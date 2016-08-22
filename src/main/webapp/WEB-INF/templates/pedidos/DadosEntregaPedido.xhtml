@@ -1,0 +1,34 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+
+    <p:panelGrid  id="panelDadosEntrega" style="margin-top: 20px" columns="4"  
+                  layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
+                  columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"  >
+        
+        <p:outputLabel value="Data da entrega" for="dataEntrega" />
+        <p:calendar id="dataEntrega"  pattern="dd/MM/yyyy" />
+
+
+        <p:outputLabel value="Logradouro:" for="entregaLogradouro" />
+        <p:inputText id="entregaLogradouro"  />
+
+        <p:outputLabel value="Número:" for="entregaNumero" />
+        <p:inputText id="entregaNumero"  />
+
+        <p:outputLabel value="Complemento:" for="entregaComplemento" />
+        <p:inputText id="entregaComplemento"  />
+
+        <p:outputLabel value="Cidade:" for="entregaCidade" />
+        <p:inputText id="entregaCidade"  />
+
+        <p:outputLabel value="Estado:" for="entregaEstado" />
+        <p:inputText id="entregaEstado"  />
+
+        <p:outputLabel value="CEP:" for="entregaCep" />
+        <p:inputText id="entregaCep"  />
+    </p:panelGrid>
+
+</ui:composition>

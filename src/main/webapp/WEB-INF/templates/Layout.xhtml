@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta charset="utf-8"/>
+            <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <meta name="description" content=""/>
+            <meta name="author" content=""/>
+        </f:facet>
+
+        <title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
+
+        <!-- Bootstrap Core CSS -->
+        <h:outputStylesheet library="syspedidovenda" name="css/bootstrap.min.css" />
+        <!-- Ionicons -->
+        <h:outputStylesheet library="syspedidovenda" name="css/ionicons.min.css" />
+        <!-- AdminLTE CSS -->
+        <h:outputStylesheet library="syspedidovenda" name="css/AdminLTE.min.css" />
+        <!-- Skin CSS -->
+        <h:outputStylesheet library="syspedidovenda" name="css/_all-skins.min.css" />
+        <!-- Sistema CSS -->
+        <h:outputStylesheet library="syspedidovenda" name="css/sistema.css"  />
+        <!-- MaskMoney JS -->
+        <h:outputScript target="body" library="syspedidovenda" name="js/jquery.maskMoney.min.js" />
+
+    </h:head>
+    <h:body class="hold-transition skin-blue sidebar-mini" style="font-size: 13px">
+        <div class="wrapper">
+
+            <header class="main-header">
+
+                <a href="" class="logo">
+                    <span class="logo-mini"><b>S</b>PV</span>
+                    <span class="logo-lg"><b>Sys</b>PedidoVenda</span>
+                </a>
+                <h:form id="nav">
+                    <nav class="navbar navbar-static-top">
+
+                        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <div class="navbar-custom-menu">
+                            <ul class="nav navbar-nav">
+                                <li class="dropdown messages-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-envelope-o"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <ul class="menu">
+                                                <li>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li class="footer"><a href="#">See All Messages</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown notifications-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-bell-o"></i>
+
+                                    </a>
+                                    <ul class="dropdown-menu">
+
+                                        <li>
+
+                                            <ul class="menu">
+                                            </ul>
+                                        </li>
+                                        <li class="footer"><a href="#">View all</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown tasks-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                        <i class="fa fa-flag-o"></i>
+                                    </a>
+                                    <ul class="dropdown-menu">
+
+                                        <li>
+
+                                            <ul class="menu">
+
+                                            </ul>
+                                        </li>
+                                        <li class="footer">
+                                            <a href="#">View all tasks</a>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li class="dropdown user user-menu">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">                         
+                                        <p:graphicImage library="syspedidovenda" styleClass="user-image" name="imagens/avatar5.png" />
+                                        <span class="hidden-xs">Cristiano Aparecido</span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+
+                                        <li class="user-header">
+                                            <p:graphicImage library="syspedidovenda" styleClass="user-image" name="imagens/avatar5.png" />
+
+                                            <p>
+                                                Cristiano Aparecido Web Developer
+                                                <small>Member since Nov. 2012</small>
+                                            </p>
+                                        </li>
+
+                                        <li class="user-body">
+                                            <div class="row">
+                                                <div class="col-xs-4 text-center">
+                                                    <a href="#">Followers</a>
+                                                </div>
+                                                <div class="col-xs-4 text-center">
+                                                    <a href="#">Sales</a>
+                                                </div>
+                                                <div class="col-xs-4 text-center">
+                                                    <a href="#">Friends</a>
+                                                </div>
+                                            </div>
+
+                                        </li>
+
+                                        <li class="user-footer">
+                                            <div class="pull-left">
+                                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            </div>
+                                            <div class="pull-right">
+                                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                                <li>
+                                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>                  
+                        <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="configurarMoeda()"
+                                      onsuccess="PF('statusDialog').hide()" />
+
+                        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+                                  closable="false" resizable="false" showHeader="false">
+                            <p:graphicImage library="syspedidovenda" name="imagens/load.gif" />
+                        </p:dialog> 
+                </h:form>
+            </header>
+            <aside class="main-sidebar">
+
+                <section class="sidebar">
+
+                    <h:form  class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+
+                    </h:form>
+
+                    <ul class="sidebar-menu">
+                        <li class="header">Menu de Navegação</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i>Home</a></li>
+                                <!-- <li><a href=""><i class="fa fa-circle-o"></i> Dashboard v2</a></li>-->
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-files-o"></i>
+                                <span>Layout Options</span>
+                                <span class="pull-right-container">
+
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-pie-chart"></i>
+                                <span>Charts</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i> ChartJS</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-laptop"></i>
+                                <span>UI Elements</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i> General</a></li>
+
+                            </ul>
+                        </li>
+                        <li class="treeview active">
+                            <a href="#">
+                                <i class="fa fa-users"></i> <span>Cadastros</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" style="display: none">
+                                <li >
+                                    <p:link outcome="/clientes/pesquisaClientes"><i class="fa fa-circle-o"></i>Clientes</p:link>
+                                </li>
+
+                                <li >
+                                    <p:link outcome="/usuarios/pesquisaUsuarios"><i class="fa fa-circle-o"></i>Usuários</p:link>
+                                </li>
+                                <li >
+                                    <p:link ><i class="fa fa-circle-o"></i>Categorias</p:link>
+                                </li>
+                                <li >
+                                    <p:link outcome="/produtos/pesquisaProdutos" ><i class="fa fa-circle-o"></i>Produtos</p:link>
+                                </li>
+
+                            </ul>
+                        </li>
+                          <li class="treeview active">
+                            <a href="#">
+                                <i class="fa fa-newspaper-o"></i> <span>Pedidos</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu" style="display: none">
+                                <li >
+                                    <p:link outcome="/pedidos/cadastroPedido"><i class="fa fa-circle-o"></i>Novo pedido</p:link>
+                                </li>
+                                  <li >
+                                    <p:link outcome="/pedidos/pesquisaPedidos"><i class="fa fa-circle-o"></i>Pesquisa</p:link>
+                                </li>
+
+                               
+
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-table"></i> <span>Tables</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i> Simple tables</a></li>
+
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="">
+                                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                                <span class="pull-right-container">
+
+                                </span>
+                            </a>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-folder"></i> <span>Examples</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href=""><i class="fa fa-circle-o"></i> 404 Error</a></li>
+                                <li><a href=""><i class="fa fa-circle-o"></i> 500 Error</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
+
+            </aside>
+
+            <div class="content-wrapper">
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Horizontal Form -->
+                            <div class="form-group">                      
+                                <div class="panel panel-default" >
+                                    <div class="panel-heading"  style="font-size: 16px">
+                                        V1.0 - Sistema de Pedido de Venda
+                                    </div>
+                                    <div class="panel-body" style="border-radius:15px">
+
+                                        <ui:insert name="content" />
+
+                                    </div>                                     
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <footer class="main-footer">
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 1.0.0
+                </div>
+                <strong> SysPedidoVenda - Sistema de Pedido de Venda - </strong> Todos os Direitos
+                Reservados.
+            </footer>
+
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Recent Activity</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                            </li>
+                        </ul>
+
+                        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                        <ul class="control-sidebar-menu">
+                        </ul>
+
+                    </div>
+
+                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <form method="post">
+                            <h3 class="control-sidebar-heading">General Settings</h3>
+
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Report panel usage
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Allow mail redirect
+
+                                </label>
+
+                                <p>
+                                    Other sets of options are available
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    Expose author name in posts
+                                </label>
+                                <p>
+                                    Allow the user to show his name in blog posts
+                                </p>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </aside>
+            <div class="control-sidebar-bg"></div>
+        </div>
+
+        <script type="text/javascript">
+            function configurarMoeda() {
+                $(".moeda").maskMoney({decimal: ",", thousands: ".", allowZero: false});
+            }
+            $(document).ready(function () {
+                configurarMoeda();
+            });
+        </script>
+        <!-- jQuery -->
+        <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
+        <!-- Bootstrap Core JavaScript -->
+        <h:outputScript target="body" library="syspedidovenda" name="js/bootstrap.min.js" />
+        <!-- FastClick -->
+        <h:outputScript target="body" library="syspedidovenda" name="js/fastclick.min.js" />
+
+        <h:outputScript target="body" library="syspedidovenda" name="js/app.min.js" />
+
+        <h:outputScript target="body" library="syspedidovenda" name="js/demo.js" />
+    </h:body>
+</html>

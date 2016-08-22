@@ -1,0 +1,96 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/Layout.xhtml">
+
+    <ui:define name="titulo">Pesquisa pedidos</ui:define>
+    <ui:define name="content">
+
+       <!-- PESQUISA PEDIDO CSS -->
+        <h:outputStylesheet library="syspedidovenda" name="css/pesquisa-pedido.css" />
+
+
+        <h:form id="formPesquisaPedido" prependId="false">
+            <div class="ui-fluid">
+
+                <h2>Pesquisa pedidos</h2>
+                <p:toolbar style="margin-top: 15px">                  
+                    <p:toolbarGroup  style="margin-left: 5px">
+                        <p:commandButton value="Pesquisar" icon="fa fa-fw fa-search" />
+                    </p:toolbarGroup>
+                    <p:toolbarGroup align="right">
+                        <p:button  value="Novo" outcome="/pedidos/cadastroPedido"  icon="fa fa-plus"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:panelGrid  id="panelpesquisa" style="margin-top: 20px" columns="2"  
+                              layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
+                              columnClasses="ui-grid-col-2,ui-grid-col-4">
+
+                    <p:outputLabel value="Número:"  /> 
+                    <h:panelGroup >
+                        <p:inputText  style="width:40%;margin-right: 3px"  />  
+                        a
+                        <p:inputText size="10" style="width: 40%;margin-left: 3px"   />
+                    </h:panelGroup> 
+
+                    <p:outputLabel value="Data de criação:"  /> 
+                    <h:panelGroup>
+                        <p:calendar   effect="fold" pattern="dd/MM/yyyy" mask="true" style="margin-right: 3px" />  
+                        a  
+                        <p:calendar  effect="fold" pattern="dd/MM/yyyy" mask="true"  style="margin-left: 3px"  />
+                    </h:panelGroup> 
+
+                    <p:outputLabel  value="Vendedor:" for="vendedor" />
+                    <p:inputText id="vendedor" styleClass="vendedor form-control"/>
+
+                    <p:outputLabel  value="Cliente:" for="cliente" />
+                    <p:inputText id="cliente" styleClass="cliente form-control"/>
+
+                    <p:outputLabel for="status" value="Status:"/>
+                    <p:selectManyCheckbox id="status"  layout="responsive"   columns="3">
+                        <f:selectItem  itemLabel="Orçamento"/>
+                        <f:selectItem    itemLabel="Emitido"/>
+                        <f:selectItem   itemLabel="Cancelado"/>
+                    </p:selectManyCheckbox>
+
+                </p:panelGrid>
+
+                <p:dataTable emptyMessage="Nenhum pedido encontrado"  paginator="true" rows="10"
+                             style="margin-top: 30px" 
+                             reflow="true" paginatorAlwaysVisible="false"
+                             paginatorPosition="bottom">
+
+                    <p:column headerText="Número" style="width: 10%"  >
+                        <h:outputText    />
+                    </p:column>
+                    <p:column headerText="Cliente"  >
+                        <h:outputText   />
+                    </p:column>
+                    <p:column headerText="Vendedor"  >
+                        <h:outputText  />
+                    </p:column>
+                    <p:column headerText="Data de Criação"  >
+                        <h:outputText    />
+                    </p:column>
+                    <p:column headerText="Valor Total"  >
+                        <h:outputText   />
+                    </p:column>
+                    <p:column headerText="Status"  >
+                        <h:outputText   />
+                    </p:column>
+                    <p:column   >
+                        <p:button  icon="fa fa-fw fa-edit" title="Editar" /> 
+                    </p:column>
+
+                </p:dataTable>
+
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

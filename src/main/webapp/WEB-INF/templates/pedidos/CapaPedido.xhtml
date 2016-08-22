@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+    <p:panelGrid  id="panelPedido" style="margin-top: 20px" columns="4"  
+                  layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
+                  columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
+
+        <p:outputLabel value="Número:" for="numero" />
+        <p:inputText id="numero"   maxlength="10" />
+
+        <p:outputLabel value="Data de Criação:" for="dataCriacao" />
+        <p:calendar  effect="fold" pattern="dd/MM/yyyy" mask="true" id="dataCriacao"  />
+
+        <p:outputLabel value="Status:" for="status" />
+        <p:inputText  id="status" />
+
+        <p:outputLabel value="Vendedor:" for="vendedor" />
+        <p:selectOneMenu id="vendedor" >
+            <f:selectItem itemLabel="Selecione um vendedor" noSelectionOption="true"/>                          
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Cliente:" for="cliente" />
+        <p:autoComplete  dropdown="true"   id="cliente"/>
+
+        <p:outputLabel value="Forma de Pagamento:" for="formaPagamento" />
+        <p:selectOneMenu id="formaPagamento" >
+            <f:selectItem itemLabel="Selecione uma forma de pagamento" noSelectionOption="true"/>                          
+        </p:selectOneMenu>
+
+        <p:outputLabel value="Valor do Frete:" for="valorFrete"  />
+        <p:inputText  styleClass="moeda"  id="valorFrete"  maxlength="10"/>
+
+        <p:outputLabel value="SubTotal:" for="subTotal" />
+        <p:inputText id="subTotal"  styleClass="moeda" maxlength="10" />
+
+        <p:outputLabel value="Valor do Desconto:" for="valorDesconto"  />
+        <p:inputText  styleClass="moeda"  id="valorDesconto"  maxlength="10"/>
+
+        <p:outputLabel value="Total do Pedido:" for="totalPedido" />
+        <p:inputText id="totalPedido"  styleClass="moeda" maxlength="10" />
+
+    </p:panelGrid>
+
+</ui:composition>

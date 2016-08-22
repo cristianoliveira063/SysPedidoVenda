@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 15/08/2016, 11:10:58
+    Author     : Cristiano Aparecido
+*/
+
+
+@media (max-width: 1200px){
+    .ui-panelgrid.panelgrid-noborder .ui-grid-responsive .ui-grid-row {
+        border: none !important;
+    } 
+}
+@media (max-width:1200px){
+    .ui-panelgrid .ui-grid-responsive .ui-grid-row {
+        border-top: 1px solid #bcc7cf !important;
+    }
+}
+@media (max-width:1200px){
+    .ui-grid-responsive .ui-grid-row {
+        display: block !important;
+    }   
+}
+
+@media (max-width: 1200px){
+    .ui-grid-responsive .ui-grid-col-1, .ui-grid-responsive .ui-grid-col-4,
+    .ui-grid-responsive .ui-grid-col-5, .ui-grid-responsive .ui-grid-col-6,
+    .ui-grid-responsive .ui-grid-col-7, .ui-grid-responsive .ui-grid-col-8,
+    .ui-grid-responsive .ui-grid-col-9, .ui-grid-responsive .ui-grid-col-10,
+    .ui-grid-responsive .ui-grid-col-11, .ui-grid-responsive .ui-grid-col-12 {
+        width: 100%  !important;
+        float: none  !important;
+    }
+}
+
+@media(max-width: 850px){
+    .ui-grid-responsive .ui-grid-col-2,.ui-grid-responsive .ui-grid-col-3{
+        width: 100%  !important;
+        float: none  !important;
+    }
+
+}
+
+.ui-calendar input{
+    
+    width: 40% !important;
+    
+    
+}
+
+

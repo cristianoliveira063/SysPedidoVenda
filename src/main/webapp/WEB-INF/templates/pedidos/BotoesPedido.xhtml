@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:toolbar style="margin-top: 15px">                  
+        <p:toolbarGroup  style="margin-left: 5px">
+            <p:button value="Novo" icon="fa fa-plus" />
+        </p:toolbarGroup>
+        <p:toolbarGroup  style="margin-left: 5px">
+            <p:commandButton value="Salvar" icon="fa fa-floppy-o" />
+        </p:toolbarGroup>
+        <!-- Botões Menu Esquerdo -->
+        <p:toolbarGroup align="right" style="margin-right: 5px">
+            <p:button value="Pesquisa" icon="fa fa-fw fa-search" outcome="/pedidos/pesquisaPedidos" />
+        </p:toolbarGroup>
+        <p:toolbarGroup align="right">
+            <p:separator/>
+        </p:toolbarGroup>
+        <p:toolbarGroup align="right" style="margin-right: 5px">
+            <p:commandButton value="Enviar por e-mail" icon="fa fa-envelope-o" />
+        </p:toolbarGroup>
+        <p:toolbarGroup align="right" style="margin-right: 5px">
+            <p:commandButton value="Cancelar" icon="fa fa-hand-paper-o" />
+        </p:toolbarGroup>
+        <p:toolbarGroup align="right" style="margin-right: 5px">
+            <p:commandButton value="Emitir" icon="fa fa-check" />
+        </p:toolbarGroup>       
+    </p:toolbar>
+</ui:composition>
