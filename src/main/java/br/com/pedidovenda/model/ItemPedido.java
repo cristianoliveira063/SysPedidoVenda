@@ -3,14 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -23,9 +27,18 @@ public class ItemPedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false,length = 3)
     private Integer quantidade;
-    private BigDecimal valorUnitario;
+    @Column(name = "valor_unitario",nullable = false,precision = 10,scale = 2)
+    @NotNull
+    private BigDecimal valorUnitario;   
+    @ManyToOne
+    @JoinColumn(name ="produto_id",nullable = false)
+    @NotNull
     private Produto produto;
+    @ManyToOne
+    @JoinColumn(name = "pedido_id",nullable = false)
+    @NotNull
     private Pedido pedido;
 
     public Long getId() {

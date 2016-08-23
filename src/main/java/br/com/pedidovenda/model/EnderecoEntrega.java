@@ -3,23 +3,42 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author CRISTIANO
  */
+@Embeddable
 public class EnderecoEntrega implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @Column(name = "entrega_logradouro", nullable = false, length = 150)
+    @NotNull
     private String logradouro;
+    
+    @Column(name = "entrega_numero", nullable = false, length = 20)
+    @NotNull @Size(max = 20)
     private String numero;
-    private String complemento;
-    private String cidade;
-    private String uf;
+    
+    @Column(name = "entrega_complemento", length = 150)
+    @Size(max = 150)
+    private String complemento;   
+    @Column(name = "entrega_cidade", nullable = false, length = 60)
+    @NotNull @Size(max = 60)
+    private String cidade;  
+    @Column(name = "entrega_uf", nullable = false, length = 60)
+    @NotNull @Size(max = 60)
+    private String uf; 
+    @Column(name = "entrega_cep", nullable = false, length = 20)
+    @NotNull @Size(max = 20)
     private String cep;
 
     /**
@@ -105,7 +124,5 @@ public class EnderecoEntrega implements Serializable {
     public void setCep(String cep) {
         this.cep = cep;
     }
-    
-    
 
 }

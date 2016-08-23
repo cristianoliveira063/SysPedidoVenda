@@ -9,38 +9,42 @@
                   columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4">
 
         <p:outputLabel value="Número:" for="numero" />
-        <p:inputText id="numero"   maxlength="10" />
+        <p:inputText id="numero" value="#{cadastroPedidoBean.pedido.id}"  maxlength="10" />
 
         <p:outputLabel value="Data de Criação:" for="dataCriacao" />
-        <p:calendar  effect="fold" pattern="dd/MM/yyyy" mask="true" id="dataCriacao"  />
+        <p:calendar  effect="fold" pattern="dd/MM/yyyy" value="#{cadastroPedidoBean.pedido.dataCriacao}" mask="true" id="dataCriacao"  />
 
         <p:outputLabel value="Status:" for="status" />
-        <p:inputText  id="status" />
+        <p:inputText  id="status" value="#{cadastroPedidoBean.pedido.status}" />
 
         <p:outputLabel value="Vendedor:" for="vendedor" />
-        <p:selectOneMenu id="vendedor" >
+        <p:selectOneMenu id="vendedor" value="#{cadastroPedidoBean.pedido.vendedor}" >
             <f:selectItem itemLabel="Selecione um vendedor" noSelectionOption="true"/>                          
         </p:selectOneMenu>
 
         <p:outputLabel value="Cliente:" for="cliente" />
-        <p:autoComplete  dropdown="true"   id="cliente"/>
+        <p:autoComplete  dropdown="true" value="#{cadastroPedidoBean.pedido.cliente}"   id="cliente"/>
 
         <p:outputLabel value="Forma de Pagamento:" for="formaPagamento" />
-        <p:selectOneMenu id="formaPagamento" >
+        <p:selectOneMenu id="formaPagamento" value="#{cadastroPedidoBean.pedido.formaPagamento}" >
             <f:selectItem itemLabel="Selecione uma forma de pagamento" noSelectionOption="true"/>                          
         </p:selectOneMenu>
 
         <p:outputLabel value="Valor do Frete:" for="valorFrete"  />
-        <p:inputText  styleClass="moeda"  id="valorFrete"  maxlength="10"/>
+        <p:inputText  styleClass="moeda"  value="#{cadastroPedidoBean.pedido.valorFrete}"  id="valorFrete"  maxlength="10"/>
 
         <p:outputLabel value="SubTotal:" for="subTotal" />
-        <p:inputText id="subTotal"  styleClass="moeda" maxlength="10" />
+        <p:inputText id="subTotal"   styleClass="moeda" maxlength="10" />
 
         <p:outputLabel value="Valor do Desconto:" for="valorDesconto"  />
-        <p:inputText  styleClass="moeda"  id="valorDesconto"  maxlength="10"/>
+        <p:inputText  styleClass="moeda" value="#{cadastroPedidoBean.pedido.valorDesconto}"  id="valorDesconto"  maxlength="10">
+           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR" type="currency"/>
+        </p:inputText>
 
         <p:outputLabel value="Total do Pedido:" for="totalPedido" />
-        <p:inputText id="totalPedido"  styleClass="moeda" maxlength="10" />
+        <p:inputText id="totalPedido" value="#{cadastroPedidoBean.pedido.valorTotal}"  styleClass="moeda" maxlength="10" >
+           <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR" type="currency"/>
+        </p:inputText>
 
     </p:panelGrid>
 

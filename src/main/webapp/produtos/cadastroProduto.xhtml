@@ -24,22 +24,22 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar" process="@this panelProduto" update="panelProduto" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Pesquisa" outcome="/produtos/pesquisaProdutos" icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <p:panelGrid  id="panel" style="margin-top: 20px" columns="2"  
+                <p:panelGrid  id="panelProduto"  style="margin-top: 20px" columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="SKU:" for="sku" />
-                    <p:inputText id="sku"   maxlength="20" />
+                    <p:inputText id="sku"  value="#{cadastroProdutoBean.produto.sku}"  maxlength="20" />
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"  maxlength="100" />
+                    <p:inputText id="nome" value="#{cadastroProdutoBean.produto.nome}"  maxlength="100" />
 
                     <p:outputLabel value="Categoria:" for="categoria" />
                     <p:selectOneMenu id="categoria" >
@@ -52,10 +52,12 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Valor unitário:" for="valorUnitario"  />
-                    <p:inputText  styleClass="moeda"  id="valorUnitario"  maxlength="10"/>
+                    <p:inputText  styleClass="moeda" value="#{cadastroProdutoBean.produto.valorUnitario}"  id="valorUnitario"  maxlength="10">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR" type="currency"/>
+                    </p:inputText>
 
-                    <p:outputLabel value="Estoque:"/>
-                    <p:inputText  id="estoque"  maxlength="10"/>
+                    <p:outputLabel value="Estoque:" for="estoque"/>
+                    <p:inputText  id="estoque" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"  maxlength="10"/>
 
                 </p:panelGrid>
 

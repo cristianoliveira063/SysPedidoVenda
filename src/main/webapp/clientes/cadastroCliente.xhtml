@@ -31,19 +31,19 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup> 
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar"  process="@this panelCliente" update="@form"  action="#{cadastroClienteBean.salvar}" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Pesquisa" outcome="/clientes/pesquisaClientes" icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <p:panelGrid  id="panel" style="margin-top: 20px" columns="2"  
+                <p:panelGrid  id="panelCliente" style="margin-top: 20px" columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"  maxlength="100"  />
+                    <p:inputText id="nome"  value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
 
                     <p:outputLabel  for="tipo" value="Tipo:" />
                     <p:selectOneRadio id="tipo"  

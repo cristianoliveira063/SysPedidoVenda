@@ -3,18 +3,18 @@
   <persistence-unit name="PEDIDO_VENDA" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <non-jta-data-source>java:/pedido_vendaDS</non-jta-data-source>
-    <class>br.com.syspedidovenda.model.Cliente</class>
-    <class>br.com.syspedidovenda.model.Endereco</class>
-    <class>br.com.syspedidovenda.model.Grupo</class>
-    <class>br.com.syspedidovenda.model.Usuario</class>
-    <class>br.com.syspedidovenda.model.Categoria</class>
-    <class>br.com.syspedidovenda.model.ItemPedido</class>
-    <class>br.com.syspedidovenda.model.Pedido</class>
-    <class>br.com.syspedidovenda.model.Produto</class>
+    <class>br.com.pedidovenda.model.Endereco</class>
+    <class>br.com.pedidovenda.model.Grupo</class>
+    <class>br.com.pedidovenda.model.Usuario</class>
+    <class>br.com.pedidovenda.model.Cliente</class>
+    <class>br.com.pedidovenda.model.ItemPedido</class>
+    <class>br.com.pedidovenda.model.Categoria</class>
+    <class>br.com.pedidovenda.model.Pedido</class>
+    <class>br.com.pedidovenda.model.Produto</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
       <property name="hibernate.show_sql" value="true"/>
       <property name="hibernate.format_sql" value="true"/>
     </properties>

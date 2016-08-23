@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -30,6 +31,7 @@ public class Categoria implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false,length = 60)
+    @NotNull
     private String descricao; 
     @ManyToOne
     @JoinColumn(name = "categoria_pai_id")

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -29,13 +31,18 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 150)
+    @NotNull
     private String nome;
     @Column(nullable = false, length = 100)
+    @NotNull
+    @Email
     private String email;
     @Column(name = "doc_receita_federal", nullable = false, length = 14)
+    @NotNull
     private String documentoReceitaFederal;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,length = 20)
+    @NotNull
     private TipoPessoa tipo;
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos = new ArrayList<>();

@@ -5,11 +5,14 @@
  */
 package br.com.pedidovenda.controller;
 
+import br.com.pedidovenda.model.EnderecoEntrega;
+import br.com.pedidovenda.model.Pedido;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 /**
@@ -21,20 +24,22 @@ import javax.inject.Named;
 public class CadastroPedidoBean implements  Serializable{
     
     private static final long serialVersionUID = 1L;
+    @Inject
+    private Pedido pedido; 
+
+    public CadastroPedidoBean() {
+     
+    }
     
-    private List<Integer> itens = new ArrayList<>();
-    
+       
     @PostConstruct
     public void init(){
-        
-        itens.add(1);
-        
+              
     }
-
-    public List<Integer> getItens() {
-        return itens;
+    public Pedido getPedido() {
+        return pedido;
     }
     
-    
+     
     
 }

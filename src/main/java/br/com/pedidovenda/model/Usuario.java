@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +17,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -30,10 +32,14 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false,length = 100)
+    @NotNull
     private String nome;
     @Column(nullable = false,length = 50,unique = true)
+    @Email
+    @NotNull
     private String email;
     @Column(nullable = false,length = 50)
+    @NotNull
     private String senha;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_grupo",joinColumns = @JoinColumn(name = "usuario_id"),

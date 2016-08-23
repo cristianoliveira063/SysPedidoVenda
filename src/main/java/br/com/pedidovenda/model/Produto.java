@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.syspedidovenda.model;
+package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,6 +14,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -26,16 +30,22 @@ public class Produto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false,length = 100)
+    @Column(nullable = false, length = 100)
+    @NotNull
+    @Size(max = 100)
     private String nome;
-    @Column(nullable = false,length = 50)
+    @Column(nullable = false, length = 50)
+    @NotNull
     private String sku;
-    @Column(name="valor_unitario", nullable = false, precision = 10, scale = 2)
+    @Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
+    @NotNull
     private BigDecimal valorUnitario;
-    @Column(name="quantidade_estoque", nullable = false, length = 5)
-    private Integer quantidadeEstoque;    
+    @Column(name = "quantidade_estoque", nullable = false, length = 5)
+    @NotNull @Min(0) @Max(9999)
+    private Integer quantidadeEstoque;
     @ManyToOne
-    @JoinColumn(nullable = false,name = "categoria_id")
+    @JoinColumn(nullable = false, name = "categoria_id")
+    @NotNull
     private Categoria categoria;
 
     public Long getId() {
