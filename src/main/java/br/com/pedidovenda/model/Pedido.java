@@ -5,7 +5,7 @@
  */
 package br.com.pedidovenda.model;
 
-import br.com.pedidovenda.util.Validador;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;

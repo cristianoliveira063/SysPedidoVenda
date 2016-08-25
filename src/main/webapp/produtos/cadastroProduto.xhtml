@@ -43,11 +43,13 @@
 
                     <p:outputLabel value="Categoria:" for="categoria" />
                     <p:selectOneMenu id="categoria" >
-                        <f:selectItem itemLabel="Selecione a categoria" noSelectionOption="true"/>                          
+                        <f:selectItem itemLabel="Selecione a categoria" value="#{cadastroProdutoBean.categoriaPai}" noSelectionOption="true"/>  
+                        <f:selectItems  value="#{cadastroProdutoBean.categoriaRaizes}" var="categoria"
+                                        itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />                        
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Subcategoria:" for="subCategoria" />
-                    <p:selectOneMenu id="subCategoria" >
+                    <p:selectOneMenu id="subCategoria" value="#{cadastroProdutoBean.produto.categoria}" >
                         <f:selectItem itemLabel="Selecione a subcategoria" noSelectionOption="true"/>                          
                     </p:selectOneMenu>
 

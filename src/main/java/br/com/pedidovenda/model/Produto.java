@@ -5,6 +5,7 @@
  */
 package br.com.pedidovenda.model;
 
+import br.com.pedidovenda.util.validation.SKU;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -35,7 +36,7 @@ public class Produto implements Serializable {
     @Size(max = 100)
     private String nome;
     @Column(nullable = false, length = 50)
-    @NotNull
+    @SKU
     private String sku;
     @Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
     @NotNull

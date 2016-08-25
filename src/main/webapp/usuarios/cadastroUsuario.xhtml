@@ -47,25 +47,25 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar" process="@this panelUsuario" update="panelUsuario" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios" icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
-                <p:panelGrid  style="margin-top: 20px" columns="2"  
+                <p:panelGrid id="panelUsuario" style="margin-top: 20px" columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"  maxlength="100" />
+                    <p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}"  maxlength="100" />
 
                     <p:outputLabel value="E-mail:" for="email" />
-                    <p:inputText id="email"    maxlength="100" />
+                    <p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
 
                     <p:outputLabel value="Senha:" for="senha" />
-                    <p:password  id="senha" maxlength="8" />
+                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" maxlength="8" />
 
                     <p:outputLabel value="Repita a senha:" for="rsenha" />
                     <p:password  id="rsenha"  maxlength="8" />
