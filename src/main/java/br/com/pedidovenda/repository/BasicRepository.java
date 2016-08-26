@@ -18,7 +18,7 @@ import javax.persistence.EntityManager;
 public abstract class BasicRepository<T,K> implements Serializable{
      
     private static final long serialVersionUID = 1L;
-    private Class<T> clazz;
+    private final  Class<T> clazz;
 
     public BasicRepository(Class<T> clazz) {
         this.clazz = clazz;
@@ -26,16 +26,18 @@ public abstract class BasicRepository<T,K> implements Serializable{
     
     protected  abstract EntityManager getEntityManager();
     
+    public T adicionar(T entity){     
+        return getEntityManager().merge(entity);
+    }
+    
     public T pesquisarPorID(K id){       
         return getEntityManager().find(clazz, id);
     }
-   
-     @SuppressWarnings("JPQLValidation")
+    
     public List<T> listar() {
         return getEntityManager().createQuery("select t from " + getClazz().getSimpleName() + " t").getResultList();
     }
-
-      
+    
     public Class<T> getClazz() {
         return clazz;
     }

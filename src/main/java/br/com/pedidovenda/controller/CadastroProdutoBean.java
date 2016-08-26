@@ -8,7 +8,9 @@ package br.com.pedidovenda.controller;
 import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.repository.Categorias;
+import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -22,8 +24,8 @@ import javax.validation.constraints.NotNull;
  */
 @Named
 @ViewScoped
-public class CadastroProdutoBean implements Serializable{
-    
+public class CadastroProdutoBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Inject
     private Produto produto;
@@ -32,19 +34,34 @@ public class CadastroProdutoBean implements Serializable{
     @NotNull
     private Categoria categoriaPai;
     private List<Categoria> categoriaRaizes;
+    private List<Categoria> subcategorias;
 
     @PostConstruct
-    public void init(){      
-        categoriaRaizes = categorias.listar();      
+    public void init() {
+        categoriaRaizes = categorias.raizes();
     }
-    
+
+    public void carregarSubcategorias() {
+        subcategorias = categorias.subcategoriasDe(categoriaPai);
+    }
+
+    public void salvar() {   
+        reset();
+        MessageView.info("Cadastro realizado com sucesso.");  
+    }
+    private void reset(){  
+       produto = new Produto(); 
+       categoriaPai = new Categoria();
+       subcategorias = new ArrayList<>();
+    }
+
     public Produto getProduto() {
         return produto;
     }
 
     public List<Categoria> getCategoriaRaizes() {
         return categoriaRaizes;
-    }  
+    }
 
     public Categoria getCategoriaPai() {
         return categoriaPai;
@@ -53,7 +70,9 @@ public class CadastroProdutoBean implements Serializable{
     public void setCategoriaPai(Categoria categoriaPai) {
         this.categoriaPai = categoriaPai;
     }
-    
-    
-    
+
+    public List<Categoria> getSubcategorias() {
+        return subcategorias;
+    }
+
 }

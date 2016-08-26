@@ -24,10 +24,12 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" process="@this panelProduto" update="panelProduto" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar" action="#{cadastroProdutoBean.salvar}" 
+                                         process="@this panelProduto" update="panelProduto" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
-                        <p:button  value="Pesquisa" outcome="/produtos/pesquisaProdutos" icon="fa fa-fw fa-search"/>
+                        <p:button  value="Pesquisa" outcome="/produtos/pesquisaProdutos"
+                                   icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
@@ -42,24 +44,28 @@
                     <p:inputText id="nome" value="#{cadastroProdutoBean.produto.nome}"  maxlength="100" />
 
                     <p:outputLabel value="Categoria:" for="categoria" />
-                    <p:selectOneMenu id="categoria" >
-                        <f:selectItem itemLabel="Selecione a categoria" value="#{cadastroProdutoBean.categoriaPai}" noSelectionOption="true"/>  
+                    <p:selectOneMenu id="categoria" value="#{cadastroProdutoBean.categoriaPai}" >
+                        <f:selectItem itemLabel="Selecione a categoria"  noSelectionOption="true"/>  
                         <f:selectItems  value="#{cadastroProdutoBean.categoriaRaizes}" var="categoria"
-                                        itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />                        
+                                        itemValue="#{categoria}" itemLabel="#{categoria.descricao}"  />   
+                        <p:ajax listener="#{cadastroProdutoBean.carregarSubcategorias}" update="subcategoria" />
                     </p:selectOneMenu>
 
-                    <p:outputLabel value="Subcategoria:" for="subCategoria" />
-                    <p:selectOneMenu id="subCategoria" value="#{cadastroProdutoBean.produto.categoria}" >
-                        <f:selectItem itemLabel="Selecione a subcategoria" noSelectionOption="true"/>                          
+                    <p:outputLabel value="Subcategoria:" for="subcategoria" />
+                    <p:selectOneMenu id="subcategoria" value="#{cadastroProdutoBean.produto.categoria}" >
+                        <f:selectItem itemLabel="Selecione a subcategoria" noSelectionOption="true"/>   
+                        <f:selectItems value="#{cadastroProdutoBean.subcategorias}" var="subcategoria"
+                                       itemLabel="#{subcategoria.descricao}" itemValue="#{subcategoria}"  />
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Valor unitário:" for="valorUnitario"  />
-                    <p:inputText  styleClass="moeda" value="#{cadastroProdutoBean.produto.valorUnitario}"  id="valorUnitario"  maxlength="10">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" locale="pt_BR" type="currency"/>
+                    <p:inputText  styleClass="moeda" value="#{cadastroProdutoBean.produto.valorUnitario}" id="valorUnitario"  maxlength="10">
+                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
                     </p:inputText>
 
                     <p:outputLabel value="Estoque:" for="estoque"/>
-                    <p:inputText  id="estoque" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"  maxlength="10"/>
+                    <p:inputText  id="estoque" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"
+                                  maxlength="10"/>
 
                 </p:panelGrid>
 

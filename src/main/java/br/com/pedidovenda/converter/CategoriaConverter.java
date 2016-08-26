@@ -20,9 +20,9 @@ import javax.inject.Inject;
 @FacesConverter(forClass = Categoria.class)
 public class CategoriaConverter implements Converter {
 
-	@Inject
-	private Categorias categorias;
-	
+    @Inject
+    private Categorias categorias;
+
     /**
      *
      * @param context
@@ -31,24 +31,23 @@ public class CategoriaConverter implements Converter {
      * @return
      */
     @Override
-	public Object getAsObject(FacesContext context, UIComponent component, String value) {
-		Categoria retorno = null;
-		
-		if (value != null) {
-			Long id = new Long(value);
-			retorno = categorias.pesquisarPorID(id);
-		}
-		
-		return retorno;
-	}
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        Categoria retorno = null;
+        if (value != null) {
+            Long id = new Long(value);
+            retorno = categorias.pesquisarPorID(id);
+        }
 
-	@Override
-	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value != null) {
-			return ((Categoria) value).getId().toString();
-		}
-		
-		return "";
-	}
+        return retorno;
+    }
+
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object value) {    
+        if (value != null) {
+            return ((Categoria) value).getId().toString();
+        }
+
+        return "";
+    }
 
 }
