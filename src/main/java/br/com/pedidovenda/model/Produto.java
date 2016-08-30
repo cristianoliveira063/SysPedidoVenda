@@ -46,7 +46,7 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_estoque", nullable = false, length = 5)
     @NotNull @Min(0) @Max(9999)
     private Integer quantidadeEstoque;
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(optional = false,fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "categoria_id")
     @NotNull
     private Categoria categoria;

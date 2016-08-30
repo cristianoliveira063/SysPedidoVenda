@@ -20,7 +20,7 @@
 
         <script type="text/javascript">
 
-           
+
         </script>
 
         <h:form id="formPesquisaProduto">
@@ -28,7 +28,8 @@
                 <h2>Pesquisa produtos</h2>
                 <p:toolbar style="margin-top: 15px">                  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Pesquisar" process="@form" update="tablePesquisa" icon="fa fa-fw fa-search" />
+                        <p:commandButton value="Pesquisar" process="@form" update="tablePesquisa"
+                                         icon="fa fa-fw fa-search" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Novo" outcome="/produtos/cadastroProduto" icon="fa fa-plus"/>
@@ -39,7 +40,8 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-3">
 
                     <p:outputLabel value="SKU:" for="sku" />
-                    <p:inputText id="sku" onkeyup="maiuscula(this)" value="#{pesquisarProdutosBean.produtoFilter.sku}"  maxlength="20" >
+                    <p:inputText id="sku" onkeyup="maiuscula(this)" 
+                                 value="#{pesquisarProdutosBean.produtoFilter.sku}"  maxlength="20" >
                         <p:keyFilter regEx="/[a-z0-9]/i"/>
                     </p:inputText>
 
@@ -49,26 +51,26 @@
 
                 <p:dataTable id="tablePesquisa" emptyMessage="Nenhum produto encontrado" var="produto" 
                              value="#{pesquisarProdutosBean.dataModel}" 
-                             paginator="true" rows="15" lazy="true" rowsPerPageTemplate="10,15,20"
+                             paginator="true" rows="10" lazy="true" rowsPerPageTemplate="10,15,20"
                              style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
-                    <p:column headerText="SKU" style="width: 10%"  >
+                    <p:column headerText="SKU" sortBy="#{produto.sku}" style="width: 10%"  >
                         <h:outputText   value="#{produto.sku}"  />
                     </p:column>
-                    <p:column headerText="Nome"  >
+                    <p:column headerText="Nome"  sortBy="#{produto.nome}" >
                         <h:outputText  value="#{produto.nome}" />
                     </p:column>
-                    <p:column headerText="Categoria"  >
+                    <p:column headerText="Categoria" width="18%"  >
                         <h:outputText value="#{produto.categoria.descricao}" />
                     </p:column>
-                    <p:column headerText="Valor unitário"  >
+                    <p:column headerText="Valor unitário" width="15%"  >
                         <h:outputText  value="#{produto.valorUnitario}"  >
                             <f:convertNumber type="currency" currencySymbol="R$" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Estoque"  >
+                    <p:column headerText="Estoque" width="9%" >
                         <h:outputText  value="#{produto.quantidadeEstoque}" />
                     </p:column>
                     <p:column width="8%" >

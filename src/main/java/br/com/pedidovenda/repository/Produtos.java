@@ -5,6 +5,7 @@
  */
 package br.com.pedidovenda.repository;
 
+import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.util.validation.Validador;
@@ -16,6 +17,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -49,6 +51,7 @@ public class Produtos extends BasicRepository<Produto, Long> {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery<Produto> criteriaQuery = builder.createQuery(Produto.class);
         Root<Produto> r = criteriaQuery.from(Produto.class);
+        r.fetch("categoria");
         criteriaQuery.select(r);
         if (filter.getFilter().isAscendente()
                 && Validador.isStringValida(filter.getFilter().getPropriedadeOrdenacao())) {

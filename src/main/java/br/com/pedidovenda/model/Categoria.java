@@ -11,6 +11,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,7 +34,7 @@ public class Categoria implements Serializable {
     @Column(nullable = false,length = 60)
     @NotNull
     private String descricao; 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "categoria_pai_id")
     private Categoria categoriaPai;
     @OneToMany(mappedBy = "categoriaPai", cascade = CascadeType.ALL)
