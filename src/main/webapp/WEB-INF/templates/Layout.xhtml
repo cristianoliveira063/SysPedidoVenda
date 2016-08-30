@@ -29,6 +29,7 @@
         <!-- MaskMoney JS -->
         <h:outputScript target="body" library="syspedidovenda" name="js/jquery.maskMoney.min.js" />
 
+
     </h:head>
     <h:body class="hold-transition skin-blue sidebar-mini" style="font-size: 13px">
         <div class="wrapper">
@@ -147,13 +148,13 @@
                             </ul>
                         </div>
                     </nav>                  
-                        <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="configurarMoeda()"
-                                      onsuccess="PF('statusDialog').hide()" />
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="configurarMoeda()"
+                                  onsuccess="PF('statusDialog').hide()"  />
 
-                        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
-                                  closable="false" resizable="false" showHeader="false">
-                            <p:graphicImage library="syspedidovenda" name="imagens/load.gif" />
-                        </p:dialog> 
+                    <p:dialog widgetVar="statusDialog" modal="true" draggable="false"
+                              closable="false" resizable="false" showHeader="false">
+                        <p:graphicImage library="syspedidovenda" name="imagens/load.gif" />
+                    </p:dialog> 
                 </h:form>
             </header>
             <aside class="main-sidebar">
@@ -248,7 +249,7 @@
 
                             </ul>
                         </li>
-                          <li class="treeview active">
+                        <li class="treeview active">
                             <a href="#">
                                 <i class="fa fa-newspaper-o"></i> <span>Pedidos</span>
                                 <span class="pull-right-container">
@@ -259,11 +260,11 @@
                                 <li >
                                     <p:link outcome="/pedidos/cadastroPedido"><i class="fa fa-circle-o"></i>Novo pedido</p:link>
                                 </li>
-                                  <li >
+                                <li >
                                     <p:link outcome="/pedidos/pesquisaPedidos"><i class="fa fa-circle-o"></i>Pesquisa</p:link>
                                 </li>
 
-                               
+
 
                             </ul>
                         </li>
@@ -403,6 +404,11 @@
             $(document).ready(function () {
                 configurarMoeda();
             });
+
+            function maiuscula(z) {
+                v = z.value.toUpperCase();
+                z.value = v;
+            }
         </script>
         <!-- jQuery -->
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />
@@ -414,5 +420,6 @@
         <h:outputScript target="body" library="syspedidovenda" name="js/app.min.js" />
 
         <h:outputScript target="body" library="syspedidovenda" name="js/demo.js" />
+
     </h:body>
 </html>

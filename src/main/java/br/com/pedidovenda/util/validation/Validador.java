@@ -19,9 +19,12 @@ public class Validador {
     
     
     public static boolean isObjectValido(Object object) {
-
         return object != null;
 
+    }
+    
+    public static boolean  isNotObjectValido(Object object){      
+          return object == null;
     }
 
     public static boolean isArrayValido(Object[] array) {

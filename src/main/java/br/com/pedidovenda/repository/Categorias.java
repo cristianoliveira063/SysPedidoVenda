@@ -34,6 +34,7 @@ public class Categorias extends BasicRepository<Categoria, Long> {
                 Categoria.class).setParameter("raiz", categoriaPai).getResultList();
     }
 
+
     @Override
     protected EntityManager getEntityManager() {
         return em;

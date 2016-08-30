@@ -5,16 +5,32 @@
  */
 package br.com.pedidovenda.service;
 
+import br.com.pedidovenda.model.Produto;
+import br.com.pedidovenda.repository.Produtos;
+import br.com.pedidovenda.util.jpa.Transactional;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
+import javax.inject.Inject;
 
 /**
  *
  * @author CRISTIANO
  */
-public class CadastroProdutoService implements Serializable{
-    
+public class CadastroProdutoService implements Serializable {
+
     private static final long serialVersionUID = 1L;
+    @Inject
+    private Produtos produtos;
+
+    @Transactional
+    public Produto salvar(Produto produto) {
+        System.out.println(produto.getSku());
+        Produto p = produtos.porSku(produto.getSku());
+        if (Validador.isObjectValido(p)) {
+            throw new NegocioException("Já existe um produto com o SKU informado.");
+        }
+        return produtos.adicionar(produto);
+    }
     
-    
-    
+      
 }

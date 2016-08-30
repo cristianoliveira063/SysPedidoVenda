@@ -9,7 +9,7 @@
 
     <ui:define name="titulo">Pesquisa produtos</ui:define>
     <ui:define name="content">
-           
+
         <style type="text/css">
             @media(min-width:1200px){
                 .btn-editar,.btn-excluir {
@@ -18,47 +18,58 @@
             }
         </style>
 
+        <script type="text/javascript">
+
+           
+        </script>
+
         <h:form id="formPesquisaProduto">
             <div class="ui-fluid">
                 <h2>Pesquisa produtos</h2>
                 <p:toolbar style="margin-top: 15px">                  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Pesquisar" icon="fa fa-fw fa-search" />
+                        <p:commandButton value="Pesquisar" process="@form" update="tablePesquisa" icon="fa fa-fw fa-search" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Novo" outcome="/produtos/cadastroProduto" icon="fa fa-plus"/>
                     </p:toolbarGroup>
                 </p:toolbar>
-                <p:panelGrid  id="panelpesquisa" style="margin-top: 20px" columns="2"  
+                <p:panelGrid  id="panelPesquisa" style="margin-top: 20px" columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                               columnClasses="ui-grid-col-2,ui-grid-col-3">
 
                     <p:outputLabel value="SKU:" for="sku" />
-                    <p:inputText id="sku"   maxlength="20" />
+                    <p:inputText id="sku" onkeyup="maiuscula(this)" value="#{pesquisarProdutosBean.produtoFilter.sku}"  maxlength="20" >
+                        <p:keyFilter regEx="/[a-z0-9]/i"/>
+                    </p:inputText>
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"   />
+                    <p:inputText id="nome" value="#{pesquisarProdutosBean.produtoFilter.nome}"   />
                 </p:panelGrid>
 
-                <p:dataTable emptyMessage="Nenhum produto encontrado" var="produto" paginator="true" rows="10"
-                             value="${pesquisarProdutosBean.produtosFiltrados}" style="margin-top: 30px" 
+                <p:dataTable id="tablePesquisa" emptyMessage="Nenhum produto encontrado" var="produto" 
+                             value="#{pesquisarProdutosBean.dataModel}" 
+                             paginator="true" rows="15" lazy="true" rowsPerPageTemplate="10,15,20"
+                             style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
                     <p:column headerText="SKU" style="width: 10%"  >
-                        <h:outputText  value="123"  />
+                        <h:outputText   value="#{produto.sku}"  />
                     </p:column>
                     <p:column headerText="Nome"  >
-                        <h:outputText  value="Notebook Dell" />
+                        <h:outputText  value="#{produto.nome}" />
                     </p:column>
                     <p:column headerText="Categoria"  >
-                        <h:outputText value="Notebooks" />
+                        <h:outputText value="#{produto.categoria.descricao}" />
                     </p:column>
                     <p:column headerText="Valor unitário"  >
-                        <h:outputText  value="25000"  />
+                        <h:outputText  value="#{produto.valorUnitario}"  >
+                            <f:convertNumber type="currency" currencySymbol="R$" />
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Estoque"  >
-                        <h:outputText  value="20" />
+                        <h:outputText  value="#{produto.quantidadeEstoque}" />
                     </p:column>
                     <p:column width="8%" >
                         <p:button styleClass="btn-editar"  icon="fa fa-fw fa-edit" title="Editar" /> 

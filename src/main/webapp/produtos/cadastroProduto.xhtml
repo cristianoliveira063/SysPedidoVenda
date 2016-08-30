@@ -38,7 +38,9 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="SKU:" for="sku" />
-                    <p:inputText id="sku"  value="#{cadastroProdutoBean.produto.sku}"  maxlength="20" />
+                    <p:inputText id="sku"  value="#{cadastroProdutoBean.produto.sku}"  maxlength="20" >
+                        <p:keyFilter regEx="/[a-z0-9]/i"/>
+                    </p:inputText>
 
                     <p:outputLabel value="Nome:" for="nome" />
                     <p:inputText id="nome" value="#{cadastroProdutoBean.produto.nome}"  maxlength="100" />
@@ -65,7 +67,9 @@
 
                     <p:outputLabel value="Estoque:" for="estoque"/>
                     <p:inputText  id="estoque" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"
-                                  maxlength="10"/>
+                                  maxlength="10">
+                     <p:keyFilter regEx="/[\d]/"/>
+                    </p:inputText>
 
                 </p:panelGrid>
 

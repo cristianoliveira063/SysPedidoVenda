@@ -7,7 +7,9 @@ package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
+import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Categorias;
+import br.com.pedidovenda.service.CadastroProdutoService;
 import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,6 +37,11 @@ public class CadastroProdutoBean implements Serializable {
     private Categoria categoriaPai;
     private List<Categoria> categoriaRaizes;
     private List<Categoria> subcategorias;
+    @Inject
+    private CadastroProdutoService cadastroProdutoService;
+    @Inject
+    private ProdutoFilter produtoFilter;
+   
 
     @PostConstruct
     public void init() {
@@ -45,14 +52,18 @@ public class CadastroProdutoBean implements Serializable {
         subcategorias = categorias.subcategoriasDe(categoriaPai);
     }
 
-    public void salvar() {   
+   
+
+    public void salvar() {
+        cadastroProdutoService.salvar(produto);
         reset();
-        MessageView.info("Cadastro realizado com sucesso.");  
+        MessageView.info("Produto cadastrado com sucesso!");
     }
-    private void reset(){  
-       produto = new Produto(); 
-       categoriaPai = new Categoria();
-       subcategorias = new ArrayList<>();
+
+    private void reset() {
+        produto = new Produto();
+        categoriaPai = null;
+        subcategorias = new ArrayList<>();
     }
 
     public Produto getProduto() {
@@ -75,4 +86,12 @@ public class CadastroProdutoBean implements Serializable {
         return subcategorias;
     }
 
+    public ProdutoFilter getProdutoFilter() {
+        return produtoFilter;
+    }
+
+    public void setProdutoFilter(ProdutoFilter produtoFilter) {
+        this.produtoFilter = produtoFilter;
+    }
+      
 }

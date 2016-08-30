@@ -8,6 +8,9 @@ package br.com.pedidovenda.repository;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -33,9 +36,26 @@ public abstract class BasicRepository<T,K> implements Serializable{
     public T pesquisarPorID(K id){       
         return getEntityManager().find(clazz, id);
     }
+     public CriteriaBuilder getCriteriaBuilder() {
+        return getEntityManager().getCriteriaBuilder();
+    }
+
+    public List<T> pesquisar(String propriedade, String valor) {
+        CriteriaQuery<T> criteriaQuery = getCriteriaBuilder().createQuery(clazz);
+        Root<T> r = criteriaQuery.from(clazz);
+        criteriaQuery.select(r);
+        criteriaQuery.where(getCriteriaBuilder().like(r.<String>get(propriedade), "%" + valor + "%"));
+        return getEntityManager().createQuery(criteriaQuery).getResultList();
+    }
     
     public List<T> listar() {
         return getEntityManager().createQuery("select t from " + getClazz().getSimpleName() + " t").getResultList();
+    }
+    
+    public Number count(){       
+        Number num = getEntityManager().createQuery("select COUNT(t) from " + getClazz().getSimpleName()  + " t ",Number.class).getSingleResult();    
+         return  num ;
+        
     }
     
     public Class<T> getClazz() {

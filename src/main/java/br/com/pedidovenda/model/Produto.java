@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,6 +37,7 @@ public class Produto implements Serializable {
     @Size(max = 100)
     private String nome;
     @Column(nullable = false, length = 50)
+    @NotNull
     @SKU
     private String sku;
     @Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
@@ -44,7 +46,7 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_estoque", nullable = false, length = 5)
     @NotNull @Min(0) @Max(9999)
     private Integer quantidadeEstoque;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(nullable = false, name = "categoria_id")
     @NotNull
     private Categoria categoria;

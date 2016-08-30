@@ -13,14 +13,13 @@ import javax.validation.Constraint;
 import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
 import javax.validation.ReportAsSingleViolation;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
  *
  * @author CRISTIANO
  */
-@NotNull
+
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @ReportAsSingleViolation
