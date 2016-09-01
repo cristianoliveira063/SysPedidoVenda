@@ -5,11 +5,9 @@
  */
 package br.com.pedidovenda.Testes;
 
-import br.com.pedidovenda.model.Produto;
+import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Produtos;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,14 +25,17 @@ public class TesteServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     @Inject
     Produtos produtos;
+    @Inject
+    ProdutoFilter produtoFilter;
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("Servlet de Teste executando...");
-        List<Produto> lista = produtos.listar();
-        long n = lista.stream().count();
-        lista = lista.stream().filter(p -> p.getSku().equals("SO7754")).collect(Collectors.toList());
-        System.out.println(n);
-        lista.forEach(p -> System.out.println(p.getCategoria().getDescricao()));
+       // List<Produto> lista = produtos.listar();
+        //long n = lista.stream().count();
+       // lista = lista.stream().filter(p -> p.getSku().equals("SO7754")).collect(Collectors.toList());
+        //System.out.println(n);
+        //lista.forEach(p -> System.out.println(p.getCategoria().getDescricao()));
+          
     }
 }

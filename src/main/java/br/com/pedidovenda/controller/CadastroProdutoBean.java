@@ -42,7 +42,6 @@ public class CadastroProdutoBean implements Serializable {
     @Inject
     private ProdutoFilter produtoFilter;
    
-
     @PostConstruct
     public void init() {
         categoriaRaizes = categorias.raizes();
@@ -51,8 +50,6 @@ public class CadastroProdutoBean implements Serializable {
     public void carregarSubcategorias() {
         subcategorias = categorias.subcategoriasDe(categoriaPai);
     }
-
-   
 
     public void salvar() {
         cadastroProdutoService.salvar(produto);

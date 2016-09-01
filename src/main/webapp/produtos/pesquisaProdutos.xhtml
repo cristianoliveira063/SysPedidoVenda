@@ -18,17 +18,12 @@
             }
         </style>
 
-        <script type="text/javascript">
-
-
-        </script>
-
         <h:form id="formPesquisaProduto">
             <div class="ui-fluid">
                 <h2>Pesquisa produtos</h2>
                 <p:toolbar style="margin-top: 15px">                  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Pesquisar" process="@form" update="tablePesquisa"
+                        <p:commandButton value="Pesquisar"  update="@form" 
                                          icon="fa fa-fw fa-search" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -41,7 +36,7 @@
 
                     <p:outputLabel value="SKU:" for="sku" />
                     <p:inputText id="sku" onkeyup="maiuscula(this)" 
-                                 value="#{pesquisarProdutosBean.produtoFilter.sku}"  maxlength="20" >
+                                 value="#{pesquisarProdutosBean.produtoFilter.sku}"   maxlength="20" >
                         <p:keyFilter regEx="/[a-z0-9]/i"/>
                     </p:inputText>
 
@@ -51,8 +46,9 @@
 
                 <p:dataTable id="tablePesquisa" emptyMessage="Nenhum produto encontrado" var="produto" 
                              value="#{pesquisarProdutosBean.dataModel}" 
-                             paginator="true" rows="10" lazy="true" rowsPerPageTemplate="10,15,20"
-                             style="margin-top: 30px" 
+                             paginator="true" rows="10" lazy="true" 
+                             style="margin-top: 30px" selectionMode="single" rowKey="#{produto.id}"
+                             selection="#{pesquisarProdutosBean.produtoSelecionado}"
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
@@ -70,7 +66,7 @@
                             <f:convertNumber type="currency" currencySymbol="R$" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Estoque" width="9%" >
+                    <p:column headerText="Estoque" sortBy="#{produto.quantidadeEstoque}" width="9%" >
                         <h:outputText  value="#{produto.quantidadeEstoque}" />
                     </p:column>
                     <p:column width="8%" >

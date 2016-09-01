@@ -5,7 +5,6 @@
  */
 package br.com.pedidovenda.repository;
 
-import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.util.validation.Validador;
@@ -14,10 +13,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
@@ -59,16 +58,41 @@ public class Produtos extends BasicRepository<Produto, Long> {
         } else if (Validador.isStringValida(filter.getFilter().getPropriedadeOrdenacao())) {
             criteriaQuery.orderBy(builder.desc(r.get(filter.getFilter().getPropriedadeOrdenacao())));
         }
+        criteriaQuery.where(getPredicates(filter, builder, r).toArray(new Predicate[0]));
+        TypedQuery<Produto> typedQuery = criarConsulta(em, filter, criteriaQuery);    
+        typedQuery.setFirstResult(filter.getFilter().getPrimeiroRegistro());
+        typedQuery.setMaxResults(filter.getFilter().getQuantidadeRegistros());
+        List<Produto> list = typedQuery.getResultList();
+        System.out.println(list.size());
+        return list;
+    }
+
+    public int quantidadeFiltrados(ProdutoFilter filter) {
+        CriteriaBuilder builder = getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery();
+        Root<Produto> rt = cq.from(Produto.class);
+        cq.select(builder.count(rt));
+        cq.where(getPredicates(filter, builder, rt).toArray(new Predicate[0]));
+        Query q = criarConsulta(em, filter, cq);
+        int total = ((Long) q.getSingleResult()).intValue();
+        System.out.println("Total: " + total);
+        return total;
+    }
+
+    public List<Predicate> getPredicates(ProdutoFilter filter, CriteriaBuilder builder, Root r) {
         List<Predicate> predicates = new ArrayList<>();
         if (Validador.isStringValida(filter.getSku())) {
-            ParameterExpression<String> paramSKu = builder.parameter(String.class,"sku");
-            predicates.add(builder.like(r.<String>get("sku"), paramSKu));
+            ParameterExpression<String> paramSKu = builder.parameter(String.class, "sku");
+            predicates.add(builder.equal(r.get("sku"), paramSKu));
         }
         if (Validador.isStringValida(filter.getNome())) {
-            ParameterExpression<String> paramNome = builder.parameter(String.class,"nome");
+            ParameterExpression<String> paramNome = builder.parameter(String.class, "nome");
             predicates.add(builder.like(r.<String>get("nome"), paramNome));
         }
-        criteriaQuery.where(predicates.toArray(new Predicate[0]));
+        return predicates;
+    }
+
+    public TypedQuery criarConsulta(EntityManager em, ProdutoFilter filter, CriteriaQuery criteriaQuery) {
         TypedQuery<Produto> typedQuery = em.createQuery(criteriaQuery);
         if (Validador.isStringValida(filter.getSku())) {
             typedQuery.setParameter("sku", filter.getSku());
@@ -76,9 +100,7 @@ public class Produtos extends BasicRepository<Produto, Long> {
         if (Validador.isStringValida(filter.getNome())) {
             typedQuery.setParameter("nome", "%" + filter.getNome() + "%");
         }
-        typedQuery.setFirstResult(filter.getFilter().getPrimeiroRegistro());
-        typedQuery.setMaxResults(filter.getFilter().getQuantidadeRegistros());
-        return typedQuery.getResultList();
+        return typedQuery;
     }
 
     @Override

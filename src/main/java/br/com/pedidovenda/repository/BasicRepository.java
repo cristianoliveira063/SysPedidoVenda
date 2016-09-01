@@ -21,7 +21,7 @@ import javax.persistence.criteria.Root;
 public abstract class BasicRepository<T,K> implements Serializable{
      
     private static final long serialVersionUID = 1L;
-    private final  Class<T> clazz;
+    final  Class<T> clazz;
 
     public BasicRepository(Class<T> clazz) {
         this.clazz = clazz;

@@ -8,7 +8,9 @@ package br.com.pedidovenda.controller;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Produtos;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -33,35 +35,63 @@ public class PesquisarProdutosBean implements Serializable {
     private LazyDataModel<Produto> dataModel;
     @Inject
     private ProdutoFilter produtoFilter;
-    
+    private Produto produtoSelecionado;
 
     @PostConstruct
-    public void init() {    
+    public void init() {
         pesquisar();
     }
 
     public LazyDataModel<Produto> pesquisar() {
+        
         dataModel = new LazyDataModel<Produto>() {
-            private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;        
             @Override
             public List<Produto> load(int first, int pageSize, String sortField, SortOrder sortOrder,
                     Map<String, Object> filters) {
+                if (Validador.isStringValida(produtoFilter.getNome()) || Validador.isStringValida(produtoFilter.getSku())) {
+                    first = BigDecimal.ZERO.intValue();
+                }
                 produtoFilter.getFilter().setPrimeiroRegistro(first);
                 produtoFilter.getFilter().setPropriedadeOrdenacao(sortField);
                 produtoFilter.getFilter().setQuantidadeRegistros(pageSize);
                 produtoFilter.getFilter().setAscendente(SortOrder.ASCENDING.equals(sortOrder));
-                setRowCount(produtos.count().intValue());
+                setRowCount(produtos.quantidadeFiltrados(produtoFilter));
                 return produtos.filtrar(produtoFilter);
             }
+              
+            @Override
+            public Object getRowKey(Produto object) {
+                return object.getId();
+            }
+            @Override
+            public Produto getRowData(String rowKey) {
+                List<Produto> list = (List<Produto>) getWrappedData();
+                for (Produto p : list) {
+                    if (p.getId() == Long.parseLong(rowKey)) {
+                        return p;
+                    }
+                }
+                return null;
+            }
         };
-        return dataModel;
+        return null;
     }
 
     public ProdutoFilter getProdutoFilter() {
         return produtoFilter;
     }
-    
+
     public LazyDataModel<Produto> getDataModel() {
         return dataModel;
     }
+
+    public Produto getProdutoSelecionado() {
+        return produtoSelecionado;
+    }
+
+    public void setProdutoSelecionado(Produto produtoSelecionado) {
+        this.produtoSelecionado = produtoSelecionado;
+    }
+
 }
