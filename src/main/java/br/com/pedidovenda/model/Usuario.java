@@ -7,7 +7,9 @@ package br.com.pedidovenda.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,13 +40,13 @@ public class Usuario implements Serializable {
     @Email
     @NotNull
     private String email;
-    @Column(nullable = false,length = 50)
+    @Column(nullable = false)
     @NotNull
     private String senha;
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "usuario_grupo",joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "grupo_id"))
-    private List<Grupo>grupos = new ArrayList<>();
+    private Set<Grupo>grupos = new HashSet<>();
     
     
     
@@ -102,14 +104,14 @@ public class Usuario implements Serializable {
      /**
      * @return the grupos
      */
-    public List<Grupo> getGrupos() {
+    public Set<Grupo> getGrupos() {
         return grupos;
     }
 
     /**
      * @param grupos the grupos to set
      */
-    public void setGrupos(List<Grupo> grupos) {
+    public void setGrupos(Set<Grupo> grupos) {
         this.grupos = grupos;
     }
     

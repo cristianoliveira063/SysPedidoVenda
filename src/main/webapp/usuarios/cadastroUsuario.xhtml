@@ -47,10 +47,12 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" process="@this panelUsuario" update="panelUsuario" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar" process="@this panelUsuario" 
+                                         update="panelUsuario" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
-                        <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios" icon="fa fa-fw fa-search"/>
+                        <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios"
+                                   icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
 
@@ -65,27 +67,34 @@
                     <p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
 
                     <p:outputLabel value="Senha:" for="senha" />
-                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" maxlength="8" />
+                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}"
+                              feedback="true"  promptLabel="Digite sua senha" weakLabel="Fraca"
+                    goodLabel="Média" strongLabel="Forte"   maxlength="12" />
 
                     <p:outputLabel value="Repita a senha:" for="rsenha" />
                     <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="8" />
 
                     <p:outputLabel value="Grupo de Permissão:" for="grupos" />
-                    <p:selectOneMenu id="grupos" styleClass="select-grupo" >
-                        <f:selectItem  itemLabel="Selecione um grupo" noSelectionOption="true"/>                          
+                    <p:selectOneMenu id="grupos" value="#{cadastroUsuarioBean.grupo}" styleClass="select-grupo" >
+                        <f:selectItem  itemLabel="Selecione um grupo" noSelectionOption="true"/>
+                        <f:selectItems value="#{cadastroUsuarioBean.listarGrupos}" var="grupo"
+                                       itemLabel="#{grupo.nome}" itemValue="#{grupo}" /> 
+                        <p:ajax   process="@this" update="grupos" />
                     </p:selectOneMenu>
 
                     <p:outputLabel  />
-                    <p:commandButton  icon="fa fa-plus"  value="Adicionar Grupo"/>
+                    <p:commandButton immediate="true" action="#{cadastroUsuarioBean.adicionarGrupo}" process="@this" update="grupoDataTable" 
+                                    icon="fa fa-plus"  value="Adicionar Grupo"/>
 
                 </p:panelGrid>
 
-                <p:dataTable id="grupoDataTable" var="grupo" value="#{cadastroUsuarioBean.usuario.grupos}"  emptyMessage="Nenhum grupo encontrado.">
-                    <p:column  headerText="Grupos" >
-                        <h:outputText  />
+                <p:dataTable id="grupoDataTable"  var="grupo" value="#{cadastroUsuarioBean.usuario.grupos}"  
+                             emptyMessage="Nenhum grupo encontrado.">
+                    <p:column  headerText="Nome" >
+                        <h:outputText  value="#{grupo.nome}" />
                     </p:column>
-                    <p:column   >
-                        <h:outputText value="#{grupo.nome}" />
+                    <p:column headerText="Descrição"   >
+                        <h:outputText value="#{grupo.descricao}" />
                     </p:column>
                 </p:dataTable>
 
