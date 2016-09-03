@@ -68,7 +68,7 @@
                     <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" maxlength="8" />
 
                     <p:outputLabel value="Repita a senha:" for="rsenha" />
-                    <p:password  id="rsenha"  maxlength="8" />
+                    <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="8" />
 
                     <p:outputLabel value="Grupo de Permissão:" for="grupos" />
                     <p:selectOneMenu id="grupos" styleClass="select-grupo" >
@@ -80,12 +80,12 @@
 
                 </p:panelGrid>
 
-                <p:dataTable id="grupoDataTable" emptyMessage="Nenhum grupo encontrado.">
+                <p:dataTable id="grupoDataTable" var="grupo" value="#{cadastroUsuarioBean.usuario.grupos}"  emptyMessage="Nenhum grupo encontrado.">
                     <p:column  headerText="Grupos" >
                         <h:outputText  />
                     </p:column>
-                    <p:column width="10%"  >
-                        <h:outputText />
+                    <p:column   >
+                        <h:outputText value="#{grupo.nome}" />
                     </p:column>
                 </p:dataTable>
 

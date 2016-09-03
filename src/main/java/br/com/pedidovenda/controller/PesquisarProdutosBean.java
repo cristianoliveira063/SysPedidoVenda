@@ -61,7 +61,8 @@ public class PesquisarProdutosBean implements Serializable {
             @Override
             public List<Produto> load(int first, int pageSize, String sortField, SortOrder sortOrder,
                     Map<String, Object> filters) {
-                if (Validador.isStringValida(produtoFilter.getNome()) || Validador.isStringValida(produtoFilter.getSku())) {
+                if (Validador.isStringValida(produtoFilter.getNome()) ||
+                        Validador.isStringValida(produtoFilter.getSku())) {
                     first = BigDecimal.ZERO.intValue();
                 }
                 produtoFilter.getFilter().setPrimeiroRegistro(first);
