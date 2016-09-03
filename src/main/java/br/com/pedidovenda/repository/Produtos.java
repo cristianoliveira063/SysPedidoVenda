@@ -5,14 +5,18 @@
  */
 package br.com.pedidovenda.repository;
 
+import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
+import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jpa.Transactional;
 import br.com.pedidovenda.util.validation.Validador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -33,6 +37,18 @@ public class Produtos extends BasicRepository<Produto, Long> {
 
     public Produtos() {
         super(Produto.class);
+    }
+
+    @Transactional
+    @Override
+    public void remove(Produto produto) {
+        try {
+            super.remove(produto);
+            em.flush();
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            throw new NegocioException("Produto não pode ser excluído.");
+        }
     }
 
     public Produto porSku(String sku) {
@@ -59,12 +75,10 @@ public class Produtos extends BasicRepository<Produto, Long> {
             criteriaQuery.orderBy(builder.desc(r.get(filter.getFilter().getPropriedadeOrdenacao())));
         }
         criteriaQuery.where(getPredicates(filter, builder, r).toArray(new Predicate[0]));
-        TypedQuery<Produto> typedQuery = criarConsulta(em, filter, criteriaQuery);    
+        TypedQuery<Produto> typedQuery = criarConsulta(em, filter, criteriaQuery);
         typedQuery.setFirstResult(filter.getFilter().getPrimeiroRegistro());
         typedQuery.setMaxResults(filter.getFilter().getQuantidadeRegistros());
-        List<Produto> list = typedQuery.getResultList();
-        System.out.println(list.size());
-        return list;
+        return typedQuery.getResultList();
     }
 
     public int quantidadeFiltrados(ProdutoFilter filter) {
@@ -74,9 +88,7 @@ public class Produtos extends BasicRepository<Produto, Long> {
         cq.select(builder.count(rt));
         cq.where(getPredicates(filter, builder, rt).toArray(new Predicate[0]));
         Query q = criarConsulta(em, filter, cq);
-        int total = ((Long) q.getSingleResult()).intValue();
-        System.out.println("Total: " + total);
-        return total;
+        return ((Long) q.getSingleResult()).intValue();
     }
 
     public List<Predicate> getPredicates(ProdutoFilter filter, CriteriaBuilder builder, Root r) {
@@ -89,6 +101,10 @@ public class Produtos extends BasicRepository<Produto, Long> {
             ParameterExpression<String> paramNome = builder.parameter(String.class, "nome");
             predicates.add(builder.like(r.<String>get("nome"), paramNome));
         }
+        if (Validador.isObjectValido(filter.getCategoria())) {
+            ParameterExpression<Categoria> paramCategoria = builder.parameter(Categoria.class, "categoria");
+            predicates.add(builder.equal(r.get("categoria"), paramCategoria));
+        }
         return predicates;
     }
 
@@ -100,6 +116,9 @@ public class Produtos extends BasicRepository<Produto, Long> {
         if (Validador.isStringValida(filter.getNome())) {
             typedQuery.setParameter("nome", "%" + filter.getNome() + "%");
         }
+        if (Validador.isObjectValido(filter.getCategoria())) {
+            typedQuery.setParameter("categoria", filter.getCategoria());
+        }
         return typedQuery;
     }
 
@@ -107,5 +126,4 @@ public class Produtos extends BasicRepository<Produto, Long> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
 }

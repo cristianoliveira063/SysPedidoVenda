@@ -16,9 +16,21 @@
                     width: 40% !important;               
                 }           
             }
+            .ui-dialog .ui-dialog-buttonpane {
+                text-align: center !important;
+
+            }
+            .ui-dialog-title{
+                float: none !important;
+
+            }
+            .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+                margin-top: 4px;
+            }
         </style>
 
-        <h:form id="formPesquisaProduto">
+        <h:form id="frmPesquisa">
+            <p:growl id="growl" autoUpdate="true" /> 
             <div class="ui-fluid">
                 <h2>Pesquisa produtos</h2>
                 <p:toolbar style="margin-top: 15px">                  
@@ -49,32 +61,58 @@
                              paginator="true" rows="10" lazy="true" 
                              style="margin-top: 30px" selectionMode="single" rowKey="#{produto.id}"
                              selection="#{pesquisarProdutosBean.produtoSelecionado}"
-                             reflow="true" paginatorAlwaysVisible="false"
+                             paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
-                    <p:column headerText="SKU" sortBy="#{produto.sku}" style="width: 10%"  >
+                    <p:column headerText="SKU" priority="2" sortBy="#{produto.sku}"   >
                         <h:outputText   value="#{produto.sku}"  />
                     </p:column>
                     <p:column headerText="Nome"  sortBy="#{produto.nome}" >
                         <h:outputText  value="#{produto.nome}" />
                     </p:column>
-                    <p:column headerText="Categoria" width="18%"  >
+                    <p:column headerText="Categoria" width="23%" filterBy="#{produto.categoria}" priority="5"   >
+                        <f:facet name="filter" >
+                            <p:selectOneMenu   value="#{pesquisarProdutosBean.produtoFilter.categoria}"  >
+                                <f:selectItem itemLabel="---- Filtrar Por Categoria ----"  noSelectionOption="true" />
+                                <f:selectItems var="categoria" itemValue="#{categoria}" 
+                                               itemLabel="#{categoria.descricao}" 
+                                               value="#{pesquisarProdutosBean.subcategorias}" />
+                                  <p:ajax  process="@this" update="tablePesquisa" />
+                            </p:selectOneMenu>
+                        </f:facet>
                         <h:outputText value="#{produto.categoria.descricao}" />
                     </p:column>
-                    <p:column headerText="Valor unitário" width="15%"  >
+                    <p:column headerText="Valor unitário" priority="4" width="15%"  >
                         <h:outputText  value="#{produto.valorUnitario}"  >
                             <f:convertNumber type="currency" currencySymbol="R$" />
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Estoque" sortBy="#{produto.quantidadeEstoque}" width="9%" >
+                    <p:column headerText="Estoque" priority="6" sortBy="#{produto.quantidadeEstoque}" width="9%" >
                         <h:outputText  value="#{produto.quantidadeEstoque}" />
                     </p:column>
-                    <p:column width="8%" >
-                        <p:button styleClass="btn-editar"  icon="fa fa-fw fa-edit" title="Editar" /> 
-                        <p:commandButton  styleClass="btn-excluir" icon="fa fa-fw fa-remove" title="Excluir" />
+                    <p:column width="12%" priority="3" >
+                        <p:button styleClass="btn-editar" outcome="/produtos/cadastroProduto" 
+                                  icon="fa fa-fw fa-edit" title="Editar" >
+                            <f:param name="produto" value="#{produto.id}"  />
+                        </p:button> 
+                        <p:commandButton  styleClass="btn-excluir" action="#{pesquisarProdutosBean.excluir}"
+                                          icon="fa fa-fw fa-remove" title="Excluir"
+                                          process="@this" update="@form">
+                            <f:setPropertyActionListener target="#{pesquisarProdutosBean.produtoSelecionado}" 
+                                                         value="#{produto}" />
+                            <p:confirm   message="Deseja Excluir o Produto
+                                         #{produto.sku}?" icon="fa fa-exclamation-triangle" />                          
+                        </p:commandButton>
                     </p:column>
-
                 </p:dataTable>
+                <p:confirmDialog  style="text-align: center" header="Atenção"  responsive="true" global="true" 
+                                  id="confirmacaoExclusaoDialog"
+                                  showEffect="fade" hideEffect="fade">                  
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close" />
+                </p:confirmDialog>
 
             </div>
         </h:form>

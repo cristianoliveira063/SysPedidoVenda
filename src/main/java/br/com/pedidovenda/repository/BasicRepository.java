@@ -18,25 +18,34 @@ import javax.persistence.criteria.Root;
  * @param <T>
  * @param <K>
  */
-public abstract class BasicRepository<T,K> implements Serializable{
-     
+public abstract class BasicRepository<T, K> implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    final  Class<T> clazz;
+    final Class<T> clazz;
 
     public BasicRepository(Class<T> clazz) {
         this.clazz = clazz;
     }
-    
-    protected  abstract EntityManager getEntityManager();
-    
-    public T adicionar(T entity){     
+
+    protected abstract EntityManager getEntityManager();
+
+    public T adicionar(T entity) {
         return getEntityManager().merge(entity);
     }
-    
-    public T pesquisarPorID(K id){       
+
+    public T pesquisarPorID(K id) {
         return getEntityManager().find(clazz, id);
     }
-     public CriteriaBuilder getCriteriaBuilder() {
+
+    public void remove(T entity) {
+        getEntityManager().remove(getEntityManager().merge(entity));
+    }
+
+    public void removerEntidadePorId(K id) {
+        getEntityManager().remove(getEntityManager().find(clazz, id));
+    }
+
+    public CriteriaBuilder getCriteriaBuilder() {
         return getEntityManager().getCriteriaBuilder();
     }
 
@@ -47,20 +56,19 @@ public abstract class BasicRepository<T,K> implements Serializable{
         criteriaQuery.where(getCriteriaBuilder().like(r.<String>get(propriedade), "%" + valor + "%"));
         return getEntityManager().createQuery(criteriaQuery).getResultList();
     }
-    
+
     public List<T> listar() {
         return getEntityManager().createQuery("select t from " + getClazz().getSimpleName() + " t").getResultList();
     }
-    
-    public Number count(){       
-        Number num = getEntityManager().createQuery("select COUNT(t) from " + getClazz().getSimpleName()  + " t ",Number.class).getSingleResult();    
-         return  num ;
-        
+
+    public Number count() {
+        Number num = getEntityManager().createQuery("select COUNT(t) from " + getClazz().getSimpleName() + " t ", Number.class).getSingleResult();
+        return num;
+
     }
-    
+
     public Class<T> getClazz() {
         return clazz;
     }
-    
-        
+
 }

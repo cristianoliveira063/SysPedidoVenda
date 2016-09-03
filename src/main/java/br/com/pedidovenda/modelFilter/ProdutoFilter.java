@@ -5,6 +5,7 @@
  */
 package br.com.pedidovenda.modelFilter;
 
+import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.util.validation.SKU;
 import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ public class ProdutoFilter implements Serializable {
     @SKU
     private String sku;
     private String nome;
+    private Categoria categoria;
     private Filter filter;
 
     public String getSku() {
@@ -49,4 +51,12 @@ public class ProdutoFilter implements Serializable {
         this.filter = filter;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
 }

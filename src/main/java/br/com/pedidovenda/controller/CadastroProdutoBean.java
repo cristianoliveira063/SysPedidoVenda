@@ -11,6 +11,7 @@ import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Categorias;
 import br.com.pedidovenda.service.CadastroProdutoService;
 import br.com.pedidovenda.util.jsf.MessageView;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,8 @@ public class CadastroProdutoBean implements Serializable {
     @Inject
     private Produto produto;
     @Inject
+    private Produto produtoParam;
+    @Inject
     private Categorias categorias;
     @NotNull
     private Categoria categoriaPai;
@@ -41,7 +44,7 @@ public class CadastroProdutoBean implements Serializable {
     private CadastroProdutoService cadastroProdutoService;
     @Inject
     private ProdutoFilter produtoFilter;
-   
+
     @PostConstruct
     public void init() {
         categoriaRaizes = categorias.raizes();
@@ -54,7 +57,7 @@ public class CadastroProdutoBean implements Serializable {
     public void salvar() {
         cadastroProdutoService.salvar(produto);
         reset();
-        MessageView.info("Produto cadastrado com sucesso!");
+        MessageView.info("Produto salvo com sucesso!");
     }
 
     private void reset() {
@@ -65,6 +68,10 @@ public class CadastroProdutoBean implements Serializable {
 
     public Produto getProduto() {
         return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 
     public List<Categoria> getCategoriaRaizes() {
@@ -90,5 +97,21 @@ public class CadastroProdutoBean implements Serializable {
     public void setProdutoFilter(ProdutoFilter produtoFilter) {
         this.produtoFilter = produtoFilter;
     }
-      
+
+    public Produto getProdutoParam() {
+        return produtoParam;
+    }
+
+    public void setProdutoParam(Produto produtoParam) {
+        this.produtoParam = produtoParam;
+        if (Validador.isObjectValido(produtoParam)) {
+            this.produto = produtoParam;
+            this.categoriaPai = this.produtoParam.getCategoria().getCategoriaPai();
+            carregarSubcategorias();
+        }
+    }
+
+    public boolean isEditando() {
+        return Validador.isObjectValido(produto.getId());
+    }
 }

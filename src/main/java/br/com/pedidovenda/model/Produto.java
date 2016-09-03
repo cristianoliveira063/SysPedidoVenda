@@ -6,6 +6,7 @@
 package br.com.pedidovenda.model;
 
 import br.com.pedidovenda.util.validation.SKU;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;
@@ -46,7 +47,7 @@ public class Produto implements Serializable {
     @Column(name = "quantidade_estoque", nullable = false, length = 5)
     @NotNull @Min(0) @Max(9999)
     private Integer quantidadeEstoque;
-    @ManyToOne(optional = false,fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "categoria_id")
     @NotNull
     private Categoria categoria;
@@ -138,12 +139,15 @@ public class Produto implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Produto)) {
             return false;
         }
         Produto other = (Produto) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
+    }
+    
+    public boolean notEquals(Object object){      
+         return !this.equals(object);     
     }
 
     @Override

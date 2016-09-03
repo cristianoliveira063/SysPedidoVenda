@@ -5,6 +5,7 @@
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="/WEB-INF/templates/Layout.xhtml">
 
     <ui:define name="titulo">Novo produto</ui:define>
@@ -15,17 +16,20 @@
             }
 
         </style>
+        <f:metadata >
+            <o:viewParam name="produto" value="#{cadastroProdutoBean.produtoParam}"  />
+        </f:metadata>
 
         <h:form id="cadastroProduto">
             <div class="ui-fluid">
-                <h2>Novo produto</h2>
+                <h2>#{cadastroProdutoBean.editando ? 'Edição de produto' : 'Novo produto'}</h2>
                 <p:toolbar style="margin-top: 15px"> 
                     <p:toolbarGroup>
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
                         <p:commandButton value="Salvar" action="#{cadastroProdutoBean.salvar}" 
-                                         process="@this panelProduto" update="panelProduto" icon="fa fa-floppy-o" />
+                                         process="@this panelProduto" update="@form" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Pesquisa" outcome="/produtos/pesquisaProdutos"
@@ -50,7 +54,7 @@
                         <f:selectItem itemLabel="Selecione a categoria"  noSelectionOption="true"/>  
                         <f:selectItems  value="#{cadastroProdutoBean.categoriaRaizes}" var="categoria"
                                         itemValue="#{categoria}" itemLabel="#{categoria.descricao}"  />   
-                        <p:ajax listener="#{cadastroProdutoBean.carregarSubcategorias}" update="subcategoria" />
+                        <p:ajax listener="#{cadastroProdutoBean.carregarSubcategorias}" process="@this" update="subcategoria" />
                     </p:selectOneMenu>
 
                     <p:outputLabel value="Subcategoria:" for="subcategoria" />
@@ -62,13 +66,13 @@
 
                     <p:outputLabel value="Valor unitário:" for="valorUnitario"  />
                     <p:inputText  styleClass="moeda" value="#{cadastroProdutoBean.produto.valorUnitario}" id="valorUnitario"  maxlength="10">
-                     <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
+                        <f:convertNumber maxFractionDigits="2" minFractionDigits="2" />
                     </p:inputText>
 
                     <p:outputLabel value="Estoque:" for="estoque"/>
                     <p:inputText  id="estoque" value="#{cadastroProdutoBean.produto.quantidadeEstoque}"
                                   maxlength="10">
-                     <p:keyFilter regEx="/[\d]/"/>
+                        <p:keyFilter regEx="/[\d]/"/>
                     </p:inputText>
 
                 </p:panelGrid>

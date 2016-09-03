@@ -5,9 +5,12 @@
  */
 package br.com.pedidovenda.controller;
 
+import br.com.pedidovenda.model.Categoria;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
+import br.com.pedidovenda.repository.Categorias;
 import br.com.pedidovenda.repository.Produtos;
+import br.com.pedidovenda.util.jsf.MessageView;
 import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -36,16 +39,25 @@ public class PesquisarProdutosBean implements Serializable {
     @Inject
     private ProdutoFilter produtoFilter;
     private Produto produtoSelecionado;
+    private List<Categoria> subcategorias;
+    @Inject
+    private Categorias categorias;
 
     @PostConstruct
     public void init() {
+        subcategorias = categorias.filhas();
         pesquisar();
+    }
+    
+    public void excluir(){      
+          produtos.remove(produtoSelecionado);
+          MessageView.info("Produto " + produtoSelecionado.getSku() 
+				+ " excluído com sucesso.");   
     }
 
     public LazyDataModel<Produto> pesquisar() {
-        
         dataModel = new LazyDataModel<Produto>() {
-            private static final long serialVersionUID = 1L;        
+            private static final long serialVersionUID = 1L;
             @Override
             public List<Produto> load(int first, int pageSize, String sortField, SortOrder sortOrder,
                     Map<String, Object> filters) {
@@ -59,7 +71,6 @@ public class PesquisarProdutosBean implements Serializable {
                 setRowCount(produtos.quantidadeFiltrados(produtoFilter));
                 return produtos.filtrar(produtoFilter);
             }
-              
             @Override
             public Object getRowKey(Produto object) {
                 return object.getId();
@@ -92,6 +103,10 @@ public class PesquisarProdutosBean implements Serializable {
 
     public void setProdutoSelecionado(Produto produtoSelecionado) {
         this.produtoSelecionado = produtoSelecionado;
+    }
+
+    public List<Categoria> getSubcategorias() {
+        return subcategorias;
     }
 
 }

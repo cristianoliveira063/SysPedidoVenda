@@ -22,7 +22,7 @@ public class Validador {
         return object != null;
 
     }
-    
+     
     public static boolean  isNotObjectValido(Object object){      
           return object == null;
     }

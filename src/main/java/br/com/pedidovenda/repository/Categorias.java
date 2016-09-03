@@ -28,7 +28,13 @@ public class Categorias extends BasicRepository<Categoria, Long> {
         return em.createQuery("from Categoria where categoriaPai is null",
                 Categoria.class).getResultList();
     }
-
+    
+    public List<Categoria> filhas(){
+    return em.createQuery("from Categoria where categoriaPai is not null",
+                Categoria.class).getResultList();
+    
+    }
+    
     public List<Categoria> subcategoriasDe(Categoria categoriaPai) {
         return em.createQuery("from Categoria where categoriaPai = :raiz",
                 Categoria.class).setParameter("raiz", categoriaPai).getResultList();
