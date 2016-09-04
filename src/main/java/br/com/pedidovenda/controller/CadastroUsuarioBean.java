@@ -39,14 +39,16 @@ public class CadastroUsuarioBean implements Serializable {
     @PostConstruct
     public void init() {
         listarGrupos = grupos.listar();
-
     }
 
     public void adicionarGrupo() {
-        System.out.println(grupo.getNome());
         usuario.getGrupos().add(grupo);
         //System.out.println(usuario.getGrupos().size());
-
+    }
+    
+    public void removerGrupo(){    
+        System.out.println(grupo.getNome());
+        usuario.getGrupos().remove(grupo);
     }
 
     public Usuario getUsuario() {

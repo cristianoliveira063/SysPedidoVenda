@@ -100,20 +100,16 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-     /**
-     * @return the grupos
-     */
+
     public Set<Grupo> getGrupos() {
         return grupos;
     }
 
-    /**
-     * @param grupos the grupos to set
-     */
     public void setGrupos(Set<Grupo> grupos) {
         this.grupos = grupos;
     }
+    
+    
     
 
     @Override
