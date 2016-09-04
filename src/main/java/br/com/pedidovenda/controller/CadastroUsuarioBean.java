@@ -8,6 +8,8 @@ package br.com.pedidovenda.controller;
 import br.com.pedidovenda.model.Grupo;
 import br.com.pedidovenda.model.Usuario;
 import br.com.pedidovenda.repository.Grupos;
+import br.com.pedidovenda.service.CadastroUsuarioService;
+import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,19 +37,24 @@ public class CadastroUsuarioBean implements Serializable {
     private List<Grupo> listarGrupos = new ArrayList<>();
     @Inject
     private Grupo grupo;
+    @Inject
+    private CadastroUsuarioService cadastroUsuarioService;
 
     @PostConstruct
     public void init() {
         listarGrupos = grupos.listar();
     }
+    
+    public void salvar(){   
+        cadastroUsuarioService.adicionar(usuario);   
+        MessageView.info("Usuário salvo com sucesso!");
+    }
 
     public void adicionarGrupo() {
-        usuario.getGrupos().add(grupo);
-        //System.out.println(usuario.getGrupos().size());
+        usuario.getGrupos().add(grupo);      
     }
     
     public void removerGrupo(){    
-        System.out.println(grupo.getNome());
         usuario.getGrupos().remove(grupo);
     }
 

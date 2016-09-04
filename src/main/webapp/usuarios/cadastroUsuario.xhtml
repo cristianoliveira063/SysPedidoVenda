@@ -47,8 +47,8 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" process="@this panelUsuario" 
-                                         update="panelUsuario" icon="fa fa-floppy-o" />
+                        <p:commandButton value="Salvar" process="@form" action="#{cadastroUsuarioBean.salvar}" 
+                                         update="@form" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios"
