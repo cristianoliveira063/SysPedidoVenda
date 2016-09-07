@@ -10,6 +10,7 @@ import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Categorias;
 import br.com.pedidovenda.service.CadastroProdutoService;
+import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
 import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
@@ -55,9 +56,13 @@ public class CadastroProdutoBean implements Serializable {
     }
 
     public void salvar() {
-        cadastroProdutoService.salvar(produto);
-        reset();
-        MessageView.info("Produto salvo com sucesso!");
+        try {
+            cadastroProdutoService.salvar(produto);
+            reset();
+            MessageView.info("Produto salvo com sucesso!");
+        } catch (NegocioException ex) {
+            MessageView.error(ex.getMessage());
+        }
     }
 
     private void reset() {

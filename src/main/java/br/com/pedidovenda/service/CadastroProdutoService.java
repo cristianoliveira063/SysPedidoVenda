@@ -23,7 +23,7 @@ public class CadastroProdutoService implements Serializable {
     private Produtos produtos;
 
     @Transactional
-    public Produto salvar(Produto produto) {
+    public Produto salvar(Produto produto) throws NegocioException {
         System.out.println(produto.getSku());
         Produto produtoExistente = produtos.porSku(produto.getSku());
         if (Validador.isObjectValido(produtoExistente) && produtoExistente.notEquals(produto)) {

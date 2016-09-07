@@ -26,7 +26,7 @@ public class CadastroUsuarioService implements Serializable {
     private Usuarios usuarios;
     
     @Transactional
-    public Usuario adicionar(Usuario usuario) { 
+    public Usuario adicionar(Usuario usuario) throws NegocioException { 
         Usuario usuarioExistente = usuarios.porEmail(usuario.getEmail());
         if(Validador.isObjectValido(usuarioExistente)){
             throw  new NegocioException("Já existe um usuário com o e-mail informado.");     
@@ -35,7 +35,7 @@ public class CadastroUsuarioService implements Serializable {
         return usuarios.adicionar(usuario);        
     }
     
-    public String convertMD5(String senha) {
+    private String convertMD5(String senha) {
         MessageDigest mdigest;
         try {
             mdigest = MessageDigest.getInstance("MD5");

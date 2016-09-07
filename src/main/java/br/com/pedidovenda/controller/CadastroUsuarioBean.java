@@ -9,7 +9,9 @@ import br.com.pedidovenda.model.Grupo;
 import br.com.pedidovenda.model.Usuario;
 import br.com.pedidovenda.repository.Grupos;
 import br.com.pedidovenda.service.CadastroUsuarioService;
+import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,6 @@ public class CadastroUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuario usuario;
-    @NotNull
     private String senha;
     @Inject
     private Grupos grupos;
@@ -44,17 +45,24 @@ public class CadastroUsuarioBean implements Serializable {
     public void init() {
         listarGrupos = grupos.listar();
     }
-    
-    public void salvar(){   
-        cadastroUsuarioService.adicionar(usuario);   
-        MessageView.info("Usuário salvo com sucesso!");
+
+    public void salvar() {
+        try {
+            cadastroUsuarioService.adicionar(usuario);
+            MessageView.info("Usuário salvo com sucesso!");
+        } catch (NegocioException ex) {
+            MessageView.error(ex.getMessage());
+        }
+
     }
 
     public void adicionarGrupo() {
-        usuario.getGrupos().add(grupo);      
+        if (Validador.isObjectValido(grupo) && Validador.isStringValida(grupo.getNome())) {
+            usuario.getGrupos().add(grupo);
+        }
     }
-    
-    public void removerGrupo(){    
+
+    public void removerGrupo() {
         usuario.getGrupos().remove(grupo);
     }
 

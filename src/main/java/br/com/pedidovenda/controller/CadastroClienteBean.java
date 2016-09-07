@@ -30,16 +30,12 @@ public class CadastroClienteBean implements Serializable{
    private Cliente cliente;
     
     @PostConstruct
-    public void init(){
-        
-        clientes.add(1);
-        
+    public void init(){       
+        clientes.add(1);       
     }
     
     public void salvar(){
-        
-        
-        
+            
     }
 
     public List<Integer> getClientes() {

@@ -55,7 +55,6 @@
                                    icon="fa fa-fw fa-search"/>
                     </p:toolbarGroup>
                 </p:toolbar>
-
                 <p:panelGrid id="panelUsuario" style="margin-top: 20px" columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
@@ -67,16 +66,18 @@
                     <p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
 
                     <p:outputLabel value="Senha:" for="senha" />
-                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}"
-                              feedback="true"  promptLabel="Digite sua senha" weakLabel="Fraca"
-                    goodLabel="Média" strongLabel="Forte"   maxlength="12" />
+                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" match="rsenha" required="true"
+                                 feedback="true"  promptLabel="Digite sua senha" requiredMessage="Senha deve ser informada."
+                                 weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
+                    goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />
 
                     <p:outputLabel value="Repita a senha:" for="rsenha" />
-                    <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="8" />
+                    <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}"
+                                   maxlength="12" />
 
                     <p:outputLabel value="Grupo de Permissão:" for="grupos" />
                     <p:selectOneMenu id="grupos" value="#{cadastroUsuarioBean.grupo}" styleClass="select-grupo" >
-                        <f:selectItem  itemLabel="Selecione um grupo" noSelectionOption="true"/>
+                        <f:selectItem  itemLabel="Selecione um grupo" itemValue="" noSelectionOption="true"/>
                         <f:selectItems value="#{cadastroUsuarioBean.listarGrupos}" var="grupo"
                                        itemLabel="#{grupo.nome}" itemValue="#{grupo}" /> 
                         <p:ajax  process="@this" update="grupos" />
@@ -86,9 +87,7 @@
                     <p:commandButton immediate="true" action="#{cadastroUsuarioBean.adicionarGrupo}" 
                                      process="@this" update="grupoDataTable" 
                                     icon="fa fa-plus"  value="Adicionar Grupo"/>
-
                 </p:panelGrid>
-
                 <p:dataTable id="grupoDataTable" reflow="true"  var="grupo" value="#{cadastroUsuarioBean.usuario.grupos}"  
                              emptyMessage="Nenhum grupo encontrado.">
                     <p:column  headerText="Nome" >
@@ -106,7 +105,6 @@
                           </p:commandButton>                       
                     </p:column>
                 </p:dataTable>
-
             </div>
         </h:form>
 

@@ -10,6 +10,7 @@ import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.repository.Categorias;
 import br.com.pedidovenda.repository.Produtos;
+import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
 import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
@@ -44,15 +45,19 @@ public class PesquisarProdutosBean implements Serializable {
     private Categorias categorias;
 
     @PostConstruct
-    public void init() {
-        subcategorias = categorias.filhas();
+    public void init()  {
+        subcategorias = categorias.filhas();    
         pesquisar();
     }
     
     public void excluir(){      
-          produtos.remove(produtoSelecionado);
-          MessageView.info("Produto " + produtoSelecionado.getSku() 
+        try {
+            produtos.remover(produtoSelecionado);
+            MessageView.info("Produto " + produtoSelecionado.getSku() 
 				+ " excluído com sucesso.");   
+        } catch (NegocioException ex) {
+          MessageView.fatal(ex.getMessage());
+        }        
     }
 
     public LazyDataModel<Produto> pesquisar() {

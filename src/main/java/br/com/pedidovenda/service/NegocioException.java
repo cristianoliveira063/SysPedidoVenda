@@ -9,7 +9,7 @@ package br.com.pedidovenda.service;
  *
  * @author CRISTIANO
  */
-public class NegocioException extends RuntimeException{
+public class NegocioException extends Exception{
     
     private static final long serialVersionUID = 1L;
 

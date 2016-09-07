@@ -29,7 +29,7 @@ public class Grupo implements Serializable {
     @NotNull
     private String nome;
     @NotNull
-    @Column(nullable = false,length = 60)
+    @Column(nullable = false,length =100)
     private String descricao;
    
 

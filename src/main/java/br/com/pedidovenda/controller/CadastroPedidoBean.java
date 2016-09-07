@@ -5,11 +5,8 @@
  */
 package br.com.pedidovenda.controller;
 
-import br.com.pedidovenda.model.EnderecoEntrega;
 import br.com.pedidovenda.model.Pedido;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;

@@ -40,8 +40,7 @@ public class Produtos extends BasicRepository<Produto, Long> {
     }
 
     @Transactional
-    @Override
-    public void remove(Produto produto) {
+    public void remover(Produto produto) throws NegocioException {
         try {
             super.remove(produto);
             em.flush();
@@ -50,7 +49,7 @@ public class Produtos extends BasicRepository<Produto, Long> {
             throw new NegocioException("Produto não pode ser excluído.");
         }
     }
-
+    
     public Produto porSku(String sku) {
         try {
             return em.createQuery("from Produto where upper(sku) = :sku", Produto.class)
