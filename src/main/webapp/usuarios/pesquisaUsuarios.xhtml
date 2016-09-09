@@ -29,22 +29,22 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"   />
+                    <p:inputText id="nome" value="#{pesquisarUsuarioBean.nome}"   />
 
                     <p:outputLabel value="E-mail:" for="email" />
-                    <p:inputText id="email"  maxlength="100"  />
+                    <p:inputText id="email"  value="#{pesquisarUsuarioBean.email}" maxlength="100"  />
 
                 </p:panelGrid>
 
-                <p:dataTable emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
+                <p:dataTable value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario" emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
                              style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
                     <p:column headerText="Nome"   >
-                        <h:outputText  />
+                        <h:outputText value="#{usuario.nome}"  />
                     </p:column>
                     <p:column headerText="E-mail"   >
-                        <h:outputText  />
+                        <h:outputText value="#{usuario.email}"  />
                     </p:column>
                     <p:column  width="8%"  >
                         <h:outputText  />

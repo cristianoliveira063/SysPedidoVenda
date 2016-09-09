@@ -53,7 +53,11 @@ public class CadastroUsuarioBean implements Serializable {
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
-
+    }
+    
+    public void reset(){     
+       this.usuario = new Usuario();
+       this.grupo = new Grupo();      
     }
 
     public void adicionarGrupo() {
