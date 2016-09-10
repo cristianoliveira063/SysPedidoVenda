@@ -10,6 +10,14 @@
     <ui:define name="titulo">Pesquisa usuários</ui:define>
     <ui:define name="content">
 
+        <style type="text/css">
+            @media(min-width:1200px){
+                .btn-editar,.btn-excluir {
+                    width: 40% !important;               
+                }           
+            }
+        </style>
+
         <h:form id="formPesquisaUsuarios">
 
             <div class="ui-fluid">
@@ -36,25 +44,31 @@
 
                 </p:panelGrid>
 
-                <p:dataTable value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario" emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
+                <p:dataTable value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario"
+                             emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
                              style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
-                    <p:column headerText="Nome"   >
+                    <p:column headerText="Nome"  sortBy="#{usuario.nome}"  >
                         <h:outputText value="#{usuario.nome}"  />
                     </p:column>
-                    <p:column headerText="E-mail"   >
+                    <p:column headerText="E-mail" sortBy="#{usuario.email}"  >
                         <h:outputText value="#{usuario.email}"  />
                     </p:column>
-                    <p:column  width="8%"  >
-                        <h:outputText  />
-                    </p:column>
-                  
-                </p:dataTable>
+                    <p:column width="15%" >
+                        <p:button styleClass="btn-editar" 
+                                  icon="fa fa-fw fa-edit" title="Editar" >                        
+                        </p:button> 
+                        <p:commandButton  styleClass="btn-excluir" 
+                                          icon="fa fa-fw fa-remove" title="Excluir" >                      
+                    </p:commandButton>
+                </p:column>
 
-            </div>
+            </p:dataTable>
 
-        </h:form>
-    </ui:define>
+        </div>
+
+    </h:form>
+</ui:define>
 
 </ui:composition>
