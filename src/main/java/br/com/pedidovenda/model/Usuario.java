@@ -41,14 +41,12 @@ public class Usuario implements Serializable {
     @Column(nullable = false)
     @NotNull
     private String senha;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "usuario_grupo",joinColumns = @JoinColumn(name = "usuario_id"),
     inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private Set<Grupo>grupos = new HashSet<>();
     
-    
-    
-   
+     
     public Long getId() {
         return id;
     }

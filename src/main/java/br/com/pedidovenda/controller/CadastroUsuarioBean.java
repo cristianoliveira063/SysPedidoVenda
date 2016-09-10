@@ -49,6 +49,7 @@ public class CadastroUsuarioBean implements Serializable {
     public void salvar() {
         try {
             cadastroUsuarioService.adicionar(usuario);
+            reset();
             MessageView.info("Usuário salvo com sucesso!");
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
