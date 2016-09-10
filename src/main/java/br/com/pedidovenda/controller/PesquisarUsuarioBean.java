@@ -6,6 +6,7 @@
 package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Usuario;
+import br.com.pedidovenda.modelFilter.UsuarioFilter;
 import br.com.pedidovenda.repository.Usuarios;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.hibernate.validator.constraints.Email;
 
 /**
  *
@@ -22,42 +22,35 @@ import org.hibernate.validator.constraints.Email;
  */
 @Named
 @ViewScoped
-public class PesquisarUsuarioBean implements Serializable{
-    
+public class PesquisarUsuarioBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    private String nome;
-    @Email
-    private String email;
+
+    @Inject
+    private UsuarioFilter usuarioFilter;
     @Inject
     private Usuarios usuarios;
     private List<Usuario> listUsuarios = new ArrayList<>();
-    
+
     @PostConstruct
-    public void init(){       
-        listUsuarios = usuarios.listar();        
+    public void init() {
+        pesquisarUsuarios();
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void pesquisarUsuarios() {
+        listUsuarios = usuarios.filtrar(usuarioFilter);
     }
 
     public List<Usuario> getListUsuarios() {
         return listUsuarios;
     }
-    
-    
-       
+
+    public UsuarioFilter getUsuarioFilter() {
+        return usuarioFilter;
+    }
+
+    public void setUsuarioFilter(UsuarioFilter usuarioFilter) {
+        this.usuarioFilter = usuarioFilter;
+    }
+
 }

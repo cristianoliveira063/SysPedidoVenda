@@ -25,7 +25,8 @@
                 <h2>Pesquisa usuários</h2>
                 <p:toolbar style="margin-top: 15px"> 
                     <p:toolbarGroup>
-                        <p:commandButton value="Pesquisa" icon="fa fa-fw fa-search" />
+                        <p:commandButton value="Pesquisar" action="#{pesquisarUsuarioBean.pesquisarUsuarios}"
+                                         update="@form" icon="fa fa-fw fa-search" />
                     </p:toolbarGroup>               
                     <p:toolbarGroup align="right" style="margin-right: 10px">
                         <p:button  value="Novo" icon="fa fa-plus" outcome="/usuarios/cadastroUsuario" />
@@ -37,14 +38,14 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome" value="#{pesquisarUsuarioBean.nome}"   />
+                    <p:inputText id="nome" value="#{pesquisarUsuarioBean.usuarioFilter.nome}"   />
 
                     <p:outputLabel value="E-mail:" for="email" />
-                    <p:inputText id="email"  value="#{pesquisarUsuarioBean.email}" maxlength="100"  />
+                    <p:inputText id="email"  value="#{pesquisarUsuarioBean.usuarioFilter.email}" maxlength="100"  />
 
                 </p:panelGrid>
 
-                <p:dataTable value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario"
+                <p:dataTable id="usuarioDataTable" value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario"
                              emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
                              style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
@@ -61,14 +62,14 @@
                         </p:button> 
                         <p:commandButton  styleClass="btn-excluir" 
                                           icon="fa fa-fw fa-remove" title="Excluir" >                      
-                    </p:commandButton>
-                </p:column>
+                        </p:commandButton>
+                    </p:column>
 
-            </p:dataTable>
+                </p:dataTable>
 
-        </div>
+            </div>
 
-    </h:form>
-</ui:define>
+        </h:form>
+    </ui:define>
 
 </ui:composition>
