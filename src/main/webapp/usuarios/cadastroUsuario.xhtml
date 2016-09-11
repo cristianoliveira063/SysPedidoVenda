@@ -4,6 +4,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:pe="http://primefaces.org/ui/extensions"
+                   xmlns:o="http://omnifaces.org/ui"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/Layout.xhtml">
 
@@ -38,7 +39,9 @@
             }
 
         </style>
-
+   <f:metadata >
+       <o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}"  />
+        </f:metadata>
         <h:form id="formCadastroUsuario">
             <div class="ui-fluid">
                 <h2>Novo usuário</h2>
@@ -63,21 +66,24 @@
                     <p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}"  maxlength="100" />
 
                     <p:outputLabel value="E-mail:" for="email" />
-                    <p:inputText id="email" readonly="#{cadastroUsuarioBean.editando}" 
+                    <p:inputText id="email" readonly="#{cadastroUsuarioBean.editando}"  
                                  value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
                     
                     <p:outputLabel rendered="#{cadastroUsuarioBean.editando}" value="Senha Atual:" for="senhaAtual" />
                     <p:password  id="senhaAtual" rendered="#{cadastroUsuarioBean.editando}"
                                    maxlength="12" />
 
-                    <p:outputLabel value="Senha:" for="senha" />
-                    <p:password  id="senha"  value="#{cadastroUsuarioBean.usuario.senha}" match="rsenha" required="true"
-                                 feedback="true"  promptLabel="Digite sua senha" requiredMessage="Senha deve ser informada."
+                    <p:outputLabel value="Senha:" rendered="#{cadastroUsuarioBean.cadastrando}" for="senha" />
+                    <p:password  id="senha" rendered="#{cadastroUsuarioBean.cadastrando}"
+                                 value="#{cadastroUsuarioBean.usuario.senha}" match="rsenha" required="true"
+                                 feedback="true"  promptLabel="Digite sua senha" 
+                                 requiredMessage="Senha deve ser informada."
                                  weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
                     goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />
 
-                    <p:outputLabel value="Repita a senha:" for="rsenha" />
-                    <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}"
+                    <p:outputLabel  rendered="#{cadastroUsuarioBean.cadastrando}" value="Repita a senha:" for="rsenha" />
+                    <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}" 
+                                 rendered="#{cadastroUsuarioBean.cadastrando}"
                                    maxlength="12" />
 
                     <p:outputLabel value="Grupo de Permissão:" for="grupos" />

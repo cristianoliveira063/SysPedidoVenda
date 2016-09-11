@@ -74,6 +74,11 @@ public class CadastroUsuarioBean implements Serializable {
         return usuario;
     }
 
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+    
+
     public String getSenha() {
         return senha;
     }
@@ -97,5 +102,8 @@ public class CadastroUsuarioBean implements Serializable {
      public boolean isEditando() {
         return Validador.isObjectValido(usuario.getId());
     }
+     public boolean isCadastrando(){      
+         return Validador.isNotObjectValido(usuario.getId());
+     }
 
 }
