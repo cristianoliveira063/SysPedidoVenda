@@ -49,8 +49,8 @@ public class PesquisarUsuarioBean implements Serializable {
     public void excluir() {
         try {
             usuarios.remover(usuarioSelecionado);
-            pesquisarUsuarios();
-            MessageView.info("Usuário excluído com sucesso.");
+            listUsuarios.remove(usuarioSelecionado);
+            MessageView.info("Usuário "+usuarioSelecionado.getNome()+ " excluído com sucesso.");
                     
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());

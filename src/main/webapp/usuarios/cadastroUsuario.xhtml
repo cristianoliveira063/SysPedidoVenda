@@ -63,10 +63,15 @@
                     <p:inputText id="nome" value="#{cadastroUsuarioBean.usuario.nome}"  maxlength="100" />
 
                     <p:outputLabel value="E-mail:" for="email" />
-                    <p:inputText id="email" value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
+                    <p:inputText id="email" readonly="#{cadastroUsuarioBean.editando}" 
+                                 value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
+                    
+                    <p:outputLabel rendered="#{cadastroUsuarioBean.editando}" value="Senha Atual:" for="senhaAtual" />
+                    <p:password  id="senhaAtual" rendered="#{cadastroUsuarioBean.editando}"
+                                   maxlength="12" />
 
                     <p:outputLabel value="Senha:" for="senha" />
-                    <p:password  id="senha" value="#{cadastroUsuarioBean.usuario.senha}" match="rsenha" required="true"
+                    <p:password  id="senha"  value="#{cadastroUsuarioBean.usuario.senha}" match="rsenha" required="true"
                                  feedback="true"  promptLabel="Digite sua senha" requiredMessage="Senha deve ser informada."
                                  weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
                     goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />

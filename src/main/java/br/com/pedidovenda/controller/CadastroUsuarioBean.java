@@ -19,7 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -93,6 +92,10 @@ public class CadastroUsuarioBean implements Serializable {
 
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
+    }
+    
+     public boolean isEditando() {
+        return Validador.isObjectValido(usuario.getId());
     }
 
 }

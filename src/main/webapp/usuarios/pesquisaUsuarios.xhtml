@@ -66,8 +66,9 @@
                         <h:outputText value="#{usuario.email}"  />
                     </p:column>
                     <p:column width="15%" >
-                        <p:button styleClass="btn-editar" 
-                                  icon="fa fa-fw fa-edit" title="Editar" >                        
+                        <p:button styleClass="btn-editar" outcome="/usuarios/cadastroUsuario"
+                                  icon="fa fa-fw fa-edit" title="Editar" > 
+                            <f:param name="usuario" value="#{usuario.id}"  />
                         </p:button> 
                         <p:commandButton  action="#{pesquisarUsuarioBean.excluir}" styleClass="btn-excluir" 
                                           process="@this" update="usuarioDataTable"
