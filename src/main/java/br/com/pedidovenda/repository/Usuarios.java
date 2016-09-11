@@ -7,12 +7,15 @@ package br.com.pedidovenda.repository;
 
 import br.com.pedidovenda.model.Usuario;
 import br.com.pedidovenda.modelFilter.UsuarioFilter;
+import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jpa.Transactional;
 import br.com.pedidovenda.util.validation.Validador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -45,7 +48,17 @@ public class Usuarios extends BasicRepository<Usuario, Long> {
             return null;
         }
     }
-
+     @Transactional
+    public void remover(Usuario usuario) throws NegocioException {
+        try {
+            super.remove(usuario);
+            em.flush();
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            throw new NegocioException("Usuário não pode ser excluído.");
+        }
+    }
+    
     public List<Usuario> filtrar(UsuarioFilter usuarioFilter) {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery<Usuario> criteriaQuery = builder.createQuery(clazz);

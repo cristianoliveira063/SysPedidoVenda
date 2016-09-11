@@ -16,10 +16,18 @@
                     width: 40% !important;               
                 }           
             }
+            .ui-dialog .ui-dialog-buttonpane {
+                text-align: center !important;
+
+            }
+            .ui-dialog-title{
+                float: none !important;
+
+            }
         </style>
 
         <h:form id="formPesquisaUsuarios">
-
+            <p:growl id="growl" autoUpdate="true" /> 
             <div class="ui-fluid">
 
                 <h2>Pesquisa usuários</h2>
@@ -47,7 +55,8 @@
 
                 <p:dataTable id="usuarioDataTable" value="#{pesquisarUsuarioBean.listUsuarios}" var="usuario"
                              emptyMessage="Nenhum usuário encontrado"  paginator="true" rows="10"
-                             style="margin-top: 30px" 
+                             style="margin-top: 30px" selectionMode="single" rowKey="#{usuario.id}"
+                             selection="#{pesquisarUsuarioBean.usuarioSelecionado}"
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
                     <p:column headerText="Nome"  sortBy="#{usuario.nome}"  >
@@ -60,12 +69,25 @@
                         <p:button styleClass="btn-editar" 
                                   icon="fa fa-fw fa-edit" title="Editar" >                        
                         </p:button> 
-                        <p:commandButton  styleClass="btn-excluir" 
-                                          icon="fa fa-fw fa-remove" title="Excluir" >                      
+                        <p:commandButton  action="#{pesquisarUsuarioBean.excluir}" styleClass="btn-excluir" 
+                                          process="@this" update="usuarioDataTable"
+                                          icon="fa fa-fw fa-remove" title="Excluir" > 
+                            <f:setPropertyActionListener target="#{pesquisarUsuarioBean.usuarioSelecionado}" 
+                                                         value="#{usuario}" />
+                            <p:confirm   message="Deseja remover o usuário selecionado?"
+                                         icon="fa fa-exclamation-triangle" />  
                         </p:commandButton>
                     </p:column>
 
                 </p:dataTable>
+                <p:confirmDialog  style="text-align: center" header="Atenção"  responsive="true" global="true" 
+                                  id="confirmacaoExclusaoDialog"
+                                  showEffect="fade" hideEffect="fade">                  
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close" />
+                </p:confirmDialog>
 
             </div>
 
