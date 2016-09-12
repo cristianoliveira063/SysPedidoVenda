@@ -101,6 +101,7 @@ public class CadastroProdutoBean implements Serializable {
 
     public void setProdutoFilter(ProdutoFilter produtoFilter) {
         this.produtoFilter = produtoFilter;
+        
     }
 
     public Produto getProdutoParam() {

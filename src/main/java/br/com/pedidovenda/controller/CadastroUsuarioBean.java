@@ -31,6 +31,8 @@ public class CadastroUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuario usuario;
+    @Inject
+    private Usuario usuarioParam;
     private String senha;
     @Inject
     private Grupos grupos;
@@ -100,10 +102,23 @@ public class CadastroUsuarioBean implements Serializable {
     }
     
      public boolean isEditando() {
-        return Validador.isObjectValido(usuario.getId());
+        return Validador.isObjectValido(usuario)&& Validador.isObjectValido(usuario.getId());
     }
      public boolean isCadastrando(){      
-         return Validador.isNotObjectValido(usuario.getId());
+         return Validador.isNotObjectValido(usuario)|| Validador.isNotObjectValido(usuario.getId());
      }
+
+    public Usuario getUsuarioParam() {
+        return usuarioParam;
+    }
+
+    public void setUsuarioParam(Usuario usuarioParam) {
+        this.usuarioParam = usuarioParam;
+        if(Validador.isObjectValido(usuarioParam)){          
+            this.usuario = usuarioParam;         
+        }
+    }
+     
+     
 
 }
