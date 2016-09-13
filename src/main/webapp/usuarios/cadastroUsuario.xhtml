@@ -11,16 +11,16 @@
     <ui:define name="titulo">Novo usuário</ui:define>
     <ui:define name="content">
         <style type="text/css">
-           
+
             .ui-dialog-title{
                 width: 100% !important;
                 float: none !important;
-               
+
 
             }
             .ui-dialog-titlebar{
                 text-align: center !important;
-                
+
             }
             .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
                 margin-top: 4px;
@@ -56,7 +56,7 @@
             <o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuarioParam}"  />
         </f:metadata>
 
-        <h:form >
+        <h:form id="frm">
             <div class="ui-fluid">
                 <h2>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h2>
                 <p:toolbar style="margin-top: 15px"> 
@@ -65,16 +65,18 @@
                     </p:toolbarGroup>  
                     <p:toolbarGroup  style="margin-left: 5px">
                         <p:commandButton value="Salvar" process="@form" action="#{cadastroUsuarioBean.salvar}" 
-                                         update="@form" icon="fa fa-floppy-o" />
+                                         update="@form msgs" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup  rendered="#{cadastroUsuarioBean.editando}" >
                         <p:separator/>
                     </p:toolbarGroup>
                     <p:toolbarGroup   rendered="#{cadastroUsuarioBean.editando}" >
                         <p:menuButton value="Opções" >
-                            <p:menuitem value="Mudar senha"  onclick="PF('mudarSenhaDialog').show()"   icon="fa fa-key"  />
+                            <p:menuitem value="Mudar senha"  process="@this" update="frm:mudarSenhaDialog" 
+                                        oncomplete="PF('mudarSenhaDialog').show()"   icon="fa fa-key"  >                      
+                                <p:resetInput target="frm:mudarSenhaDialog"/>
+                            </p:menuitem>
                             <p:menuitem value="Recuperar senha"  icon="fa fa-wrench" />
-
                         </p:menuButton>
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -93,7 +95,6 @@
                     <p:outputLabel value="E-mail:" for="email" />
                     <p:inputText id="email" readonly="#{cadastroUsuarioBean.editando}"
                                  value="#{cadastroUsuarioBean.usuario.email}"   maxlength="100" />
-
 
                     <p:outputLabel value="Senha:"  for="senha" rendered="#{cadastroUsuarioBean.cadastrando}"/>
                     <p:password  id="senha" rendered="#{cadastroUsuarioBean.cadastrando}"
@@ -121,7 +122,8 @@
                                      process="@this" update="grupoDataTable" 
                                      icon="fa fa-plus"  value="Adicionar Grupo"/>
                 </p:panelGrid>
-                <p:dataTable style="margin-top: 20px" id="grupoDataTable" reflow="true"  var="grupo" value="#{cadastroUsuarioBean.usuario.grupos}"  
+                <p:dataTable style="margin-top: 20px" id="grupoDataTable" reflow="true"  var="grupo"
+                             value="#{cadastroUsuarioBean.usuario.grupos}"  
                              emptyMessage="Nenhum grupo encontrado.">
 
                     <p:column  headerText="Nome" >
@@ -140,34 +142,34 @@
                     </p:column>
                 </p:dataTable>
 
-
-                <p:dialog widgetVar="mudarSenhaDialog" styleClass="senhaDialog"   id="mudarSenhaDialog"
+                <p:dialog widgetVar="mudarSenhaDialog" rendered="#{cadastroUsuarioBean.editando}" styleClass="senhaDialog"   id="mudarSenhaDialog"
                           header="Mudar senha" resizable="false" responsive="true">
 
-                    <div class="ui-fluid">
+                    <h:panelGroup id="senhaPanel" layout="block" class="ui-fluid">
+                        <p:messages autoUpdate="false" closable="true" />
                         <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
                                      columnClasses="ui-grid-col-4, ui-grid-col-8">
-                            <p:outputLabel value="Senha atual:" for="senhaAtual" />
-                            <p:inputText id="senhaAtual"  />
+                            <p:outputLabel value="Senha:" for="senhaAtual" />
+                            <p:inputText id="senhaAtual"  value="#{cadastroUsuarioBean.senhaAtual}" />
 
-                            <p:outputLabel value="Nova senha:" for="novaSenha" />
-                            <p:inputText id="novaSenha"  />
+                            <p:outputLabel value="Nova Senha:"  for="nsenha" />
+                            <p:password  id="nsenha"   value="#{cadastroUsuarioBean.usuario.senha}"
+                                         match="nrsenha" required="true"
+                                         feedback="true"  promptLabel="Digite sua senha" 
+                                         requiredMessage="Senha deve ser informada."
+                                         weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
+                                         goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />
 
-                            <p:outputLabel value="Confirme a senha:" for="nsenha" />
-                            <p:inputText id="nsenha" />
-
+                            <p:outputLabel  value="Digite sua senha novamente:" for="nrsenha" />
+                            <p:password  id="nrsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="12" />
 
                             <p:outputLabel/>
-                            <p:commandButton  icon="fa fa-check" value="Salvar" />
+                            <p:commandButton  process="mudarSenhaDialog" update="senhaPanel" icon="fa fa-check" value="Salvar" />
                         </p:panelGrid>
-                    </div>
+                    </h:panelGroup>
 
                 </p:dialog>
             </div>
-
-
         </h:form>
-
     </ui:define>
-
 </ui:composition>

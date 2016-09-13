@@ -20,21 +20,23 @@ import javax.inject.Inject;
  * @author CRISTIANO
  */
 public class CadastroUsuarioService implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuarios usuarios;
-    
+
     @Transactional
-    public Usuario adicionar(Usuario usuario) throws NegocioException { 
+    public Usuario adicionar(Usuario usuario) throws NegocioException {
         Usuario usuarioExistente = usuarios.porEmail(usuario.getEmail());
-        if(Validador.isObjectValido(usuarioExistente)){
-            throw  new NegocioException("Já existe um usuário com o e-mail informado.");     
+        if (Validador.isObjectValido(usuarioExistente) && usuarioExistente.notEquals(usuario)) {
+            throw new NegocioException("Já existe um usuário com o e-mail informado.");
         }
-        usuario.setSenha(convertMD5(usuario.getSenha()));
-        return usuarios.adicionar(usuario);        
+        if (Validador.isNotObjectValido(usuario.getId())) {
+            usuario.setSenha(convertMD5(usuario.getSenha()));
+        }
+        return usuarios.adicionar(usuario);
     }
-    
+
     private String convertMD5(String senha) {
         MessageDigest mdigest;
         try {
@@ -51,7 +53,5 @@ public class CadastroUsuarioService implements Serializable {
             System.out.println(e.getMessage());
             return null;
         }
-        
     }
-    
 }

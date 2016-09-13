@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -31,6 +32,8 @@ public class CadastroUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuario usuario;
+    @NotNull
+    private String senhaAtual;
     @Inject
     private Usuario usuarioParam;
     private String senha;
@@ -56,10 +59,10 @@ public class CadastroUsuarioBean implements Serializable {
             MessageView.error(ex.getMessage());
         }
     }
-    
-    public void reset(){     
-       this.usuario = new Usuario();
-       this.grupo = new Grupo();      
+
+    public void reset() {
+        this.usuario = new Usuario();
+        this.grupo = new Grupo();
     }
 
     public void adicionarGrupo() {
@@ -79,7 +82,6 @@ public class CadastroUsuarioBean implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
 
     public String getSenha() {
         return senha;
@@ -100,13 +102,14 @@ public class CadastroUsuarioBean implements Serializable {
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
     }
-    
-     public boolean isEditando() {
-        return Validador.isObjectValido(usuario)&& Validador.isObjectValido(usuario.getId());
+
+    public boolean isEditando() {
+        return Validador.isObjectValido(usuario) && Validador.isObjectValido(usuario.getId());
     }
-     public boolean isCadastrando(){      
-         return Validador.isNotObjectValido(usuario)|| Validador.isNotObjectValido(usuario.getId());
-     }
+
+    public boolean isCadastrando() {
+        return Validador.isNotObjectValido(usuario) || Validador.isNotObjectValido(usuario.getId());
+    }
 
     public Usuario getUsuarioParam() {
         return usuarioParam;
@@ -114,11 +117,19 @@ public class CadastroUsuarioBean implements Serializable {
 
     public void setUsuarioParam(Usuario usuarioParam) {
         this.usuarioParam = usuarioParam;
-        if(Validador.isObjectValido(usuarioParam)){          
-            this.usuario = usuarioParam;         
+        if (Validador.isObjectValido(usuarioParam)) {
+            this.usuario = usuarioParam;
         }
     }
-     
-     
+
+    public String getSenhaAtual() {
+        return senhaAtual;
+    }
+
+    public void setSenhaAtual(String senhaAtual) {
+        this.senhaAtual = senhaAtual;
+    }
+    
+    
 
 }

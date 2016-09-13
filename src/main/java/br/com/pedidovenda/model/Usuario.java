@@ -124,6 +124,10 @@ public class Usuario implements Serializable {
         Usuario other = (Usuario) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
+    
+    public boolean notEquals(Object object){      
+       return !this.equals(object);
+    }
 
     @Override
     public String toString() {
