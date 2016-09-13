@@ -19,7 +19,6 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -32,7 +31,6 @@ public class CadastroUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuario usuario;
-    @NotNull
     private String senhaAtual;
     @Inject
     private Usuario usuarioParam;

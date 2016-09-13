@@ -57,33 +57,11 @@
         </f:metadata>
 
         <h:form id="frm">
-            <div class="ui-fluid">
+            <h:panelGroup id="panel" layout="block" class="ui-fluid">
                 <h2>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h2>
-                <p:toolbar style="margin-top: 15px"> 
-                    <p:toolbarGroup>
-                        <p:button value="Novo" icon="fa fa-plus"/>
-                    </p:toolbarGroup>  
-                    <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar" process="@form" action="#{cadastroUsuarioBean.salvar}" 
-                                         update="@form msgs" icon="fa fa-floppy-o" />
-                    </p:toolbarGroup>
-                    <p:toolbarGroup  rendered="#{cadastroUsuarioBean.editando}" >
-                        <p:separator/>
-                    </p:toolbarGroup>
-                    <p:toolbarGroup   rendered="#{cadastroUsuarioBean.editando}" >
-                        <p:menuButton value="Opções" >
-                            <p:menuitem value="Mudar senha"  process="@this" update="frm:mudarSenhaDialog" 
-                                        oncomplete="PF('mudarSenhaDialog').show()"   icon="fa fa-key"  >                      
-                                <p:resetInput target="frm:mudarSenhaDialog"/>
-                            </p:menuitem>
-                            <p:menuitem value="Recuperar senha"  icon="fa fa-wrench" />
-                        </p:menuButton>
-                    </p:toolbarGroup>
-                    <p:toolbarGroup align="right">
-                        <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios"
-                                   icon="fa fa-fw fa-search"/>
-                    </p:toolbarGroup>
-                </p:toolbar>
+
+                <ui:include  src="/WEB-INF/templates/usuarios/BotoesUsuario.xhtml" />
+
 
                 <p:panelGrid id="panelUsuario" style="margin-top:30px" columns="2"  
                              layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
@@ -104,7 +82,7 @@
                                  weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
                                  goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />
 
-                    <p:outputLabel  value="Informe a senha novamente:" for="rsenha"
+                    <p:outputLabel  value="Digite a senha novamente:" for="rsenha"
                                     rendered="#{cadastroUsuarioBean.cadastrando}" />
                     <p:password  id="rsenha" value="#{cadastroUsuarioBean.senha}" 
                                  rendered="#{cadastroUsuarioBean.cadastrando}"  maxlength="12" />
@@ -140,36 +118,11 @@
                                                           target="#{cadastroUsuarioBean.grupo}" />
                         </p:commandButton>                       
                     </p:column>
-                </p:dataTable>
+                </p:dataTable>                
+            </h:panelGroup>
 
-                <p:dialog widgetVar="mudarSenhaDialog" rendered="#{cadastroUsuarioBean.editando}" styleClass="senhaDialog"   id="mudarSenhaDialog"
-                          header="Mudar senha" resizable="false" responsive="true">
+            <ui:include  src="/WEB-INF/templates/usuarios/mudarSenhaUsuario.xhtml"/>
 
-                    <h:panelGroup id="senhaPanel" layout="block" class="ui-fluid">
-                        <p:messages autoUpdate="false" closable="true" />
-                        <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
-                                     columnClasses="ui-grid-col-4, ui-grid-col-8">
-                            <p:outputLabel value="Senha:" for="senhaAtual" />
-                            <p:inputText id="senhaAtual"  value="#{cadastroUsuarioBean.senhaAtual}" />
-
-                            <p:outputLabel value="Nova Senha:"  for="nsenha" />
-                            <p:password  id="nsenha"   value="#{cadastroUsuarioBean.usuario.senha}"
-                                         match="nrsenha" required="true"
-                                         feedback="true"  promptLabel="Digite sua senha" 
-                                         requiredMessage="Senha deve ser informada."
-                                         weakLabel="Força senha:Fraca" validatorMessage="Senhas devem ser iguais."
-                                         goodLabel="Força senha:Média" strongLabel="Força senha:Forte"   maxlength="12" />
-
-                            <p:outputLabel  value="Digite sua senha novamente:" for="nrsenha" />
-                            <p:password  id="nrsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="12" />
-
-                            <p:outputLabel/>
-                            <p:commandButton  process="mudarSenhaDialog" update="senhaPanel" icon="fa fa-check" value="Salvar" />
-                        </p:panelGrid>
-                    </h:panelGroup>
-
-                </p:dialog>
-            </div>
         </h:form>
     </ui:define>
 </ui:composition>
