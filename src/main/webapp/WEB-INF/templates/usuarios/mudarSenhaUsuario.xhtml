@@ -17,7 +17,7 @@
                                     value="#{cadastroUsuarioBean.senhaAtual}" />
 
                         <p:outputLabel value="Nova Senha:"  for="nsenha" />
-                        <p:password  id="nsenha"   value="#{cadastroUsuarioBean.usuario.senha}"
+                        <p:password  id="nsenha"   value="#{cadastroUsuarioBean.novaSenha}"
                                      match="nrsenha" required="true"
                                      requiredMessage="Nova senha deve ser informada."
                                      validatorMessage="Senhas devem ser iguais." maxlength="12" />
@@ -26,7 +26,8 @@
                         <p:password  id="nrsenha" value="#{cadastroUsuarioBean.senha}"  maxlength="12" />
 
                         <p:outputLabel/>
-                        <p:commandButton  process="mudarSenhaDialog" update="senhaPanel"
+                        <p:commandButton  process="mudarSenhaDialog" update="senhaPanel" 
+                                          action="#{cadastroUsuarioBean.mudarSenha}" 
                                           icon="fa fa-check" value="Salvar" />
                     </p:panelGrid>
                 </h:panelGroup>

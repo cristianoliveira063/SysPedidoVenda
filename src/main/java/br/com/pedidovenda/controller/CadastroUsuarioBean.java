@@ -15,6 +15,8 @@ import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -32,6 +34,7 @@ public class CadastroUsuarioBean implements Serializable {
     @Inject
     private Usuario usuario;
     private String senhaAtual;
+    private String novaSenha;
     @Inject
     private Usuario usuarioParam;
     private String senha;
@@ -56,6 +59,16 @@ public class CadastroUsuarioBean implements Serializable {
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
+    }
+
+    public void mudarSenha() {
+        try {
+            usuario = cadastroUsuarioService.alterarSenha(usuario, senhaAtual, novaSenha);
+            MessageView.info("Senha alterada com sucesso!");
+        } catch (NegocioException ex) {
+            MessageView.error(ex.getMessage());
+        }
+
     }
 
     public void reset() {
@@ -127,7 +140,13 @@ public class CadastroUsuarioBean implements Serializable {
     public void setSenhaAtual(String senhaAtual) {
         this.senhaAtual = senhaAtual;
     }
-    
-    
+
+    public String getNovaSenha() {
+        return novaSenha;
+    }
+
+    public void setNovaSenha(String novaSenha) {
+        this.novaSenha = novaSenha;
+    }
 
 }

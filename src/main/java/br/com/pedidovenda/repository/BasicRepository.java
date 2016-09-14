@@ -33,6 +33,10 @@ public abstract class BasicRepository<T, K> implements Serializable {
         return getEntityManager().merge(entity);
     }
 
+    public T alterar(T entity) {
+       return getEntityManager().merge(entity);
+    }
+
     public T pesquisarPorID(K id) {
         return getEntityManager().find(clazz, id);
     }

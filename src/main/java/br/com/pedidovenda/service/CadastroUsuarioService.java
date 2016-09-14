@@ -54,4 +54,14 @@ public class CadastroUsuarioService implements Serializable {
             return null;
         }
     }
+   
+    @Transactional
+    public Usuario alterarSenha(Usuario usuario, String senhaAtual, String novaSenha) throws NegocioException {
+        Usuario u = usuarios.pesquisarPorID(usuario.getId());
+        if (convertMD5(senhaAtual).equals(u.getSenha())) {
+            u.setSenha(convertMD5(novaSenha));
+            return u;
+        }       
+        throw  new NegocioException("Senha não pode ser alterada.");      
+    }
 }

@@ -58,10 +58,9 @@
 
         <h:form id="frm">
             <h:panelGroup id="panel" layout="block" class="ui-fluid">
-                <h2>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h2>
-
+                <h2>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h2>       
+                
                 <ui:include  src="/WEB-INF/templates/usuarios/BotoesUsuario.xhtml" />
-
 
                 <p:panelGrid id="panelUsuario" style="margin-top:30px" columns="2"  
                              layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
@@ -100,6 +99,7 @@
                                      process="@this" update="grupoDataTable" 
                                      icon="fa fa-plus"  value="Adicionar Grupo"/>
                 </p:panelGrid>
+                
                 <p:dataTable style="margin-top: 20px" id="grupoDataTable" reflow="true"  var="grupo"
                              value="#{cadastroUsuarioBean.usuario.grupos}"  
                              emptyMessage="Nenhum grupo encontrado.">

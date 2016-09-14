@@ -97,7 +97,7 @@
                         </p:button> 
                         <p:commandButton  styleClass="btn-excluir" action="#{pesquisarProdutosBean.excluir}"
                                           icon="fa fa-fw fa-remove" title="Excluir"
-                                          process="@this" update="@form">
+                                          process="@this" update="@form msgs">
                             <f:setPropertyActionListener target="#{pesquisarProdutosBean.produtoSelecionado}" 
                                                          value="#{produto}" />
                             <p:confirm   message="Deseja Excluir o Produto
