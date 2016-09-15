@@ -90,7 +90,7 @@
                     <p:column headerText="Estoque" priority="6" sortBy="#{produto.quantidadeEstoque}" width="9%" >
                         <h:outputText  value="#{produto.quantidadeEstoque}" />
                     </p:column>
-                    <p:column width="12%" priority="3" >
+                    <p:column width="14%" priority="3" >
                         <p:button styleClass="btn-editar" outcome="/produtos/cadastroProduto" 
                                   icon="fa fa-fw fa-edit" title="Editar" >
                             <f:param name="produto" value="#{produto.id}"  />

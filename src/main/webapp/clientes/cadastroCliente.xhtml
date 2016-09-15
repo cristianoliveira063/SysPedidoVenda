@@ -12,7 +12,7 @@
 
         <style type="text/css">
             .ui-selectoneradio{
-                width: 225px !important;             
+                width: 270px !important;             
             }
             .ui-radiobutton-box{     
                 width: 18px !important;
@@ -23,7 +23,7 @@
             }
         </style>
 
-        <h:form id="formCadastroCliente" prependId="false">
+        <h:form id="frm" prependId="false">
             <div class="ui-fluid">
                 <h2>Novo cliente</h2>
                 <p:toolbar style="margin-top: 15px"> 
@@ -31,7 +31,7 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup> 
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar"  process="@this panelCliente" update="@form"  
+                        <p:commandButton value="Salvar"  process="@form" update="@form msgs"  
                                          action="#{cadastroClienteBean.salvar}" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -46,25 +46,32 @@
                     <p:outputLabel value="Nome:" for="nome" />
                     <p:inputText id="nome"  value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
 
-                    <p:outputLabel  for="tipo" value="Tipo:" />
-                    <p:selectOneRadio id="tipo"  
-                                      layout="responsive" columns="2"  >
-                        <f:selectItem  itemLabel="Fisica" />    
-                        <f:selectItem  itemLabel="Juridica" /> 
+                    <p:outputLabel value="E-mail:" for="email"/>
+                    <p:inputText value="#{cadastroClienteBean.cliente.email}"  id="email"   />
+                 
+                </p:panelGrid>
+                 <p:panelGrid  id="panelTipoPessoa"  columns="2"  
+                              layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
+                     columnClasses="ui-grid-col-2,ui-grid-col-4">
+                                  
+                      <p:outputLabel  for="tipo" value="Tipo:" />
+                      <p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}"  layout="responsive" columns="2"  >
+                        <f:selectItems  value="#{cadastroClienteBean.tipoPessoas}" var="pessoa"
+                                        itemLabel="#{pessoa.descricao}"  itemValue="#{pessoa}"    />
+                        <p:ajax process="@this" update="panelTipoPessoa"  />
                     </p:selectOneRadio>
 
-                    <p:outputLabel value="CPF:" for="cpf"/>
-                    <p:inputText  id="cpf"   />
+                      <p:outputLabel rendered="#{cadastroClienteBean.pessoaFisica}"  value="CPF:" for="cpf"/>
+                    <p:inputText rendered="#{cadastroClienteBean.pessoaFisica}" 
+                                 value="#{cadastroClienteBean.cliente.documentoReceitaFederal}" id="cpf"   />
 
-                    <p:outputLabel value="CNPJ:" for="cnpj"/>
-                    <p:inputText  id="cnpj"   />
+                    <p:outputLabel  rendered="#{cadastroClienteBean.pessoaJuridica}" value="CNPJ:" for="cnpj"/>
+                    <p:inputText  rendered="#{cadastroClienteBean.pessoaJuridica}"  id="cnpj" 
+                                  value="#{cadastroClienteBean.cliente.documentoReceitaFederal}"   />
+                     
+                 </p:panelGrid>
 
-                    <p:outputLabel value="E-mail:" for="email"/>
-                    <p:inputText  id="email"   />
-
-                </p:panelGrid>
-                 
-                <ui:include  src="/WEB-INF/templates/clientes/ListagemEnderecos.xhtml"/>
+                <ui:include  src="/WEB-INF/templates/clientes/Enderecos.xhtml"/>
 
             </div>
 

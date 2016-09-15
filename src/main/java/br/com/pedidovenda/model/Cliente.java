@@ -8,6 +8,7 @@ package br.com.pedidovenda.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -37,14 +38,14 @@ public class Cliente implements Serializable {
     @NotNull
     @Email
     private String email;
-    @Column(name = "doc_receita_federal", nullable = false, length = 14)
+    @Column(name = "doc_receita_federal", nullable = false, length = 14,unique = true)
     @NotNull
     private String documentoReceitaFederal;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false,length = 20)
+    @Column(name = "tipo_pessoa",nullable = false,length = 20)
     @NotNull
     private TipoPessoa tipo;
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
     private List<Endereco> enderecos = new ArrayList<>();
 
     public Long getId() {

@@ -6,8 +6,15 @@
 package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Cliente;
+import br.com.pedidovenda.model.Endereco;
+import br.com.pedidovenda.model.TipoPessoa;
+import br.com.pedidovenda.model.UF;
+import br.com.pedidovenda.service.CadastroClienteService;
+import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jsf.MessageView;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -17,29 +24,32 @@ import javax.inject.Named;
 /**
  *
  * @author Cristiano Aparecido
- * 
+ *
  */
 @Named
 @ViewScoped
-public class CadastroClienteBean implements Serializable{
-    
+public class CadastroClienteBean implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-   private  List<Integer> clientes = new ArrayList<>();
-   @Inject
-   private Cliente cliente;
-    
-    @PostConstruct
-    public void init(){       
-        clientes.add(1);       
-    }
-    
-    public void salvar(){
-            
+
+    @Inject
+    private Cliente cliente;
+    private Endereco endereco;
+    @Inject
+    private CadastroClienteService clienteService;
+
+    public void salvar() {
+        try {
+            clienteService.adicionar(cliente);
+            MessageView.info("Cliente salvo com sucesso!");
+        } catch (NegocioException ex) {
+            MessageView.error(ex.getMessage());
+        }
+
     }
 
-    public List<Integer> getClientes() {
-        return clientes;
+    public void novoEndereco() {
+        this.endereco = new Endereco();
     }
 
     public Cliente getCliente() {
@@ -49,8 +59,30 @@ public class CadastroClienteBean implements Serializable{
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-    
-    
-    
-   
+
+    public List<UF> getUfs() {
+        return Arrays.asList(UF.values());
+    }
+
+    public List<TipoPessoa> getTipoPessoas() {
+        return Arrays.asList(TipoPessoa.values());
+    }
+
+    public boolean isPessoaFisica() {
+        return Validador.isObjectValido(cliente.getTipo()) && cliente.getTipo().equals(TipoPessoa.FISICA);
+    }
+
+    public boolean isPessoaJuridica() {
+
+        return Validador.isObjectValido(cliente.getTipo()) && cliente.getTipo().equals(TipoPessoa.JURIDICA);
+    }
+
+    public Endereco getEndereco() {
+        if (Validador.isObjectValido(endereco)) {
+            return endereco;
+        }
+        endereco = new Endereco();
+        return endereco;
+    }
+
 }

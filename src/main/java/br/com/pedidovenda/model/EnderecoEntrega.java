@@ -26,8 +26,7 @@ public class EnderecoEntrega implements Serializable {
     
     @Column(name = "entrega_numero", nullable = false, length = 20)
     @NotNull @Size(max = 20)
-    private String numero;
-    
+    private String numero;    
     @Column(name = "entrega_complemento", length = 150)
     @Size(max = 150)
     private String complemento;   

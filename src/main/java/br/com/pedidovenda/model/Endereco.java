@@ -5,6 +5,7 @@
  */
 package br.com.pedidovenda.model;
 
+import br.com.pedidovenda.util.validation.Cep;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,18 +40,16 @@ public class Endereco implements Serializable {
     @NotNull @Size(max = 60)
     private String cidade;
     @Column(nullable = false,length = 60)
-    @NotNull 
-    private String uf;
+    private UF uf;
     @Column(nullable = false,length = 20)
     @NotNull 
+    @Cep
     private String cep; 
     @ManyToOne
     @JoinColumn(nullable = false)
     @NotNull
     private Cliente cliente;
-   
-    
-    
+     
     public Long getId() {
         return id;
     }
@@ -58,8 +57,6 @@ public class Endereco implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-    
 
     /**
      * @return the logradouro
@@ -117,19 +114,6 @@ public class Endereco implements Serializable {
         this.cidade = cidade;
     }
 
-    /**
-     * @return the uf
-     */
-    public String getUf() {
-        return uf;
-    }
-
-    /**
-     * @param uf the uf to set
-     */
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
 
     /**
      * @return the cep
@@ -158,6 +142,15 @@ public class Endereco implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
+    public UF getUf() {
+        return uf;
+    }
+
+    public void setUf(UF uf) {
+        this.uf = uf;
+    }
+    
     
     @Override
     public int hashCode() {
@@ -173,10 +166,7 @@ public class Endereco implements Serializable {
             return false;
         }
         Endereco other = (Endereco) object;
-        if ((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id)));
     }
 
     @Override
