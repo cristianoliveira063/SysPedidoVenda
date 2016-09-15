@@ -8,7 +8,10 @@ package br.com.pedidovenda.model;
 import br.com.pedidovenda.util.validation.Cep;
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,14 +43,14 @@ public class Endereco implements Serializable {
     @NotNull @Size(max = 60)
     private String cidade;
     @Column(nullable = false,length = 60)
+    @Enumerated(EnumType.STRING)
     private UF uf;
     @Column(nullable = false,length = 20)
     @NotNull 
     @Cep
     private String cep; 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
-    @NotNull
     private Cliente cliente;
      
     public Long getId() {
