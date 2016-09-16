@@ -10,46 +10,60 @@
                 width: 40% !important;               
             }           
         }
+        
 
     </style>
 
-        <p:commandButton style="margin-top: 25px;width: auto" action="#{cadastroClienteBean.novoEndereco}"
-                         styleClass="btn-adicionar-endereco" 
+    <p:commandButton style="margin-top: 25px;width: auto" action="#{cadastroClienteBean.novoEndereco}"
+                     styleClass="btn-adicionar-endereco" 
                      process="@this" update="frm:novoEnderecoDialog" 
                      oncomplete="PF('novoEnderecoDialog').show()"  id="endereco"  
                      icon="fa fa-plus" value="Adicionar endereço">
         <p:resetInput target="frm:novoEnderecoDialog"/>
     </p:commandButton>
 
-    <p:dataTable id="tableEndereco" value="#{cadastroClienteBean.cliente.enderecos}" var="endereco" 
-                 emptyMessage="O cliente não possui endereços" style="margin-top: 8px"  reflow="true">
+    <p:dataTable id="tableEndereco" value="#{cadastroClienteBean.cliente.enderecos}" var="endereco" reflow="true"
+                 editable="true"   emptyMessage="O cliente não possui endereços" style="margin-top: 8px;
+                 table-layout: auto" >
+        <p:ajax event="rowEdit" listener="#{cadastroClienteBean.onRowEdit}" update="tableEndereco" />
+        <p:ajax event="rowEditCancel" listener="#{cadastroClienteBean.onRowCancel}" update="tableEndereco" />
+
         <p:column headerText="Logradouro" >
-            <h:outputText value="#{endereco.logradouro}" />
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{endereco.logradouro}" /></f:facet>
+                <f:facet name="input"><p:inputText id="logradouro" value="#{endereco.logradouro}" style="width:100%"/></f:facet>
+            </p:cellEditor>
         </p:column>
-        <p:column headerText="Número"  >
-            <h:outputText  value="#{endereco.numero}" />
+           <p:column headerText="Número" >
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{endereco.numero}" /></f:facet>
+                <f:facet name="input"><p:inputText id="numero" value="#{endereco.numero}" style="width:100%"/></f:facet>
+            </p:cellEditor>
         </p:column>
-        <p:column headerText="Complemento"  >
-            <h:outputText  value="#{endereco.complemento}" />
+        
+          <p:column headerText="Complemento" >
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{endereco.complemento==null?'Não informado':endereco.complemento}" /></f:facet>
+                <f:facet name="input"><p:inputText id="complemento" value="#{endereco.complemento}" style="width:100%"/></f:facet>
+            </p:cellEditor>
         </p:column>
-        <p:column headerText="CEP" >
+        <p:column headerText="CEP"  >
             <h:outputText  value="#{endereco.cep}" />
         </p:column>
-        <p:column headerText="Cidade/UF" >
-            <h:outputText  value="#{endereco.cidade}/#{endereco.uf}"/>
+        <p:column headerText="Cidade"  >
+            <h:outputText  value="#{endereco.cidade}"/>
         </p:column>
-        <p:column width="12%" >
-            <p:button styleClass="btn-editar"    icon="fa fa-fw fa-edit" title="Editar" />
-            <p:commandButton styleClass="btn-excluir" update=":frm:tableEndereco" process=":frm:tableEndereco" 
-                             icon="fa fa-times" title="Excluir" >
-                <p:collector value="#{endereco}" removeFrom="#{cadastroClienteBean.cliente.enderecos}" unique="false"/>
-            </p:commandButton>
+        <p:column headerText="UF"  >
+            <h:outputText  value="#{endereco.uf}"/>
+        </p:column>
+        <p:column width="10%"  >
+            <p:rowEditor  editTitle="editar" />
         </p:column>
 
     </p:dataTable>
 
     <p:dialog widgetVar="novoEnderecoDialog" id="novoEnderecoDialog" modal="true" showEffect="explode" 
-               focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="true" responsive="true">
+              focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="true" responsive="true">
 
         <h:panelGroup id="enderecoPanel" class="ui-fluid" layout="block">
             <p:messages autoUpdate="false" closable="true" />
@@ -79,8 +93,8 @@
 
                 <p:outputLabel/>
                 <p:commandButton  icon="fa fa-plus" value="Adicionar" process="novoEnderecoDialog"
-                       oncomplete="if (!args.validationFailed) PF('novoEnderecoDialog').hide()"
-                       update="frm:tableEndereco enderecoPanel">
+                                  oncomplete="if (!args.validationFailed) PF('novoEnderecoDialog').hide()"
+                                  update="frm:tableEndereco enderecoPanel">
                     <p:collector value="#{cadastroClienteBean.endereco}" 
                                  addTo="#{cadastroClienteBean.cliente.enderecos}" 
                                  unique="false"/>

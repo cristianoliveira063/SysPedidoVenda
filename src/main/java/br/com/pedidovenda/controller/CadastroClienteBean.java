@@ -19,6 +19,7 @@ import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -41,10 +42,24 @@ public class CadastroClienteBean implements Serializable {
         try {
             endereco.setCliente(cliente);
             clienteService.adicionar(cliente);
+            reset();
             MessageView.info("Cliente salvo com sucesso!");
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
+
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+
+    }
+
+    public void reset() {
+        this.cliente = new Cliente();
 
     }
 

@@ -48,31 +48,29 @@
 
                     <p:outputLabel value="E-mail:" for="email"/>
                     <p:inputText value="#{cadastroClienteBean.cliente.email}"  id="email"   />
-                 
+
                 </p:panelGrid>
-                 <p:panelGrid  id="panelTipoPessoa"  columns="2"  
+                <p:panelGrid  id="panelTipoPessoa"  columns="2"  
                               layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
-                     columnClasses="ui-grid-col-2,ui-grid-col-4">
-                                  
-                      <p:outputLabel  for="tipo" value="Tipo:" />
-                      <p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}"  layout="responsive" columns="2"  >
+                              columnClasses="ui-grid-col-2,ui-grid-col-4">
+
+                    <p:outputLabel  for="tipo" value="Tipo:" />
+                    <p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}"  layout="responsive" columns="2"  >
                         <f:selectItems  value="#{cadastroClienteBean.tipoPessoas}" var="pessoa"
                                         itemLabel="#{pessoa.descricao}"  itemValue="#{pessoa}"    />
                         <p:ajax process="@this" update="panelTipoPessoa"  />
                     </p:selectOneRadio>
 
-                      <p:outputLabel rendered="#{cadastroClienteBean.pessoaFisica}"  value="CPF:" for="cpf"/>
+                    <p:outputLabel rendered="#{cadastroClienteBean.pessoaFisica}"  value="CPF:" for="cpf"/>
                     <p:inputText rendered="#{cadastroClienteBean.pessoaFisica}" 
                                  value="#{cadastroClienteBean.cliente.documentoReceitaFederal}" id="cpf"   />
 
                     <p:outputLabel  rendered="#{cadastroClienteBean.pessoaJuridica}" value="CNPJ:" for="cnpj"/>
                     <p:inputText  rendered="#{cadastroClienteBean.pessoaJuridica}"  id="cnpj" 
                                   value="#{cadastroClienteBean.cliente.documentoReceitaFederal}"   />
-                     
-                 </p:panelGrid>
 
+                </p:panelGrid>
                 <ui:include  src="/WEB-INF/templates/clientes/Enderecos.xhtml"/>
-
             </div>
 
         </h:form>
