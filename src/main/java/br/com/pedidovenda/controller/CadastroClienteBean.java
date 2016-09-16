@@ -37,6 +37,9 @@ public class CadastroClienteBean implements Serializable {
     private Endereco endereco;
     @Inject
     private CadastroClienteService clienteService;
+  
+    
+    
 
     public void salvar() {
         try {
@@ -47,7 +50,6 @@ public class CadastroClienteBean implements Serializable {
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
-
     }
 
     public void onRowEdit(RowEditEvent event) {
@@ -75,9 +77,6 @@ public class CadastroClienteBean implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<UF> getUfs() {
-        return Arrays.asList(UF.values());
-    }
 
     public List<TipoPessoa> getTipoPessoas() {
         return Arrays.asList(TipoPessoa.values());
@@ -99,5 +98,11 @@ public class CadastroClienteBean implements Serializable {
         endereco = new Endereco();
         return endereco;
     }
+
+   public List<UF>getUfs(){     
+       return Arrays.asList(UF.values());
+   }
+    
+    
 
 }

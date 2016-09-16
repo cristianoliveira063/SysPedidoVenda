@@ -15,7 +15,7 @@ public class Teste {
         
         ViaCEP cep =  new ViaCEP();
         cep.buscar("78093559");
-        System.out.println(cep.getBairro());
+        System.out.println(cep.getLogradouro());
         
         
     }

@@ -11,6 +11,8 @@
             }           
         }
         
+       
+        
 
     </style>
 
@@ -47,15 +49,33 @@
                 <f:facet name="input"><p:inputText id="complemento" value="#{endereco.complemento}" style="width:100%"/></f:facet>
             </p:cellEditor>
         </p:column>
-        <p:column headerText="CEP"  >
-            <h:outputText  value="#{endereco.cep}" />
+        
+        
+          <p:column headerText="CEP" >
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{endereco.cep}" /></f:facet>
+                <f:facet name="input"><p:inputText id="cep" value="#{endereco.cep}" style="width:100%"/></f:facet>
+            </p:cellEditor>
         </p:column>
-        <p:column headerText="Cidade"  >
-            <h:outputText  value="#{endereco.cidade}"/>
+        
+        <p:column headerText="Cidade" >
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{endereco.cidade}" /></f:facet>
+                <f:facet name="input"><p:inputText id="cidade" value="#{endereco.cidade}" style="width:100%"/></f:facet>
+            </p:cellEditor>
         </p:column>
-        <p:column headerText="UF"  >
-            <h:outputText  value="#{endereco.uf}"/>
-        </p:column>
+        
+         <p:column headerText="UF">
+           <p:cellEditor>
+               <f:facet name="output"><h:outputText value="#{endereco.uf}" /></f:facet>
+               <f:facet name="input">
+                   <h:selectOneMenu value="#{endereco.uf}" style="width:100%;color: black" >
+                       <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" itemLabel="#{uf}" itemValue="#{uf}" />
+                   </h:selectOneMenu>
+               </f:facet>
+           </p:cellEditor>
+       </p:column>
+        
         <p:column width="10%"  >
             <p:rowEditor  editTitle="editar" />
         </p:column>
