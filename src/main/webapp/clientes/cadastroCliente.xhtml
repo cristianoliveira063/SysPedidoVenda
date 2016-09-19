@@ -31,7 +31,8 @@
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup> 
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar"  process="@form" update="@form msgs"  
+                        <p:commandButton value="Salvar"  process="panelCliente panelTipoPessoa tableEndereco" 
+                                         update="panelCliente panelTipoPessoa tableEndereco msgs"  
                                          action="#{cadastroClienteBean.salvar}" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">

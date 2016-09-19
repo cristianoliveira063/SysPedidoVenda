@@ -43,7 +43,7 @@ public class CadastroClienteBean implements Serializable {
 
     public void salvar() {
         try {
-            endereco.setCliente(cliente);
+            endereco.setCliente(cliente);          
             clienteService.adicionar(cliente);
             reset();
             MessageView.info("Cliente salvo com sucesso!");
@@ -53,11 +53,9 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void onRowEdit(RowEditEvent event) {
-
     }
 
     public void onRowCancel(RowEditEvent event) {
-
     }
 
     public void reset() {

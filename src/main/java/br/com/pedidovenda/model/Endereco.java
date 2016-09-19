@@ -6,6 +6,7 @@
 package br.com.pedidovenda.model;
 
 import br.com.pedidovenda.util.validation.Cep;
+import br.com.pedidovenda.util.validation.Validador;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -44,6 +45,7 @@ public class Endereco implements Serializable {
     private String cidade;
     @Column(nullable = false,length = 60)
     @Enumerated(EnumType.STRING)
+    @NotNull
     private UF uf;
     @Column(nullable = false,length = 20)
     @NotNull 
@@ -136,6 +138,10 @@ public class Endereco implements Serializable {
      * @return the cliente
      */
     public Cliente getCliente() {
+        if(Validador.isObjectValido(cliente)){
+            return cliente;  
+        }
+        cliente = new Cliente();
         return cliente;
     }
 

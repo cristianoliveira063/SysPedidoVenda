@@ -61,7 +61,8 @@
         <p:column headerText="Cidade" >
             <p:cellEditor>
                 <f:facet name="output"><h:outputText value="#{endereco.cidade}" /></f:facet>
-                <f:facet name="input"><p:inputText id="cidade" value="#{endereco.cidade}" style="width:100%"/></f:facet>
+                <f:facet name="input"><p:inputText id="cidade" value="#{endereco.cidade}"
+                                                   style="width:100%"/></f:facet>
             </p:cellEditor>
         </p:column>
         
@@ -70,7 +71,8 @@
                <f:facet name="output"><h:outputText value="#{endereco.uf}" /></f:facet>
                <f:facet name="input">
                    <h:selectOneMenu value="#{endereco.uf}" style="width:100%;color: black" >
-                       <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" itemLabel="#{uf}" itemValue="#{uf}" />
+                       <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" 
+                                      itemLabel="#{uf}" itemValue="#{uf}" />
                    </h:selectOneMenu>
                </f:facet>
            </p:cellEditor>
@@ -106,9 +108,10 @@
                 <p:inputText id="cidade" value="#{cadastroClienteBean.endereco.cidade}" />
 
                 <p:outputLabel value="UF" for="uf" />
-                <p:selectOneMenu id="uf" value="#{cadastroClienteBean.endereco.uf}" >
+                <p:selectOneMenu id="uf" value="#{cadastroClienteBean.endereco.uf}"   >
                     <f:selectItem  itemLabel="Selecione um estado" value="#{null}"  noSelectionOption="true"/> 
-                    <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" itemValue="#{uf}" itemLabel="#{uf.valor}"  />
+                    <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" 
+                                   itemValue="#{uf}" itemLabel="#{uf.valor}"  />
                 </p:selectOneMenu>
 
                 <p:outputLabel/>
