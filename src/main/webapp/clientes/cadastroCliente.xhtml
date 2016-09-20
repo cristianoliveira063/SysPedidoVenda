@@ -24,15 +24,15 @@
         </style>
 
         <h:form id="frm" prependId="false">
-            <div class="ui-fluid">
+            <h:panelGroup layout="block" class="ui-fluid" id="grupoDados">
                 <h2>Novo cliente</h2>
                 <p:toolbar style="margin-top: 15px"> 
                     <p:toolbarGroup>
                         <p:button value="Novo" icon="fa fa-plus"/>
                     </p:toolbarGroup> 
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Salvar"  process="panelCliente panelTipoPessoa tableEndereco" 
-                                         update="panelCliente panelTipoPessoa tableEndereco msgs"  
+                        <p:commandButton value="Salvar"  process="grupoDados tableEndereco" 
+                                         update="grupoDados tableEndereco msgs"  
                                          action="#{cadastroClienteBean.salvar}" icon="fa fa-floppy-o" />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
@@ -71,9 +71,10 @@
                                   value="#{cadastroClienteBean.cliente.documentoReceitaFederal}"   />
 
                 </p:panelGrid>
+            </h:panelGroup>
+            <div class="ui-fluid" >
                 <ui:include  src="/WEB-INF/templates/clientes/Enderecos.xhtml"/>
             </div>
-
         </h:form>
 
     </ui:define>

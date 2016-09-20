@@ -46,7 +46,7 @@ public class CadastroClienteBean implements Serializable {
             endereco.setCliente(cliente);          
             clienteService.adicionar(cliente);
             reset();
-            MessageView.info("Cliente salvo com sucesso!");
+            MessageView.info("Cliente  com sucesso!");
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }

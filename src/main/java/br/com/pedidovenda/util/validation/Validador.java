@@ -180,13 +180,10 @@ public class Validador {
       dv1 = Character.digit(cpf.charAt(cpf.length() - 2), 10);
       dv2 = Character.digit(cpf.charAt(cpf.length() - 1), 10);
 
-      if (cpf.length() <= 11 &&
-          !isCadeiaRepetida(cpf) &&
-          dv1 == calcDvModulo11(cpf, cpf.length() - 2, 2, 11) &&
-          dv2 == calcDvModulo11(cpf, cpf.length() - 1, 2, 11))
-         return true;
-
-      return false;
+      return cpf.length() <= 11 &&
+              !isCadeiaRepetida(cpf) &&
+              dv1 == calcDvModulo11(cpf, cpf.length() - 2, 2, 11) &&
+              dv2 == calcDvModulo11(cpf, cpf.length() - 1, 2, 11);
    }
      /**
     * Verifica se cadeia é composta apenas por caracteres repetidos (tudo 0 ou tudo 1, ...).

@@ -62,6 +62,6 @@ public class CadastroUsuarioService implements Serializable {
             u.setSenha(convertMD5(novaSenha));
             return u;
         }       
-        throw  new NegocioException("Senha não pode ser alterada.");      
+        throw  new NegocioException("Senha atual não confere.");      
     }
 }
