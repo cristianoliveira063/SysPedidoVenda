@@ -10,7 +10,7 @@ import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.modelFilter.ProdutoFilter;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jpa.Transactional;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;

@@ -12,14 +12,16 @@ import br.com.pedidovenda.model.UF;
 import br.com.pedidovenda.service.CadastroClienteService;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.event.RowEditEvent;
+import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 /**
  *
@@ -35,27 +37,24 @@ public class CadastroClienteBean implements Serializable {
     @Inject
     private Cliente cliente;
     private Endereco endereco;
+    @CPF
+    @NotNull
+    private String cpf;
+    @CNPJ
+    @NotNull
+    private String cnpj;
     @Inject
     private CadastroClienteService clienteService;
-  
-    
-    
 
     public void salvar() {
         try {
-            endereco.setCliente(cliente);          
+            endereco.setCliente(cliente);
             clienteService.adicionar(cliente);
             reset();
-            MessageView.info("Cliente  com sucesso!");
+            MessageView.info("Cliente salvo com sucesso!");
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
-    }
-
-    public void onRowEdit(RowEditEvent event) {
-    }
-
-    public void onRowCancel(RowEditEvent event) {
     }
 
     public void reset() {
@@ -74,7 +73,6 @@ public class CadastroClienteBean implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
 
     public List<TipoPessoa> getTipoPessoas() {
         return Arrays.asList(TipoPessoa.values());
@@ -97,10 +95,26 @@ public class CadastroClienteBean implements Serializable {
         return endereco;
     }
 
-   public List<UF>getUfs(){     
-       return Arrays.asList(UF.values());
-   }
-    
-    
+    public List<UF> getUfs() {
+        return Arrays.asList(UF.values());
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cliente.setDocumentoReceitaFederal(cpf);
+        this.cpf = cpf;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.getCliente().setDocumentoReceitaFederal(cnpj);
+        this.cnpj = cnpj;
+    }
 
 }

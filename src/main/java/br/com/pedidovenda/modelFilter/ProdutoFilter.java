@@ -6,8 +6,8 @@
 package br.com.pedidovenda.modelFilter;
 
 import br.com.pedidovenda.model.Categoria;
-import br.com.pedidovenda.util.validation.SKU;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.SKU;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 
 /**

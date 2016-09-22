@@ -8,7 +8,7 @@ package br.com.pedidovenda.service;
 import br.com.pedidovenda.model.Usuario;
 import br.com.pedidovenda.repository.Usuarios;
 import br.com.pedidovenda.util.jpa.Transactional;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -56,7 +56,7 @@ public class CadastroUsuarioService implements Serializable {
     }
    
     @Transactional
-    public Usuario alterarSenha(Usuario usuario, String senhaAtual, String novaSenha) throws NegocioException {
+    public Usuario mudarSenha(Usuario usuario, String senhaAtual, String novaSenha) throws NegocioException {
         Usuario u = usuarios.pesquisarPorID(usuario.getId());
         if (convertMD5(senhaAtual).equals(u.getSenha())) {
             u.setSenha(convertMD5(novaSenha));

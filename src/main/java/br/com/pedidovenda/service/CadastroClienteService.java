@@ -8,7 +8,7 @@ package br.com.pedidovenda.service;
 import br.com.pedidovenda.model.Cliente;
 import br.com.pedidovenda.repository.Clientes;
 import br.com.pedidovenda.util.jpa.Transactional;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import javax.inject.Inject;
 

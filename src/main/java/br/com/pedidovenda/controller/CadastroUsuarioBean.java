@@ -11,7 +11,7 @@ import br.com.pedidovenda.repository.Grupos;
 import br.com.pedidovenda.service.CadastroUsuarioService;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +31,6 @@ public class CadastroUsuarioBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Inject
     private Usuario usuario;
-    private String senhaAtual;
-    private String novaSenha;
     @Inject
     private Usuario usuarioParam;
     private String senha;
@@ -57,16 +55,6 @@ public class CadastroUsuarioBean implements Serializable {
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
-    }
-
-    public void mudarSenha() {
-        try {
-            usuario = cadastroUsuarioService.alterarSenha(usuario, senhaAtual, novaSenha);
-            MessageView.info("Senha alterada com sucesso!");
-        } catch (NegocioException ex) {
-            MessageView.error(ex.getMessage());
-        }
-
     }
 
     public void reset() {
@@ -131,20 +119,5 @@ public class CadastroUsuarioBean implements Serializable {
         }
     }
 
-    public String getSenhaAtual() {
-        return senhaAtual;
-    }
-
-    public void setSenhaAtual(String senhaAtual) {
-        this.senhaAtual = senhaAtual;
-    }
-
-    public String getNovaSenha() {
-        return novaSenha;
-    }
-
-    public void setNovaSenha(String novaSenha) {
-        this.novaSenha = novaSenha;
-    }
 
 }

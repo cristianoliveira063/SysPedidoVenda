@@ -5,8 +5,8 @@
  */
 package br.com.pedidovenda.model;
 
-import br.com.pedidovenda.util.validation.Cep;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.StringUtil;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import br.com.pedidovenda.util.validator.CEP;
 
 /**
  *
@@ -49,7 +50,7 @@ public class Endereco implements Serializable {
     private UF uf;
     @Column(nullable = false,length = 20)
     @NotNull 
-    @Cep
+    @CEP
     private String cep; 
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
@@ -73,8 +74,9 @@ public class Endereco implements Serializable {
     /**
      * @param logradouro the logradouro to set
      */
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
+    public void setLogradouro(String logradouro) {     
+        this.logradouro = Validador.isStringValida(logradouro)?StringUtil
+                .convertePrimeiraLetraMaiuscula(logradouro):logradouro;
     }
 
     /**
@@ -116,10 +118,10 @@ public class Endereco implements Serializable {
      * @param cidade the cidade to set
      */
     public void setCidade(String cidade) {
-        this.cidade = cidade;
+        this.cidade = Validador.isStringValida(cidade)?StringUtil
+                .convertePrimeiraLetraMaiuscula(cidade):cidade;
     }
-
-
+    
     /**
      * @return the cep
      */

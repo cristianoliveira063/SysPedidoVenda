@@ -11,8 +11,12 @@
             }           
         }
 
+        @media(min-width:1200px){
+            .novoEnderecoDialog {
+                width: 550px !important; 
 
-
+            }           
+        }
 
     </style>
 
@@ -25,73 +29,39 @@
     </p:commandButton>
 
     <p:dataTable id="tableEndereco" value="#{cadastroClienteBean.cliente.enderecos}" var="endereco" reflow="true"
-                 editable="true"   emptyMessage="O cliente não possui endereços" style="margin-top: 8px;
+                 emptyMessage="O cliente não possui endereços" style="margin-top: 8px;
                  table-layout: auto" >
-        <p:ajax event="rowEdit" listener="#{cadastroClienteBean.onRowEdit}" update="tableEndereco msgs" />
-        <p:ajax event="rowEditCancel" listener="#{cadastroClienteBean.onRowCancel}" update="tableEndereco msgs" />
 
-        <p:column headerText="Logradouro" >
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.logradouro}" /></f:facet>
-                <f:facet name="input"><p:inputText id="logradouro" label="Logradouro" value="#{endereco.logradouro}" style="width:100%"/></f:facet>
-            </p:cellEditor>
+        <p:column headerText="Logradouro"   >
+            <h:outputText value="#{endereco.logradouro}"  />
         </p:column>
-        <p:column headerText="Número" >
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.numero}" /></f:facet>
-                <f:facet name="input"><p:inputText id="numero" label="Número" value="#{endereco.numero}" style="width:100%"/></f:facet>
-            </p:cellEditor>
+        <p:column headerText="Número"   >
+            <h:outputText value="#{endereco.numero}"  />
         </p:column>
-
-        <p:column headerText="Complemento" >
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.complemento==null?'Não Informado':endereco.complemento}" /></f:facet>
-                <f:facet name="input"><p:inputText id="complemento" value="#{endereco.complemento}" style="width:100%"/></f:facet>
-            </p:cellEditor>
+        <p:column headerText="Complemento"   >
+            <h:outputText value="#{endereco.complemento==null?'Não Informado':endereco.complemento}"  />
         </p:column>
-
-
-        <p:column headerText="CEP" >
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.cep}" /></f:facet>
-                <f:facet name="input"><p:inputText id="cep" label="CEP" value="#{endereco.cep}" style="width:100%"/></f:facet>
-            </p:cellEditor>
+        <p:column headerText="CEP"   >
+            <h:outputText value="#{endereco.cep}"  />
         </p:column>
-
-        <p:column headerText="Cidade" >
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.cidade}" /></f:facet>
-                <f:facet name="input"><p:inputText label="Cidade" id="cidade" value="#{endereco.cidade}"
-                                                   style="width:100%"/></f:facet>
-            </p:cellEditor>
+        <p:column headerText="Cidade"   >
+            <h:outputText value="#{endereco.cidade}"  />
         </p:column>
-
-        <p:column headerText="UF">
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{endereco.uf}" /></f:facet>
-                <f:facet name="input">
-                    <h:selectOneMenu value="#{endereco.uf}" label="UF" style="width:100%;color: black" >
-                        <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" 
-                                       itemLabel="#{uf}" itemValue="#{uf}" />
-                    </h:selectOneMenu>
-                </f:facet>
-            </p:cellEditor>
+        <p:column headerText="UF"   >
+            <h:outputText value="#{endereco.uf}"  />
         </p:column>
-
-        <p:column width="5%"  >
-            <p:rowEditor   editTitle="editar"  />           
-        </p:column>
-        <p:column width="8%"  >
-            <p:commandButton icon="fa fa-fw fa-remove" title="Excluir">
-            
+        <p:column width="15%"  >
+            <p:button styleClass="btn-editar" 
+                      icon="fa fa-fw fa-edit" title="Editar" >
+            </p:button> 
+            <p:commandButton icon="fa fa-fw fa-remove" styleClass="btn-excluir" title="Excluir">
             </p:commandButton>
-
         </p:column>
 
     </p:dataTable>
 
-    <p:dialog widgetVar="novoEnderecoDialog" id="novoEnderecoDialog" modal="true" showEffect="explode" 
-              focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="true" responsive="true">
+    <p:dialog widgetVar="novoEnderecoDialog" styleClass="novoEnderecoDialog"  id="novoEnderecoDialog" modal="true" showEffect="explode" 
+              focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="false" responsive="true">
 
         <h:panelGroup id="enderecoPanel" class="ui-fluid" layout="block">
             <p:messages autoUpdate="false" closable="true" />
@@ -100,11 +70,11 @@
 
                 <p:outputLabel value="CEP" for="cep" />
                 <p:inputText id="cep" value="#{cadastroClienteBean.endereco.cep}"  maxlength="8">
-                  <p:keyFilter regEx="/[\d]/"/>
+                    <p:keyFilter regEx="/[\d]/"/>
                 </p:inputText>
 
                 <p:outputLabel value="Logradouro" for="logradouro" />
-                <p:inputText id="logradouro" value="#{cadastroClienteBean.endereco.logradouro}"  />
+                <p:inputText id="logradouro"  value="#{cadastroClienteBean.endereco.logradouro}"  />
 
                 <p:outputLabel value="Número" for="numero" />
                 <p:inputText id="numero" value="#{cadastroClienteBean.endereco.numero}" maxlength="8"  >

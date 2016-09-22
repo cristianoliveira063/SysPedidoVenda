@@ -64,11 +64,11 @@
 
                     <p:outputLabel rendered="#{cadastroClienteBean.pessoaFisica}"  value="CPF:" for="cpf"/>
                     <p:inputText rendered="#{cadastroClienteBean.pessoaFisica}" 
-                                 value="#{cadastroClienteBean.cliente.documentoReceitaFederal}" id="cpf"   />
+                                 value="#{cadastroClienteBean.cpf}" id="cpf"   />
 
                     <p:outputLabel  rendered="#{cadastroClienteBean.pessoaJuridica}" value="CNPJ:" for="cnpj"/>
                     <p:inputText  rendered="#{cadastroClienteBean.pessoaJuridica}"  id="cnpj" 
-                                  value="#{cadastroClienteBean.cliente.documentoReceitaFederal}"   />
+                                  value="#{cadastroClienteBean.cnpj}"   />
 
                 </p:panelGrid>
             </h:panelGroup>

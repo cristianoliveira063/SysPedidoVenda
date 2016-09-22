@@ -11,18 +11,6 @@
             <p:commandButton value="Salvar" process="panel" action="#{cadastroUsuarioBean.salvar}" 
                              update="panel msgs" icon="fa fa-floppy-o" />
         </p:toolbarGroup>
-        <p:toolbarGroup  rendered="#{cadastroUsuarioBean.editando}" >
-            <p:separator/>
-        </p:toolbarGroup>
-        <p:toolbarGroup   rendered="#{cadastroUsuarioBean.editando}" >
-            <p:menuButton value="Opções" >
-                <p:menuitem value="Mudar senha"  process="@this" update="frm:mudarSenhaDialog" 
-                            oncomplete="PF('mudarSenhaDialog').show()"   icon="fa fa-key"  >                      
-                    <p:resetInput target="frm:mudarSenhaDialog"/>
-                </p:menuitem>
-                <p:menuitem value="Recuperar senha"  icon="fa fa-wrench" />
-            </p:menuButton>
-        </p:toolbarGroup>
         <p:toolbarGroup align="right">
             <p:button  value="Pesquisa" outcome="/usuarios/pesquisaUsuarios"
                        icon="fa fa-fw fa-search"/>

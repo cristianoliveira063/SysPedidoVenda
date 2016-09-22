@@ -12,7 +12,7 @@ import br.com.pedidovenda.repository.Categorias;
 import br.com.pedidovenda.service.CadastroProdutoService;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
-import br.com.pedidovenda.util.validation.Validador;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
