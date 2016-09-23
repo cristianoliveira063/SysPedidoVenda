@@ -51,9 +51,10 @@
             <h:outputText value="#{endereco.uf}"  />
         </p:column>
         <p:column width="15%"  >
-            <p:button styleClass="btn-editar" 
+            <p:commandButton styleClass="btn-editar" 
+                     oncomplete="PF('editarEnderecoDialog').show()"                   
                       icon="fa fa-fw fa-edit" title="Editar" >
-            </p:button> 
+            </p:commandButton>
             <p:commandButton icon="fa fa-fw fa-remove" styleClass="btn-excluir" title="Excluir">
             </p:commandButton>
         </p:column>
@@ -106,5 +107,50 @@
         </h:panelGroup>
 
     </p:dialog>
+    
+      <p:dialog widgetVar="editarEnderecoDialog" styleClass="editarEnderecoDialog"  id="editarEnderecoDialog" modal="true" showEffect="explode" 
+             dynamic="true"  header="Editar endereço" resizable="false" responsive="true">
+
+        <h:panelGroup id="editarEnderecoPanel" class="ui-fluid" layout="block">
+            <p:messages autoUpdate="false" closable="true" />
+            <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
+                         columnClasses="ui-grid-col-4, ui-grid-col-8">
+
+                <p:outputLabel value="CEP" for="editCep" />
+                <p:inputText id="editCep"   maxlength="8">
+                    <p:keyFilter regEx="/[\d]/"/>
+                </p:inputText>
+
+                <p:outputLabel value="Logradouro" for="editLogradouro" />
+                <p:inputText id="editLogradouro"    />
+
+                <p:outputLabel value="Número" for="editNumero" />
+                <p:inputText id="editNumero"   >
+                    <p:keyFilter regEx="/[\d]/"/>
+                </p:inputText>
+
+                <p:outputLabel value="complemento" for="editComplemento" />
+                <p:inputText id="editComplemento" />
+
+                <p:outputLabel value="Cidade" for="editCidade" />
+                <p:inputText id="editCidade" />
+
+                <p:outputLabel value="UF" for="editUf" />
+                <p:selectOneMenu id="editUf"   >
+                    <f:selectItem  itemLabel="Selecione um estado" value="#{null}"  noSelectionOption="true"/> 
+                   
+                </p:selectOneMenu>
+
+                <p:outputLabel/>
+                <p:commandButton  icon="fa fa-plus" value="Salvar"   >
+                  
+                </p:commandButton>
+            </p:panelGrid>
+        </h:panelGroup>
+
+    </p:dialog>
+
+    
+   
 
 </ui:composition>
