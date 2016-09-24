@@ -23,7 +23,8 @@
             }
         </style>
 
-        <h:form id="frm" prependId="false">         
+        <h:form id="frm" prependId="false" onkeypress="if (event.keyCode == 13) {return false;}"> 
+            <p:focus />
             <h:panelGroup layout="block" class="ui-fluid" id="grupoDados">            
                 <h2>Novo cliente</h2>
                 <p:toolbar style="margin-top: 15px"> 
@@ -45,7 +46,7 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"  value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
+                    <p:inputText id="nome" onkeyup="nomeMaiusculo(this)" value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
 
                     <p:outputLabel value="E-mail:" for="email"/>
                     <p:inputText value="#{cadastroClienteBean.cliente.email}"  id="email"   />
@@ -63,12 +64,12 @@
                     </p:selectOneRadio>
 
                     <p:outputLabel rendered="#{cadastroClienteBean.pessoaFisica}"  value="CPF:" for="cpf"/>
-                    <p:inputText rendered="#{cadastroClienteBean.pessoaFisica}" 
-                                 value="#{cadastroClienteBean.cpf}" id="cpf"   />
+                    <p:inputMask rendered="#{cadastroClienteBean.pessoaFisica}" converter="retirarMascaraConverter"
+                                 value="#{cadastroClienteBean.cpf}" id="cpf" mask="999.999.999-99" />
 
                     <p:outputLabel  rendered="#{cadastroClienteBean.pessoaJuridica}" value="CNPJ:" for="cnpj"/>
-                    <p:inputText  rendered="#{cadastroClienteBean.pessoaJuridica}"  id="cnpj" 
-                                  value="#{cadastroClienteBean.cnpj}"   />
+                    <p:inputMask rendered="#{cadastroClienteBean.pessoaJuridica}" converter="retirarMascaraConverter"
+                                 value="#{cadastroClienteBean.cnpj}" id="cnpj" mask="99.999.999/9999-99" />
 
                 </p:panelGrid>
             </h:panelGroup>

@@ -410,7 +410,14 @@
                 v = z.value.toUpperCase();
                 z.value = v;
             }
-            
+
+            function nomeMaiusculo(nome) {
+                n = nome.value.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
+                    return a.toUpperCase();
+                });
+                nome.value = n;
+            }
+
         </script>
         <!-- jQuery -->
         <h:outputScript target="body" library="primefaces" name="jquery/jquery.js" />

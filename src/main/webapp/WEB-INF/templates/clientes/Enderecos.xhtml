@@ -12,17 +12,17 @@
         }
 
         @media(min-width:1200px){
-            .novoEnderecoDialog {
+            .novoEnderecoDialog,.editarEnderecoDialog {
                 width: 550px !important; 
-
-            }           
+            } 
+           
         }
 
     </style>
 
     <p:commandButton style="margin-top: 25px;width: auto" action="#{cadastroClienteBean.novoEndereco}"
                      styleClass="btn-adicionar-endereco" 
-                     process="@this" update="frm:novoEnderecoDialog" 
+                     process="@this" update=":frm:novoEnderecoDialog" 
                      oncomplete="PF('novoEnderecoDialog').show()"  id="endereco"  
                      icon="fa fa-plus" value="Adicionar endereço">
         <p:resetInput target="frm:novoEnderecoDialog"/>
@@ -44,6 +44,11 @@
         <p:column headerText="CEP"   >
             <h:outputText value="#{endereco.cep}"  />
         </p:column>
+
+        <p:column headerText="Bairro"   >
+            <h:outputText value="#{endereco.bairro}"  />
+        </p:column>
+
         <p:column headerText="Cidade"   >
             <h:outputText value="#{endereco.cidade}"  />
         </p:column>
@@ -51,11 +56,16 @@
             <h:outputText value="#{endereco.uf}"  />
         </p:column>
         <p:column width="15%"  >
-            <p:commandButton styleClass="btn-editar" 
-                     oncomplete="PF('editarEnderecoDialog').show()"                   
-                      icon="fa fa-fw fa-edit" title="Editar" >
+            <p:commandButton styleClass="btn-editar"  update=":frm:editarEnderecoDialog" 
+                             oncomplete="PF('editarEnderecoDialog').show()"                     
+                             icon="fa fa-fw fa-edit" title="Editar" >
+                <f:setPropertyActionListener  value="#{endereco}" 
+                                              target="#{cadastroClienteBean.endereco}" />
+                <p:resetInput target=":frm:editarEnderecoDialog:editUF"/>
             </p:commandButton>
-            <p:commandButton icon="fa fa-fw fa-remove" styleClass="btn-excluir" title="Excluir">
+            <p:commandButton icon="fa fa-fw fa-remove" process="@this" update="tableEndereco" styleClass="btn-excluir" title="Excluir">
+                <p:collector  value="#{endereco}" removeFrom="#{cadastroClienteBean.cliente.enderecos}"
+                              unique="false"/>
             </p:commandButton>
         </p:column>
 
@@ -63,33 +73,36 @@
 
     <p:dialog widgetVar="novoEnderecoDialog" styleClass="novoEnderecoDialog"  id="novoEnderecoDialog" modal="true" showEffect="explode" 
               focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="false" responsive="true">
-
+         
         <h:panelGroup id="enderecoPanel" class="ui-fluid" layout="block">
             <p:messages autoUpdate="false" closable="true" />
             <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
                          columnClasses="ui-grid-col-4, ui-grid-col-8">
 
-                <p:outputLabel value="CEP" for="cep" />
-                <p:inputText id="cep" value="#{cadastroClienteBean.endereco.cep}"  maxlength="8">
-                    <p:keyFilter regEx="/[\d]/"/>
-                </p:inputText>
+                <p:outputLabel value="CEP:" for="cep" />
+                <p:inputMask value="#{cadastroClienteBean.endereco.cep}" converter="retirarMascaraConverter" id="cep" mask="99999-999"/>
 
-                <p:outputLabel value="Logradouro" for="logradouro" />
+                <p:outputLabel value="Logradouro:" for="logradouro" />
                 <p:inputText id="logradouro"  value="#{cadastroClienteBean.endereco.logradouro}"  />
 
-                <p:outputLabel value="Número" for="numero" />
+                <p:outputLabel value="Número:" for="numero" />
                 <p:inputText id="numero" value="#{cadastroClienteBean.endereco.numero}" maxlength="8"  >
                     <p:keyFilter regEx="/[\d]/"/>
                 </p:inputText>
 
-                <p:outputLabel value="complemento" for="complemento" />
+                <p:outputLabel value="complemento:" for="complemento" />
                 <p:inputText id="complemento"  value="#{cadastroClienteBean.endereco.complemento}"/>
 
-                <p:outputLabel value="Cidade" for="cidade" />
+                <p:outputLabel value="Bairro:" for="bairro" />
+                <p:inputText id="bairro"  value="#{cadastroClienteBean.endereco.bairro}"/>
+
+                <p:outputLabel value="Cidade:" for="cidade" />
                 <p:inputText id="cidade" value="#{cadastroClienteBean.endereco.cidade}" />
 
-                <p:outputLabel value="UF" for="uf" />
-                <p:selectOneMenu id="uf" value="#{cadastroClienteBean.endereco.uf}"   >
+                <p:outputLabel value="UF:" for="uf" />
+                <p:selectOneMenu id="uf" value="#{cadastroClienteBean.endereco.uf}"  
+                                 filter="true" filterMatchMode="startsWith"
+                                 required="true" requiredMessage="UF deve ser informada."  >
                     <f:selectItem  itemLabel="Selecione um estado" value="#{null}"  noSelectionOption="true"/> 
                     <f:selectItems value="#{cadastroClienteBean.ufs}" var="uf" 
                                    itemValue="#{uf}" itemLabel="#{uf.valor}"  />
@@ -107,50 +120,52 @@
         </h:panelGroup>
 
     </p:dialog>
-    
-      <p:dialog widgetVar="editarEnderecoDialog" styleClass="editarEnderecoDialog"  id="editarEnderecoDialog" modal="true" showEffect="explode" 
-             dynamic="true"  header="Editar endereço" resizable="false" responsive="true">
+
+    <p:dialog widgetVar="editarEnderecoDialog" styleClass="editarEnderecoDialog"  id="editarEnderecoDialog" modal="true" showEffect="explode" 
+              dynamic="true"  header="Editar endereço" resizable="false" responsive="true">
 
         <h:panelGroup id="editarEnderecoPanel" class="ui-fluid" layout="block">
             <p:messages autoUpdate="false" closable="true" />
-            <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
+            <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder" 
                          columnClasses="ui-grid-col-4, ui-grid-col-8">
 
                 <p:outputLabel value="CEP" for="editCep" />
-                <p:inputText id="editCep"   maxlength="8">
+                <p:inputText id="editCep" value="#{cadastroClienteBean.endereco.cep}"   maxlength="8">
                     <p:keyFilter regEx="/[\d]/"/>
                 </p:inputText>
 
                 <p:outputLabel value="Logradouro" for="editLogradouro" />
-                <p:inputText id="editLogradouro"    />
+                <p:inputText id="editLogradouro" value="#{cadastroClienteBean.endereco.logradouro}"    />
 
                 <p:outputLabel value="Número" for="editNumero" />
-                <p:inputText id="editNumero"   >
+                <p:inputText id="editNumero" value="#{cadastroClienteBean.endereco.numero}"   >
                     <p:keyFilter regEx="/[\d]/"/>
                 </p:inputText>
 
                 <p:outputLabel value="complemento" for="editComplemento" />
-                <p:inputText id="editComplemento" />
+                <p:inputText id="editComplemento" value="#{cadastroClienteBean.endereco.complemento}" />
+                
+                
+                <p:outputLabel value="Bairro" for="editBairro" />
+                <p:inputText id="editBairro" value="#{cadastroClienteBean.endereco.bairro}" />
 
                 <p:outputLabel value="Cidade" for="editCidade" />
-                <p:inputText id="editCidade" />
+                <p:inputText id="editCidade" value="#{cadastroClienteBean.endereco.cidade}" />
 
-                <p:outputLabel value="UF" for="editUf" />
-                <p:selectOneMenu id="editUf"   >
-                    <f:selectItem  itemLabel="Selecione um estado" value="#{null}"  noSelectionOption="true"/> 
-                   
-                </p:selectOneMenu>
+                <p:outputLabel value="UF" for="editUF" />
+                <p:autoComplete id="editUF" dropdown="true" value="#{cadastroClienteBean.endereco.uf}"  
+                                var="uf" itemLabel="#{uf.valor}" itemValue="#{uf}"
+                                completeMethod="#{cadastroClienteBean.getUfs}"/>
 
-                <p:outputLabel/>
-                <p:commandButton  icon="fa fa-plus" value="Salvar"   >
-                  
+                <p:outputLabel   />
+                <p:commandButton  icon="fa fa-plus" value="Salvar" 
+                                  process="editarEnderecoDialog"
+                                  oncomplete="if (!args.validationFailed) PF('editarEnderecoDialog').hide()"
+                                  update="frm:tableEndereco editarEnderecoPanel">                 
                 </p:commandButton>
             </p:panelGrid>
         </h:panelGroup>
 
     </p:dialog>
-
-    
-   
 
 </ui:composition>

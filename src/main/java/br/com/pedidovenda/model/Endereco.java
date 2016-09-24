@@ -9,7 +9,6 @@ import br.com.pedidovenda.util.validator.StringUtil;
 import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -33,29 +32,35 @@ public class Endereco implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false,length = 150)
-    @NotNull @Size(max = 150)
+    @Column(nullable = false, length = 150)
+    @NotNull
+    @Size(max = 150)
     private String logradouro;
-    @Column(nullable = false,length = 20)
-    @NotNull @Size(max = 20)
+    @Column(nullable = false, length = 20)
+    @NotNull
+    @Size(max = 20)
     private String numero;
     @Column(length = 200)
     private String complemento;
-    @Column(nullable = false,length = 60)
-    @NotNull @Size(max = 60)
+    @Column(nullable = false, length = 60)
+    @NotNull
+    private String bairro;
+    @Column(nullable = false, length = 60)
+    @NotNull
+    @Size(max = 60)
     private String cidade;
-    @Column(nullable = false,length = 60)
+    @Column(nullable = false, length = 60)
     @Enumerated(EnumType.STRING)
     @NotNull
     private UF uf;
-    @Column(nullable = false,length = 20)
-    @NotNull 
+    @Column(nullable = false, length = 20)
+    @NotNull
     @CEP
-    private String cep; 
+    private String cep;
     @ManyToOne(optional = false)
     @JoinColumn(nullable = false)
     private Cliente cliente;
-     
+
     public Long getId() {
         return id;
     }
@@ -74,9 +79,9 @@ public class Endereco implements Serializable {
     /**
      * @param logradouro the logradouro to set
      */
-    public void setLogradouro(String logradouro) {     
-        this.logradouro = Validador.isStringValida(logradouro)?StringUtil
-                .convertePrimeiraLetraMaiuscula(logradouro):logradouro;
+    public void setLogradouro(String logradouro) {
+        this.logradouro = Validador.isStringValida(logradouro) ? StringUtil
+                .convertePrimeiraLetraMaiuscula(logradouro) : logradouro;
     }
 
     /**
@@ -118,10 +123,10 @@ public class Endereco implements Serializable {
      * @param cidade the cidade to set
      */
     public void setCidade(String cidade) {
-        this.cidade = Validador.isStringValida(cidade)?StringUtil
-                .convertePrimeiraLetraMaiuscula(cidade):cidade;
+        this.cidade = Validador.isStringValida(cidade) ? StringUtil
+                .convertePrimeiraLetraMaiuscula(cidade) : cidade;
     }
-    
+
     /**
      * @return the cep
      */
@@ -140,8 +145,8 @@ public class Endereco implements Serializable {
      * @return the cliente
      */
     public Cliente getCliente() {
-        if(Validador.isObjectValido(cliente)){
-            return cliente;  
+        if (Validador.isObjectValido(cliente)) {
+            return cliente;
         }
         cliente = new Cliente();
         return cliente;
@@ -161,8 +166,16 @@ public class Endereco implements Serializable {
     public void setUf(UF uf) {
         this.uf = uf;
     }
-    
-    
+
+    public String getBairro() {
+        return bairro;
+    }
+
+    public void setBairro(String bairro) {
+        this.bairro = Validador.isStringValida(bairro) ? StringUtil
+                .convertePrimeiraLetraMaiuscula(bairro) : bairro;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

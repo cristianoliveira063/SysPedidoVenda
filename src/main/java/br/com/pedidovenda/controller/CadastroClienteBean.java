@@ -51,7 +51,7 @@ public class CadastroClienteBean implements Serializable {
             endereco.setCliente(cliente);
             clienteService.adicionar(cliente);
             reset();
-            MessageView.info("Cliente salvo com sucesso!");
+            MessageView.info("Cadastro salvo com sucesso!");
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
@@ -59,7 +59,8 @@ public class CadastroClienteBean implements Serializable {
 
     public void reset() {
         this.cliente = new Cliente();
-
+        this.cnpj = new String();
+        this.cpf = new String();
     }
 
     public void novoEndereco() {
@@ -98,6 +99,10 @@ public class CadastroClienteBean implements Serializable {
     public List<UF> getUfs() {
         return Arrays.asList(UF.values());
     }
+    
+    public List<UF>getUfs(String query){
+        return Arrays.asList(UF.values());      
+    }
 
     public String getCpf() {
         return cpf;
@@ -117,4 +122,10 @@ public class CadastroClienteBean implements Serializable {
         this.cnpj = cnpj;
     }
 
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
+     
+   
 }

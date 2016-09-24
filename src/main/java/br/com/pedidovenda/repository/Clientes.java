@@ -27,8 +27,8 @@ public class Clientes extends BasicRepository<Cliente, Long> {
 
     public Cliente porNumeroDocumento(String documento, TipoPessoa tipo) {
         try {
-            return getEntityManager().createQuery("from Cliente where email = :email and tipo = :tipo",
-                    Cliente.class).setParameter("email", documento)
+            return getEntityManager().createQuery("from Cliente where documentoReceitaFederal = :documento and tipo = :tipo",
+                    Cliente.class).setParameter("documento", documento)
                     .setParameter("tipo", tipo).getSingleResult();
         } catch (NoResultException e) {
             System.out.println(e.getMessage());

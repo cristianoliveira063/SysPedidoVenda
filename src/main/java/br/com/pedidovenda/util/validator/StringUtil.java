@@ -57,35 +57,13 @@ public class StringUtil {
         }
     }
 
-    public static String retiraMascara(String str) {
-        StringBuilder ret = new StringBuilder();
-        StringBuilder sb = new StringBuilder();
-
-        if (Validador.isStringValida(str)) {
-            ret.append(str);
-            sb.append(str);
-            String aux, charMasc = "./-:(){}[]";
-            int i, indice, caracter;
-            char c;
-            aux = str;
-            for (i = 0; i < charMasc.length(); i++) {
-                c = charMasc.charAt(i);
-                while ((indice = aux.indexOf(c)) != -1) {
-                    sb.deleteCharAt(indice);
-                    aux = sb.toString();
-                }
-            }
-            ret = new StringBuilder();
-            for (i = 0; i < aux.length(); i++) {
-                caracter = (int) aux.charAt(i);
-                if (caracter >= 32 && caracter <= 127) {
-                    ret.append((char) caracter);
-                }
-            }
+     public static String retiraMascara(String valor) {
+        if (valor != null && !valor.isEmpty()) {
+            return valor.replaceAll("\\D", "");
         }
-        return ret.toString();
+        return valor;
     }
-
+ 
     /**
      * Método utilizado para retornar textos sem espaços em excesso. O parametro
      * pode conter textos que provavelmente têm espaços em excesso.<br>
