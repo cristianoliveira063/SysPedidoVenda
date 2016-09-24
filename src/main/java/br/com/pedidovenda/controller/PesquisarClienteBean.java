@@ -35,7 +35,7 @@ public class PesquisarClienteBean implements Serializable {
     private Clientes clientes;
 
     @PostConstruct
-    public void init() { 
+    public void init() {
         System.out.println("Pesquisar clientes executando");
         pesquisar();
     }
@@ -96,7 +96,5 @@ public class PesquisarClienteBean implements Serializable {
     public void setClienteSelecionado(Cliente clienteSelecionado) {
         this.clienteSelecionado = clienteSelecionado;
     }
-    
-    
 
 }

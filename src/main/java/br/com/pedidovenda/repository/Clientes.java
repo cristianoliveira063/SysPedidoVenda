@@ -9,7 +9,7 @@ import br.com.pedidovenda.model.Cliente;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
-import br.com.pedidovenda.modelFilter.ProdutoFilter;
+import br.com.pedidovenda.modelFilter.Filter;
 import br.com.pedidovenda.util.validator.Validador;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,26 +53,30 @@ public class Clientes extends BasicRepository<Cliente, Long> {
 
     public List<Cliente> filtrar(ClienteFilter clienteFilter) {
         CriteriaBuilder builder = getCriteriaBuilder();
-        CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(Cliente.class);
-        Root<Cliente> r = criteriaQuery.from(Cliente.class);
+        CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(clazz);
+        Root<Cliente> r = criteriaQuery.from(clazz);
         criteriaQuery.select(r);
-        if (clienteFilter.getFilter().isAscendente()
-                && Validador.isStringValida(clienteFilter.getFilter().getPropriedadeOrdenacao())) {
-            criteriaQuery.orderBy(builder.asc(r.get(clienteFilter.getFilter().getPropriedadeOrdenacao())));
-        } else if (Validador.isStringValida(clienteFilter.getFilter().getPropriedadeOrdenacao())) {
-            criteriaQuery.orderBy(builder.desc(r.get(clienteFilter.getFilter().getPropriedadeOrdenacao())));
-        }
+        ordenação(clienteFilter.getFilter(), criteriaQuery, builder, r);
         criteriaQuery.where(getPredicates(clienteFilter, builder, r).toArray(new Predicate[0]));
         TypedQuery<Cliente> typedQuery = criarConsulta(em, clienteFilter, criteriaQuery);
         typedQuery.setFirstResult(clienteFilter.getFilter().getPrimeiroRegistro());
         typedQuery.setMaxResults(clienteFilter.getFilter().getQuantidadeRegistros());
         return typedQuery.getResultList();
     }
+    
+    public void ordenação(Filter filter,CriteriaQuery criteriaQuery,CriteriaBuilder builder,Root r){      
+         if (filter.isAscendente()
+                && Validador.isStringValida(filter.getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.asc(r.get(filter.getPropriedadeOrdenacao())));
+        } else if (Validador.isStringValida(filter.getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.desc(r.get(filter.getPropriedadeOrdenacao())));
+        }
+    }
 
     public int quantidadeFiltrados(ClienteFilter filter) {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery();
-        Root<Cliente> rt = cq.from(Cliente.class);
+        Root<Cliente> rt = cq.from(clazz);
         cq.select(builder.count(rt));
         cq.where(getPredicates(filter, builder, rt).toArray(new Predicate[0]));
         Query q = criarConsulta(em, filter, cq);
