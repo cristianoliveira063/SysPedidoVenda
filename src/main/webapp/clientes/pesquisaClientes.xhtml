@@ -29,26 +29,31 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-3">
 
                     <p:outputLabel value="CPF/CNPJ:" for="cpfCnpj" />
-                    <p:inputText id="cpfCnpj"  maxlength="15" styleClass="form-control" />
+                    <p:inputText id="cpfCnpj" value="#{pesquisarClienteBean.clienteFilter.documentoReceitaFederal}" 
+                                 maxlength="15" styleClass="form-control" />
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome"  maxlength="100" styleClass="form-control" />
+                    <p:inputText id="nome" value="#{pesquisarClienteBean.clienteFilter.nome}" 
+                                 maxlength="100" styleClass="form-control" />
 
                 </p:panelGrid>
 
-                <p:dataTable emptyMessage="Nenhum cliente encontrado"  paginator="true" rows="10"
-                             style="margin-top: 30px" 
+                <p:dataTable emptyMessage="Nenhum cliente encontrado" 
+                             value="#{pesquisarClienteBean.lazyClienteDataModel}" lazy="true" 
+                             paginator="true" rows="10" selectionMode="single" rowKey="#{cliente.id}"
+                             selection="#{pesquisarClienteBean.clienteSelecionado}"
+                             var="cliente"   style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
-                    <p:column headerText="Nome"   >
-                        <h:outputText  />
+                    <p:column headerText="Nome"  sortBy="#{cliente.nome}"  >
+                        <h:outputText value="#{cliente.nome}" />
                     </p:column>
                     <p:column headerText="Tipo"   >
-                        <h:outputText  />
+                        <h:outputText  value="#{cliente.tipo}"/>
                     </p:column>
-                    <p:column headerText="CPF/CNPJ"  >
-                        <h:outputText />
+                    <p:column headerText="CPF/CNPJ" sortBy="#{cliente.documentoReceitaFederal}"  >
+                        <h:outputText value="#{cliente.documentoReceitaFederal}" />
                     </p:column>
                     <p:column  width="8%"  >
                         <h:outputText  />

@@ -56,12 +56,20 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(Cliente.class);
         Root<Cliente> r = criteriaQuery.from(Cliente.class);
         criteriaQuery.select(r);
+        if (clienteFilter.getFilter().isAscendente()
+                && Validador.isStringValida(clienteFilter.getFilter().getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.asc(r.get(clienteFilter.getFilter().getPropriedadeOrdenacao())));
+        } else if (Validador.isStringValida(clienteFilter.getFilter().getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.desc(r.get(clienteFilter.getFilter().getPropriedadeOrdenacao())));
+        }
         criteriaQuery.where(getPredicates(clienteFilter, builder, r).toArray(new Predicate[0]));
-        TypedQuery<Cliente> typedQuery = criarConsulta(em,clienteFilter,criteriaQuery);
+        TypedQuery<Cliente> typedQuery = criarConsulta(em, clienteFilter, criteriaQuery);
+        typedQuery.setFirstResult(clienteFilter.getFilter().getPrimeiroRegistro());
+        typedQuery.setMaxResults(clienteFilter.getFilter().getQuantidadeRegistros());
         return typedQuery.getResultList();
     }
 
-     public int quantidadeFiltrados(ClienteFilter filter) {
+    public int quantidadeFiltrados(ClienteFilter filter) {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery cq = builder.createQuery();
         Root<Cliente> rt = cq.from(Cliente.class);
@@ -70,7 +78,7 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         Query q = criarConsulta(em, filter, cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-     
+
     public List<Predicate> getPredicates(ClienteFilter filter, CriteriaBuilder builder, Root r) {
         List<Predicate> predicates = new ArrayList<>();
         if (Validador.isStringValida(filter.getDocumentoReceitaFederal())) {

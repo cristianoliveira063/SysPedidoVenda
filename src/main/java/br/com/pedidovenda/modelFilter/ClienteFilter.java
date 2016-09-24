@@ -6,6 +6,7 @@
 package br.com.pedidovenda.modelFilter;
 
 import br.com.pedidovenda.model.TipoPessoa;
+import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 
 /**
@@ -19,6 +20,7 @@ public class ClienteFilter implements Serializable {
     private String documentoReceitaFederal;
     private String nome;
     private TipoPessoa tipo;
+    private Filter filter;
 
     public String getDocumentoReceitaFederal() {
         return documentoReceitaFederal;
@@ -43,6 +45,19 @@ public class ClienteFilter implements Serializable {
     public void setTipo(TipoPessoa tipo) {
         this.tipo = tipo;
     }
+
+    public Filter getFilter() {
+        if(Validador.isObjectValido(filter)){           
+            return filter;          
+        }
+        filter = new Filter();
+        return filter;
+    }
+
+    public void setFilter(Filter filter) {
+        this.filter = filter;
+    }
+    
     
     
 
