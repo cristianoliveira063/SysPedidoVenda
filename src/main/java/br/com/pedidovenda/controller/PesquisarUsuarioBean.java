@@ -53,7 +53,7 @@ public class PesquisarUsuarioBean implements Serializable {
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         }
-        
+       
     }
     
     public List<Usuario> getListUsuarios() {

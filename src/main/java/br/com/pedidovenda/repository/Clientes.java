@@ -6,10 +6,23 @@
 package br.com.pedidovenda.repository;
 
 import br.com.pedidovenda.model.Cliente;
+import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
+import br.com.pedidovenda.modelFilter.ClienteFilter;
+import br.com.pedidovenda.modelFilter.ProdutoFilter;
+import br.com.pedidovenda.util.validator.Validador;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -36,6 +49,50 @@ public class Clientes extends BasicRepository<Cliente, Long> {
 
         }
 
+    }
+
+    public List<Cliente> filtrar(ClienteFilter clienteFilter) {
+        CriteriaBuilder builder = getCriteriaBuilder();
+        CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(Cliente.class);
+        Root<Cliente> r = criteriaQuery.from(Cliente.class);
+        criteriaQuery.select(r);
+        criteriaQuery.where(getPredicates(clienteFilter, builder, r).toArray(new Predicate[0]));
+        TypedQuery<Cliente> typedQuery = criarConsulta(em,clienteFilter,criteriaQuery);
+        return typedQuery.getResultList();
+    }
+
+     public int quantidadeFiltrados(ClienteFilter filter) {
+        CriteriaBuilder builder = getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery();
+        Root<Cliente> rt = cq.from(Cliente.class);
+        cq.select(builder.count(rt));
+        cq.where(getPredicates(filter, builder, rt).toArray(new Predicate[0]));
+        Query q = criarConsulta(em, filter, cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
+     
+    public List<Predicate> getPredicates(ClienteFilter filter, CriteriaBuilder builder, Root r) {
+        List<Predicate> predicates = new ArrayList<>();
+        if (Validador.isStringValida(filter.getDocumentoReceitaFederal())) {
+            ParameterExpression<String> paramDoc = builder.parameter(String.class, "documentoReceitaFederal");
+            predicates.add(builder.equal(r.get("documentoReceitaFederal"), paramDoc));
+        }
+        if (Validador.isStringValida(filter.getNome())) {
+            ParameterExpression<String> paramNome = builder.parameter(String.class, "nome");
+            predicates.add(builder.like(r.<String>get("nome"), paramNome));
+        }
+        return predicates;
+    }
+
+    public TypedQuery criarConsulta(EntityManager em, ClienteFilter filter, CriteriaQuery criteriaQuery) {
+        TypedQuery<Produto> typedQuery = em.createQuery(criteriaQuery);
+        if (Validador.isStringValida(filter.getDocumentoReceitaFederal())) {
+            typedQuery.setParameter("documentoReceitaFederal", filter.getDocumentoReceitaFederal());
+        }
+        if (Validador.isStringValida(filter.getNome())) {
+            typedQuery.setParameter("nome", "%" + filter.getNome() + "%");
+        }
+        return typedQuery;
     }
 
     @Override
