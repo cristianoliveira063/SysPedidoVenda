@@ -56,14 +56,15 @@
             <h:outputText value="#{endereco.uf}"  />
         </p:column>
         <p:column width="15%"  >
-            <p:commandButton styleClass="btn-editar"  update=":frm:editarEnderecoDialog" 
+            <p:commandButton styleClass="btn-editar" process="@this"  update=":frm:editarEnderecoDialog" 
                              oncomplete="PF('editarEnderecoDialog').show()"                     
                              icon="fa fa-fw fa-edit" title="Editar" >
                 <f:setPropertyActionListener  value="#{endereco}" 
                                               target="#{cadastroClienteBean.endereco}" />
                
             </p:commandButton>
-            <p:commandButton icon="fa fa-fw fa-remove" process="@this" update="tableEndereco" styleClass="btn-excluir" title="Excluir">
+            <p:commandButton icon="fa fa-fw fa-remove" process="@this" 
+                             update="tableEndereco" styleClass="btn-excluir" title="Excluir">
                 <p:collector  value="#{endereco}" removeFrom="#{cadastroClienteBean.cliente.enderecos}"
                               unique="false"/>
             </p:commandButton>
@@ -71,7 +72,8 @@
 
     </p:dataTable>
 
-    <p:dialog widgetVar="novoEnderecoDialog" styleClass="novoEnderecoDialog"  id="novoEnderecoDialog" modal="true" showEffect="explode" 
+    <p:dialog widgetVar="novoEnderecoDialog" styleClass="novoEnderecoDialog"  
+              id="novoEnderecoDialog" modal="true" showEffect="explode" 
               focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="false" responsive="true">
          
         <h:panelGroup id="enderecoPanel" class="ui-fluid" layout="block">
@@ -80,7 +82,8 @@
                          columnClasses="ui-grid-col-4, ui-grid-col-8">
 
                 <p:outputLabel value="CEP:" for="cep" />
-                <p:inputMask value="#{cadastroClienteBean.endereco.cep}" converter="retirarMascaraConverter" id="cep" mask="99999-999"/>
+                <p:inputMask value="#{cadastroClienteBean.endereco.cep}" 
+                             converter="retirarMascaraConverter" id="cep" mask="99999-999"/>
 
                 <p:outputLabel value="Logradouro:" for="logradouro" />
                 <p:inputText id="logradouro"  value="#{cadastroClienteBean.endereco.logradouro}"  />
@@ -121,7 +124,8 @@
 
     </p:dialog>
 
-    <p:dialog widgetVar="editarEnderecoDialog" styleClass="editarEnderecoDialog"  id="editarEnderecoDialog" modal="true" showEffect="explode" 
+    <p:dialog widgetVar="editarEnderecoDialog" styleClass="editarEnderecoDialog" 
+              id="editarEnderecoDialog" modal="true" showEffect="explode" 
               dynamic="true"  header="Editar endereço" resizable="false" responsive="true">
 
         <h:panelGroup id="editarEnderecoPanel" class="ui-fluid" layout="block">
