@@ -9,13 +9,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
@@ -45,7 +48,8 @@ public class Cliente implements Serializable {
     @Column(name = "tipo_pessoa",nullable = false,length = 20)
     @NotNull
     private TipoPessoa tipo;
-    @OneToMany(mappedBy = "cliente",cascade = CascadeType.ALL)
+    @ElementCollection
+    @CollectionTable(name = "cliente_endereco",joinColumns = @JoinColumn(name = "id_cliente"))
     private List<Endereco> enderecos = new ArrayList<>();
 
     public Long getId() {

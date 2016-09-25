@@ -61,7 +61,7 @@
                              icon="fa fa-fw fa-edit" title="Editar" >
                 <f:setPropertyActionListener  value="#{endereco}" 
                                               target="#{cadastroClienteBean.endereco}" />
-                <p:resetInput target=":frm:editarEnderecoDialog:editUF"/>
+               
             </p:commandButton>
             <p:commandButton icon="fa fa-fw fa-remove" process="@this" update="tableEndereco" styleClass="btn-excluir" title="Excluir">
                 <p:collector  value="#{endereco}" removeFrom="#{cadastroClienteBean.cliente.enderecos}"

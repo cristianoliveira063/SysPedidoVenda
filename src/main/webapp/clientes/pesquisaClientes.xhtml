@@ -9,6 +9,16 @@
 
     <ui:define name="titulo">Pesquisa clientes</ui:define>
     <ui:define name="content">
+        <style type="text/css">
+            @media(min-width:1200px){
+                .btn-editar,.btn-excluir {
+                    width: 40% !important;               
+                }           
+            }
+
+        </style>
+
+
 
         <h:form id="formPesquisaClientes">
 
@@ -55,10 +65,15 @@
                     <p:column headerText="CPF/CNPJ" sortBy="#{cliente.documentoReceitaFederal}"  >
                         <h:outputText value="#{cliente.documentoReceitaFederal}" />
                     </p:column>
-                    <p:column  width="8%"  >
-                        <h:outputText  />
+                    <p:column width="18%">
+                        <p:button styleClass="btn-editar"  
+                                  icon="fa fa-fw fa-edit" title="Editar" >
+                        </p:button> 
+                        <p:commandButton  styleClass="btn-excluir"
+                                          icon="fa fa-fw fa-remove" title="Excluir">
+                        </p:commandButton>
                     </p:column>
-                    
+
                 </p:dataTable>
 
             </div>

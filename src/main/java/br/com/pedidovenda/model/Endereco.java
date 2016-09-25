@@ -9,29 +9,22 @@ import br.com.pedidovenda.util.validator.StringUtil;
 import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import br.com.pedidovenda.util.validator.CEP;
+import javax.persistence.Embeddable;
 
 /**
  *
  * @author CRISTIANO
  */
-@Entity
+@Embeddable
 public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+   
     @Column(nullable = false, length = 150)
     @NotNull
     @Size(max = 150)
@@ -57,18 +50,8 @@ public class Endereco implements Serializable {
     @NotNull
     @CEP
     private String cep;
-    @ManyToOne(optional = false)
-    @JoinColumn(nullable = false)
-    private Cliente cliente;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+ 
+  
     /**
      * @return the logradouro
      */
@@ -141,23 +124,6 @@ public class Endereco implements Serializable {
         this.cep = cep;
     }
 
-    /**
-     * @return the cliente
-     */
-    public Cliente getCliente() {
-        if (Validador.isObjectValido(cliente)) {
-            return cliente;
-        }
-        cliente = new Cliente();
-        return cliente;
-    }
-
-    /**
-     * @param cliente the cliente to set
-     */
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
 
     public UF getUf() {
         return uf;
@@ -176,26 +142,6 @@ public class Endereco implements Serializable {
                 .convertePrimeiraLetraMaiuscula(bairro) : bairro;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (getId() != null ? getId().hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Endereco)) {
-            return false;
-        }
-        Endereco other = (Endereco) object;
-        return !((this.getId() == null && other.getId() != null) || (this.getId() != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        return "br.com.syspedidovenda.model.Endereco[ id=" + getId() + " ]";
-    }
+   
 
 }

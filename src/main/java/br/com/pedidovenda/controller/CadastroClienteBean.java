@@ -48,7 +48,7 @@ public class CadastroClienteBean implements Serializable {
 
     public void salvar() {
         try {
-            endereco.setCliente(cliente);
+
             clienteService.adicionar(cliente);
             reset();
             MessageView.info("Cadastro salvo com sucesso!");
@@ -64,7 +64,7 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void novoEndereco() {
-        this.endereco = new Endereco();
+        this.endereco = new Endereco();      
     }
 
     public Cliente getCliente() {
@@ -99,9 +99,9 @@ public class CadastroClienteBean implements Serializable {
     public List<UF> getUfs() {
         return Arrays.asList(UF.values());
     }
-    
-    public List<UF>getUfs(String query){
-        return Arrays.asList(UF.values());      
+
+    public List<UF> getUfs(String query) {
+        return Arrays.asList(UF.values());
     }
 
     public String getCpf() {
@@ -126,6 +126,4 @@ public class CadastroClienteBean implements Serializable {
         this.endereco = endereco;
     }
 
-     
-   
 }
