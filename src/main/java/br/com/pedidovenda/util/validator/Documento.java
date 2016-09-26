@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.pedidovenda.util.validation;
+package br.com.pedidovenda.util.validator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,14 +18,14 @@ import javax.validation.constraints.Pattern;
  *
  * @author CRISTIANO
  */
+
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {})
-@Pattern(regexp = "[0-9]{8}")
-public @interface Cep {
+public @interface Documento {
 
     @OverridesAttribute(constraint = Pattern.class, name = "message")
-    String message() default "{com.pedidovenda.constraints.cep.message}";
+    String message() default "{com.pedidovenda.constraints.documento.message}";
 
     Class<?>[] groups() default {};
 

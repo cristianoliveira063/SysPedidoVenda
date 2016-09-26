@@ -27,7 +27,7 @@
                 <h2>Pesquisa clientes</h2>
                 <p:toolbar style="margin-top: 15px"> 
                     <p:toolbarGroup>
-                        <p:commandButton value="Pesquisa" icon="fa fa-fw fa-search" />
+                        <p:commandButton value="Pesquisa" process="@form" update="@form msgs" icon="fa fa-fw fa-search" />
                     </p:toolbarGroup>               
                     <p:toolbarGroup align="right" style="margin-right: 10px">
                         <p:button  value="Novo" icon="fa fa-plus" outcome="/clientes/cadastroCliente" />
@@ -77,7 +77,6 @@
                 </p:dataTable>
 
             </div>
-
         </h:form>
     </ui:define>
 
