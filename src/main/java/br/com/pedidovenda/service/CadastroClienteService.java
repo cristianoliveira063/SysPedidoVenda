@@ -26,7 +26,7 @@ public class CadastroClienteService implements Serializable {
     public Cliente adicionar(Cliente cliente) throws NegocioException {
         Cliente clienteExistente = clientes.porNumeroDocumento(cliente.getDocumentoReceitaFederal(),
                 cliente.getTipo());
-        if (Validador.isObjectValido(clienteExistente)) {
+        if (Validador.isObjectValido(clienteExistente) && clienteExistente.notEquals(cliente)) {
             throw new NegocioException("Já existe um cliente com o documento informado.");
         }
         return clientes.adicionar(cliente);

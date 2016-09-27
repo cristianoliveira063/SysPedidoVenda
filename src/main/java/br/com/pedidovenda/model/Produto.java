@@ -6,7 +6,6 @@
 package br.com.pedidovenda.model;
 
 import br.com.pedidovenda.util.validator.SKU;
-import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Column;

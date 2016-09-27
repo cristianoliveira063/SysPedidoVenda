@@ -109,7 +109,9 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void setCpf(String cpf) {
-        this.cliente.setDocumentoReceitaFederal(cpf);
+        if(this.cliente.getTipo().equals(TipoPessoa.FISICA)){
+              this.cliente.setDocumentoReceitaFederal(cpf);
+        }
         this.cpf = cpf;
     }
 
@@ -118,7 +120,9 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void setCnpj(String cnpj) {
-        this.getCliente().setDocumentoReceitaFederal(cnpj);
+        if(this.cliente.getTipo().equals(TipoPessoa.JURIDICA)){
+               this.getCliente().setDocumentoReceitaFederal(cnpj);
+        }
         this.cnpj = cnpj;
     }
 

@@ -137,12 +137,15 @@ public class Cliente implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-
         if (!(object instanceof Cliente)) {
             return false;
         }
         Cliente other = (Cliente) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
+    }
+    
+    public boolean notEquals(Object object){     
+        return !this.equals(object);      
     }
 
     @Override

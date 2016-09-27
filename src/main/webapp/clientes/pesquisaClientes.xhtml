@@ -15,6 +15,18 @@
                     width: 40% !important;               
                 }           
             }
+            
+             .ui-dialog .ui-dialog-buttonpane {
+                text-align: center !important;
+
+            }
+            .ui-dialog-title{
+                float: none !important;
+
+            }
+            .ui-selectonemenu .ui-selectonemenu-trigger .ui-icon {
+                margin-top: 4px;
+            }
 
         </style>
 
@@ -72,12 +84,24 @@
                                   icon="fa fa-fw fa-edit" title="Editar" >
                              <f:param name="cliente" value="#{cliente.id}"  />
                         </p:button> 
-                        <p:commandButton  styleClass="btn-excluir"
-                                          icon="fa fa-fw fa-remove" title="Excluir">
-                        </p:commandButton>
+                        
+                        <p:commandButton  styleClass="btn-excluir" 
+                                          icon="fa fa-fw fa-remove" title="Excluir"
+                                          process="@this" update="@form msgs">
+                            <p:confirm   message="Deseja Excluir 
+                                    #{cliente.nome}?" icon="fa fa-exclamation-triangle" />                          
+                        </p:commandButton>                      
                     </p:column>
 
                 </p:dataTable>
+                  <p:confirmDialog   style="text-align: center" header="Atenção"  responsive="true" global="true" 
+                                  id="confirmacaoExclusaoDialog"
+                                  showEffect="explode" hideEffect="fade">                  
+                    <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
+                                     icon="ui-icon-check" />
+                    <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
+                                     icon="ui-icon-close" />
+                </p:confirmDialog>
 
             </div>
         </h:form>
