@@ -6,6 +6,7 @@
 package br.com.pedidovenda.modelFilter;
 
 import br.com.pedidovenda.model.TipoPessoa;
+import br.com.pedidovenda.util.validator.Documento;
 import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 
@@ -16,7 +17,7 @@ import java.io.Serializable;
 public class ClienteFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @Documento
     private String documentoReceitaFederal;
     private String nome;
     private TipoPessoa tipo;

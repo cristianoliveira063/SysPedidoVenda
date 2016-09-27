@@ -15,7 +15,7 @@
             .novoEnderecoDialog,.editarEnderecoDialog {
                 width: 550px !important; 
             } 
-           
+
         }
 
     </style>
@@ -61,7 +61,7 @@
                              icon="fa fa-fw fa-edit" title="Editar" >
                 <f:setPropertyActionListener  value="#{endereco}" 
                                               target="#{cadastroClienteBean.endereco}" />
-               
+
             </p:commandButton>
             <p:commandButton icon="fa fa-fw fa-remove" process="@this" 
                              update="tableEndereco" styleClass="btn-excluir" title="Excluir">
@@ -75,7 +75,7 @@
     <p:dialog widgetVar="novoEnderecoDialog" styleClass="novoEnderecoDialog"  
               id="novoEnderecoDialog" modal="true" showEffect="explode" 
               focus="cep" dynamic="true"  header="Inclusão de endereço" resizable="false" responsive="true">
-         
+
         <h:panelGroup id="enderecoPanel" class="ui-fluid" layout="block">
             <p:messages autoUpdate="false" closable="true" />
             <p:panelGrid columns="2"  layout="grid" styleClass="panelgrid-noborder"
@@ -148,8 +148,8 @@
 
                 <p:outputLabel value="complemento" for="editComplemento" />
                 <p:inputText id="editComplemento" value="#{cadastroClienteBean.endereco.complemento}" />
-                
-                
+
+
                 <p:outputLabel value="Bairro" for="editBairro" />
                 <p:inputText id="editBairro" value="#{cadastroClienteBean.endereco.bairro}" />
 

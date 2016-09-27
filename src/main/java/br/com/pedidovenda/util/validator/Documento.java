@@ -12,16 +12,19 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.OverridesAttribute;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 /**
  *
  * @author CRISTIANO
  */
-
+@Min(11)
 @Target({ElementType.FIELD, ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = {})
+@ReportAsSingleViolation
+@Constraint(validatedBy = {ValidarDocumento.class})
 public @interface Documento {
 
     @OverridesAttribute(constraint = Pattern.class, name = "message")

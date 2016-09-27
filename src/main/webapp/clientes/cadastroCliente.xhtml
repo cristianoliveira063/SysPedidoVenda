@@ -4,6 +4,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:pe="http://primefaces.org/ui/extensions"
+                 xmlns:o="http://omnifaces.org/ui"
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/templates/Layout.xhtml">
 
@@ -22,11 +23,15 @@
                 width: 22px !important;
             }
         </style>
+        
+          <f:metadata >
+              <o:viewParam name="cliente" value="#{cadastroClienteBean.clienteParam}"  />
+        </f:metadata>
 
         <h:form id="frm" prependId="false" onkeypress="if (event.keyCode == 13) {return false;}"> 
             <p:focus />
             <h:panelGroup layout="block" class="ui-fluid" id="grupoDados">            
-                <h2>Novo cliente</h2>
+                <h2>#{cadastroClienteBean.editando ? 'Edição de cliente' : 'Novo cliente'}</h2>
                 <p:toolbar style="margin-top: 15px"> 
                     <p:toolbarGroup>
                         <p:button value="Novo" icon="fa fa-plus"/>

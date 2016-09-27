@@ -6,6 +6,7 @@
 package br.com.pedidovenda.repository;
 
 import br.com.pedidovenda.model.Cliente;
+import br.com.pedidovenda.model.Endereco;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
@@ -50,7 +51,9 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         }
 
     }
-
+    
+    
+ 
     public List<Cliente> filtrar(ClienteFilter clienteFilter) {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(clazz);

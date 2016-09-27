@@ -8,7 +8,6 @@ package br.com.pedidovenda.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -19,7 +18,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
@@ -41,7 +39,7 @@ public class Cliente implements Serializable {
     @NotNull
     @Email
     private String email;
-    @Column(name = "doc_receita_federal", nullable = false, length = 14,unique = true)
+    @Column(name = "doc_receita_federal", nullable = false, length = 14)
     @NotNull
     private String documentoReceitaFederal;
     @Enumerated(EnumType.STRING)
@@ -49,7 +47,7 @@ public class Cliente implements Serializable {
     @NotNull
     private TipoPessoa tipo;
     @ElementCollection
-    @CollectionTable(name = "cliente_endereco",joinColumns = @JoinColumn(name = "id_cliente"))
+    @CollectionTable(name = "endereco",joinColumns = @JoinColumn(name = "id_cliente"))
     private List<Endereco> enderecos = new ArrayList<>();
 
     public Long getId() {

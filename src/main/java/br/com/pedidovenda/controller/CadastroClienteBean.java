@@ -37,6 +37,8 @@ public class CadastroClienteBean implements Serializable {
     @Inject
     private Cliente cliente;
     private Endereco endereco;
+    @Inject
+    private Cliente clienteParam;
     @CPF
     @NotNull
     private String cpf;
@@ -48,7 +50,6 @@ public class CadastroClienteBean implements Serializable {
 
     public void salvar() {
         try {
-
             clienteService.adicionar(cliente);
             reset();
             MessageView.info("Cadastro salvo com sucesso!");
@@ -64,7 +65,7 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void novoEndereco() {
-        this.endereco = new Endereco();      
+        this.endereco = new Endereco();
     }
 
     public Cliente getCliente() {
@@ -84,7 +85,6 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public boolean isPessoaJuridica() {
-
         return Validador.isObjectValido(cliente.getTipo()) && cliente.getTipo().equals(TipoPessoa.JURIDICA);
     }
 
@@ -126,4 +126,24 @@ public class CadastroClienteBean implements Serializable {
         this.endereco = endereco;
     }
 
+    public Cliente getClienteParam() {
+        return clienteParam;
+    }
+
+    public void setClienteParam(Cliente clienteParam) {
+        if (Validador.isObjectValido(clienteParam)) {
+            this.cliente.setEnderecos(clienteParam.getEnderecos());
+            this.cliente = clienteParam;
+            this.cpf = clienteParam.getTipo().equals(TipoPessoa.FISICA) ? clienteParam.getDocumentoReceitaFederal() : "";
+            this.cnpj = clienteParam.getTipo().equals(TipoPessoa.JURIDICA) ? clienteParam.getDocumentoReceitaFederal() : "";
+        }
+        this.clienteParam = clienteParam;
+    }
+    
+    public boolean isEditando(){
+        
+        return Validador.isObjectValido(cliente.getId());
+    }
+    
+    
 }

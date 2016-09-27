@@ -40,7 +40,9 @@
 
                     <p:outputLabel value="CPF/CNPJ:" for="cpfCnpj" />
                     <p:inputText id="cpfCnpj" value="#{pesquisarClienteBean.clienteFilter.documentoReceitaFederal}" 
-                                 maxlength="15" styleClass="form-control" />
+                                 maxlength="15" styleClass="form-control" >
+                     <p:keyFilter regEx="/[\d]/"/>
+                    </p:inputText>
 
                     <p:outputLabel value="Nome:" for="nome" />
                     <p:inputText id="nome" value="#{pesquisarClienteBean.clienteFilter.nome}" 
@@ -60,14 +62,15 @@
                         <h:outputText value="#{cliente.nome}" />
                     </p:column>
                     <p:column headerText="Tipo"   >
-                        <h:outputText  value="#{cliente.tipo}"/>
+                        <h:outputText  value="#{cliente.tipo.descricao}"/>
                     </p:column>
                     <p:column headerText="CPF/CNPJ" sortBy="#{cliente.documentoReceitaFederal}"  >
                         <h:outputText value="#{cliente.documentoReceitaFederal}" />
                     </p:column>
                     <p:column width="18%">
-                        <p:button styleClass="btn-editar"  
+                        <p:button styleClass="btn-editar" outcome="/clientes/cadastroCliente"  
                                   icon="fa fa-fw fa-edit" title="Editar" >
+                             <f:param name="cliente" value="#{cliente.id}"  />
                         </p:button> 
                         <p:commandButton  styleClass="btn-excluir"
                                           icon="fa fa-fw fa-remove" title="Excluir">
