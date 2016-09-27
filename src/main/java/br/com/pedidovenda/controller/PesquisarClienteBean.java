@@ -8,6 +8,8 @@ package br.com.pedidovenda.controller;
 import br.com.pedidovenda.model.Cliente;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
 import br.com.pedidovenda.repository.Clientes;
+import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,16 @@ public class PesquisarClienteBean implements Serializable {
     public void init() {
         System.out.println("Pesquisar clientes executando");
         pesquisar();
+    }
+    
+    public void excluir(){      
+        try {
+            clientes.remover(clienteSelecionado);
+              MessageView.info("Cliente " + clienteSelecionado.getNome()
+				+ " excluído com sucesso.");  
+        } catch (NegocioException e) {
+              MessageView.fatal(e.getMessage());
+        }      
     }
 
     public LazyDataModel<Cliente> pesquisar() {

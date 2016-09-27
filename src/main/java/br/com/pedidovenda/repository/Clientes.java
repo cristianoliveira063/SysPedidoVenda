@@ -11,12 +11,15 @@ import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
 import br.com.pedidovenda.modelFilter.Filter;
+import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jpa.Transactional;
 import br.com.pedidovenda.util.validator.Validador;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -51,9 +54,18 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         }
 
     }
-    
-    
- 
+
+    @Transactional
+    public void remover(Cliente cliente) throws NegocioException {
+        try {
+            super.remove(cliente);
+            em.flush();
+        } catch (PersistenceException e) {
+            System.out.println(e.getMessage());
+            throw new NegocioException("Cadastro não pode ser excluído.");
+        }
+    }
+
     public List<Cliente> filtrar(ClienteFilter clienteFilter) {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery<Cliente> criteriaQuery = builder.createQuery(clazz);
@@ -66,9 +78,9 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         typedQuery.setMaxResults(clienteFilter.getFilter().getQuantidadeRegistros());
         return typedQuery.getResultList();
     }
-    
-    public void ordenação(Filter filter,CriteriaQuery criteriaQuery,CriteriaBuilder builder,Root r){      
-         if (filter.isAscendente()
+
+    public void ordenação(Filter filter, CriteriaQuery criteriaQuery, CriteriaBuilder builder, Root r) {
+        if (filter.isAscendente()
                 && Validador.isStringValida(filter.getPropriedadeOrdenacao())) {
             criteriaQuery.orderBy(builder.asc(r.get(filter.getPropriedadeOrdenacao())));
         } else if (Validador.isStringValida(filter.getPropriedadeOrdenacao())) {

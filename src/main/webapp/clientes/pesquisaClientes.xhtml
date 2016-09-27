@@ -15,8 +15,8 @@
                     width: 40% !important;               
                 }           
             }
-            
-             .ui-dialog .ui-dialog-buttonpane {
+
+            .ui-dialog .ui-dialog-buttonpane {
                 text-align: center !important;
 
             }
@@ -53,7 +53,7 @@
                     <p:outputLabel value="CPF/CNPJ:" for="cpfCnpj" />
                     <p:inputText id="cpfCnpj" value="#{pesquisarClienteBean.clienteFilter.documentoReceitaFederal}" 
                                  maxlength="15" styleClass="form-control" >
-                     <p:keyFilter regEx="/[\d]/"/>
+                        <p:keyFilter regEx="/[\d]/"/>
                     </p:inputText>
 
                     <p:outputLabel value="Nome:" for="nome" />
@@ -82,21 +82,23 @@
                     <p:column width="18%">
                         <p:button styleClass="btn-editar" outcome="/clientes/cadastroCliente"  
                                   icon="fa fa-fw fa-edit" title="Editar" >
-                             <f:param name="cliente" value="#{cliente.id}"  />
+                            <f:param name="cliente" value="#{cliente.id}"  />
                         </p:button> 
-                        
-                        <p:commandButton  styleClass="btn-excluir" 
+
+                        <p:commandButton  styleClass="btn-excluir" action="#{pesquisarClienteBean.excluir}"
                                           icon="fa fa-fw fa-remove" title="Excluir"
                                           process="@this" update="@form msgs">
+                            <f:setPropertyActionListener target="#{pesquisarClienteBean.clienteSelecionado}" 
+                                                         value="#{cliente}" />
                             <p:confirm   message="Deseja Excluir 
-                                    #{cliente.nome}?" icon="fa fa-exclamation-triangle" />                          
+                                         #{cliente.nome}?" icon="fa fa-exclamation-triangle" />                          
                         </p:commandButton>                      
                     </p:column>
 
                 </p:dataTable>
-                  <p:confirmDialog   style="text-align: center" header="Atenção"  responsive="true" global="true" 
-                                  id="confirmacaoExclusaoDialog"
-                                  showEffect="explode" hideEffect="fade">                  
+                <p:confirmDialog   style="text-align: center" header="Atenção"  responsive="true" global="true" 
+                                   id="confirmacaoExclusaoDialog"
+                                   showEffect="explode" hideEffect="fade">                  
                     <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes"
                                      icon="ui-icon-check" />
                     <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no"
