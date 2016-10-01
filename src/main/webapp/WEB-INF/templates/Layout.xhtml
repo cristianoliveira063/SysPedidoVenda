@@ -29,6 +29,8 @@
         <h:outputStylesheet library="syspedidovenda" name="css/sistema.css"  />
         <!-- MaskMoney JS -->
         <h:outputScript target="body" library="syspedidovenda" name="js/jquery.maskMoney.min.js" />
+        <!-- Locales JS -->
+        <h:outputScript target="body" library="syspedidovenda" name="js/locales.js" />
 
 
     </h:head>
@@ -149,7 +151,7 @@
                             </ul>
                         </div>
                     </nav>                  
-                    <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="configurarMoeda()"
+                    <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="configurarMoeda(),upperText()"
                                   onsuccess="PF('statusDialog').hide()"  />
 
                     <p:dialog widgetVar="statusDialog"  draggable="false"
@@ -404,18 +406,27 @@
             }
             $(document).ready(function () {
                 configurarMoeda();
+                upperText();
             });
 
-            function maiuscula(z) {
-                v = z.value.toUpperCase();
-                z.value = v;
-            }
-
-            function nomeMaiusculo(nome) {
-                n = nome.value.toLowerCase().replace(/(?:^|\s)\S/g, function (a) {
-                    return a.toUpperCase();
+            // Funcao que faz o texto ficar em uppercase
+            function upperText() {
+                // Para tratar o colar
+                jQuery(".up").bind('paste', function (e) {
+                    var el = jQuery(this);
+                    setTimeout(function () {
+                        var text = jQuery(el).val();
+                        el.val(text.toUpperCase());
+                    }, 100);
                 });
-                nome.value = n;
+                // Para tratar quando é digitado
+                jQuery(".up").keypress(function () {
+                    var el = jQuery(this);
+                    setTimeout(function () {
+                        var text = jQuery(el).val();
+                        el.val(text.toUpperCase());
+                    }, 100);
+                });
             }
 
         </script>

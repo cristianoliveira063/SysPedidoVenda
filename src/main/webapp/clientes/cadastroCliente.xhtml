@@ -51,10 +51,10 @@
                               columnClasses="ui-grid-col-2,ui-grid-col-4">
 
                     <p:outputLabel value="Nome:" for="nome" />
-                    <p:inputText id="nome" onkeyup="nomeMaiusculo(this)" value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
+                    <p:inputText id="nome" styleClass="up" value="#{cadastroClienteBean.cliente.nome}"  maxlength="100"  />
 
                     <p:outputLabel value="E-mail:" for="email"/>
-                    <p:inputText value="#{cadastroClienteBean.cliente.email}"  id="email"   />
+                    <p:inputText value="#{cadastroClienteBean.cliente.email}" styleClass="up"  id="email"   />
 
                 </p:panelGrid>
                 <p:panelGrid  id="panelTipoPessoa"  columns="2"  

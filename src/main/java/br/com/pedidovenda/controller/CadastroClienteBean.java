@@ -54,7 +54,7 @@ public class CadastroClienteBean implements Serializable {
             reset();
             MessageView.info("Cadastro salvo com sucesso!");
         } catch (NegocioException ex) {
-            MessageView.error(ex.getMessage());
+           MessageView.error(ex.getMessage());
         }
     }
 
@@ -109,8 +109,8 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void setCpf(String cpf) {
-        if(this.cliente.getTipo().equals(TipoPessoa.FISICA)){
-              this.cliente.setDocumentoReceitaFederal(cpf);
+        if (this.cliente.getTipo().equals(TipoPessoa.FISICA)) {
+            this.cliente.setDocumentoReceitaFederal(cpf);
         }
         this.cpf = cpf;
     }
@@ -120,8 +120,8 @@ public class CadastroClienteBean implements Serializable {
     }
 
     public void setCnpj(String cnpj) {
-        if(this.cliente.getTipo().equals(TipoPessoa.JURIDICA)){
-               this.getCliente().setDocumentoReceitaFederal(cnpj);
+        if (this.cliente.getTipo().equals(TipoPessoa.JURIDICA)) {
+            this.getCliente().setDocumentoReceitaFederal(cnpj);
         }
         this.cnpj = cnpj;
     }
@@ -143,11 +143,10 @@ public class CadastroClienteBean implements Serializable {
         }
         this.clienteParam = clienteParam;
     }
-    
-    public boolean isEditando(){
-        
+
+    public boolean isEditando() {
+
         return Validador.isObjectValido(cliente.getId());
     }
-    
-    
+
 }

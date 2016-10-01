@@ -27,17 +27,17 @@ public class ItemPedido implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false,length = 3)
-    private Integer quantidade;
-    @Column(name = "valor_unitario",nullable = false,precision = 10,scale = 2)
+    @Column(nullable = false, length = 3)
+    private int quantidade;
+    @Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
     @NotNull
-    private BigDecimal valorUnitario;   
+    private BigDecimal valorUnitario = BigDecimal.ZERO;
     @ManyToOne
-    @JoinColumn(name ="produto_id",nullable = false)
+    @JoinColumn(name = "produto_id", nullable = false)
     @NotNull
     private Produto produto;
     @ManyToOne
-    @JoinColumn(name = "pedido_id",nullable = false)
+    @JoinColumn(name = "pedido_id", nullable = false)
     @NotNull
     private Pedido pedido;
 
@@ -49,17 +49,11 @@ public class ItemPedido implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the quantidade
-     */
-    public Integer getQuantidade() {
+    public int getQuantidade() {
         return quantidade;
     }
 
-    /**
-     * @param quantidade the quantidade to set
-     */
-    public void setQuantidade(Integer quantidade) {
+    public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
 
@@ -103,6 +97,14 @@ public class ItemPedido implements Serializable {
      */
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
+    }
+
+    public BigDecimal getValorTotal() {
+        return this.getValorUnitario().multiply(new BigDecimal(this.getQuantidade()));
+    }
+
+    public boolean isProdutoAssociado() {
+        return this.getProduto() != null && this.getProduto().getId() != null;
     }
 
     @Override

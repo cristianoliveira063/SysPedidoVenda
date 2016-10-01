@@ -1,34 +1,43 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 
 
     <p:panelGrid  id="panelDadosEntrega" style="margin-top: 20px" columns="4"  
                   layout="grid" styleClass="panelgrid-noborder ui-panelgrid-blank"
                   columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"  >
-        
+
         <p:outputLabel value="Data da entrega" for="dataEntrega" />
-        <p:calendar id="dataEntrega" value="#{cadastroPedidoBean.pedido.dataEntrega}"  pattern="dd/MM/yyyy" />
+        <p:calendar id="dataEntrega" locale="pt_BR" value="#{cadastroPedidoBean.pedido.dataEntrega}" mask="99/99/9999"  pattern="dd/MM/yyyy" />
 
 
         <p:outputLabel value="Logradouro:" for="entregaLogradouro" />
-        <p:inputText id="entregaLogradouro" value="#{cadastroPedidoBean.pedido.enderecoEntrega.logradouro}"  />
+        <p:inputText id="entregaLogradouro" styleClass="up" value="#{cadastroPedidoBean.pedido.enderecoEntrega.logradouro}"  />
 
         <p:outputLabel value="Número:" for="entregaNumero" />
-        <p:inputText id="entregaNumero"  value="#{cadastroPedidoBean.pedido.enderecoEntrega.numero}" />
+        <p:inputText id="entregaNumero"  value="#{cadastroPedidoBean.pedido.enderecoEntrega.numero}" >
+            <p:keyFilter regEx="/[\d]/"/>
+        </p:inputText>
 
         <p:outputLabel value="Complemento:" for="entregaComplemento" />
-        <p:inputText id="entregaComplemento" value="#{cadastroPedidoBean.pedido.enderecoEntrega.complemento}"  />
+        <p:inputText id="entregaComplemento" styleClass="up" value="#{cadastroPedidoBean.pedido.enderecoEntrega.complemento}"  />
 
         <p:outputLabel value="Cidade:" for="entregaCidade" />
-        <p:inputText id="entregaCidade" value="#{cadastroPedidoBean.pedido.enderecoEntrega.cidade}"  />
+        <p:inputText id="entregaCidade" styleClass="up" value="#{cadastroPedidoBean.pedido.enderecoEntrega.cidade}"  />
 
         <p:outputLabel value="Estado:" for="entregaEstado" />
-        <p:inputText id="entregaEstado" value="#{cadastroPedidoBean.pedido.enderecoEntrega.uf}"  />
+        <p:selectOneMenu id="entregaEstado" value="#{cadastroPedidoBean.pedido.enderecoEntrega.uf}">
+            <f:selectItem  itemLabel="Selecione a UF de entrega" itemValue="#{null}" noSelectionOption="true"/>
+            <f:selectItems value="#{cadastroPedidoBean.pedido.enderecoEntrega.ufs}" var="uf"
+                           itemLabel="#{uf.valor}" itemValue="#{uf}"/>
+
+        </p:selectOneMenu>
 
         <p:outputLabel value="CEP:" for="entregaCep" />
-        <p:inputText id="entregaCep" value="#{cadastroPedidoBean.pedido.enderecoEntrega.cep}"  />
+        <p:inputMask id="entregaCep" value="#{cadastroPedidoBean.pedido.enderecoEntrega.cep}"
+                     converter="retirarMascaraConverter"  mask="99999-999"  />
     </p:panelGrid>
 
 </ui:composition>

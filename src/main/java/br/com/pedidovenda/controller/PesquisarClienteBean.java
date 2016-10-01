@@ -6,11 +6,13 @@
 package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Cliente;
+import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
 import br.com.pedidovenda.repository.Clientes;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -87,6 +89,10 @@ public class PesquisarClienteBean implements Serializable {
         };
 
         return null;
+    }
+    
+    public List<TipoPessoa> getTipoPessoas(){       
+        return Arrays.asList(TipoPessoa.values());
     }
 
     public LazyDataModel<Cliente> getLazyClienteDataModel() {

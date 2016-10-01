@@ -108,6 +108,10 @@ public class Clientes extends BasicRepository<Cliente, Long> {
             ParameterExpression<String> paramNome = builder.parameter(String.class, "nome");
             predicates.add(builder.like(r.<String>get("nome"), paramNome));
         }
+        if (Validador.isObjectValido(filter.getTipo())) {
+            ParameterExpression<TipoPessoa> paramTipo = builder.parameter(TipoPessoa.class, "tipo");
+            predicates.add(builder.equal(r.get("tipo"), paramTipo));
+        }
         return predicates;
     }
 
@@ -119,6 +123,10 @@ public class Clientes extends BasicRepository<Cliente, Long> {
         if (Validador.isStringValida(filter.getNome())) {
             typedQuery.setParameter("nome", "%" + filter.getNome() + "%");
         }
+         if (Validador.isObjectValido(filter.getTipo())) {
+            typedQuery.setParameter("tipo", filter.getTipo());
+        }
+        
         return typedQuery;
     }
 

@@ -86,7 +86,7 @@
                              converter="retirarMascaraConverter" id="cep" mask="99999-999"/>
 
                 <p:outputLabel value="Logradouro:" for="logradouro" />
-                <p:inputText id="logradouro"  value="#{cadastroClienteBean.endereco.logradouro}"  />
+                <p:inputText id="logradouro" styleClass="up"  value="#{cadastroClienteBean.endereco.logradouro}"  />
 
                 <p:outputLabel value="Número:" for="numero" />
                 <p:inputText id="numero" value="#{cadastroClienteBean.endereco.numero}" maxlength="8"  >
@@ -97,10 +97,10 @@
                 <p:inputText id="complemento"  value="#{cadastroClienteBean.endereco.complemento}"/>
 
                 <p:outputLabel value="Bairro:" for="bairro" />
-                <p:inputText id="bairro"  value="#{cadastroClienteBean.endereco.bairro}"/>
+                <p:inputText id="bairro" styleClass="up"  value="#{cadastroClienteBean.endereco.bairro}"/>
 
                 <p:outputLabel value="Cidade:" for="cidade" />
-                <p:inputText id="cidade" value="#{cadastroClienteBean.endereco.cidade}" />
+                <p:inputText id="cidade" styleClass="up" value="#{cadastroClienteBean.endereco.cidade}" />
 
                 <p:outputLabel value="UF:" for="uf" />
                 <p:selectOneMenu id="uf" value="#{cadastroClienteBean.endereco.uf}"  
@@ -139,7 +139,7 @@
                 </p:inputText>
 
                 <p:outputLabel value="Logradouro" for="editLogradouro" />
-                <p:inputText id="editLogradouro" value="#{cadastroClienteBean.endereco.logradouro}"    />
+                <p:inputText id="editLogradouro" styleClass="up" value="#{cadastroClienteBean.endereco.logradouro}"    />
 
                 <p:outputLabel value="Número" for="editNumero" />
                 <p:inputText id="editNumero" value="#{cadastroClienteBean.endereco.numero}"   >
@@ -147,17 +147,17 @@
                 </p:inputText>
 
                 <p:outputLabel value="complemento" for="editComplemento" />
-                <p:inputText id="editComplemento" value="#{cadastroClienteBean.endereco.complemento}" />
+                <p:inputText id="editComplemento" styleClass="up" value="#{cadastroClienteBean.endereco.complemento}" />
 
 
                 <p:outputLabel value="Bairro" for="editBairro" />
-                <p:inputText id="editBairro" value="#{cadastroClienteBean.endereco.bairro}" />
+                <p:inputText id="editBairro" styleClass="up" value="#{cadastroClienteBean.endereco.bairro}" />
 
                 <p:outputLabel value="Cidade" for="editCidade" />
-                <p:inputText id="editCidade" value="#{cadastroClienteBean.endereco.cidade}" />
+                <p:inputText id="editCidade" styleClass="up" value="#{cadastroClienteBean.endereco.cidade}" />
 
                 <p:outputLabel value="UF" for="editUF" />
-                <p:autoComplete id="editUF" dropdown="true" value="#{cadastroClienteBean.endereco.uf}"  
+                <p:autoComplete id="editUF" dropdown="true" forceSelection="true" value="#{cadastroClienteBean.endereco.uf}"  
                                 var="uf" itemLabel="#{uf.valor}" itemValue="#{uf}"
                                 completeMethod="#{cadastroClienteBean.getUfs}"/>
 

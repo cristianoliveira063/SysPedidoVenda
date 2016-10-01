@@ -58,11 +58,11 @@
 
                     <p:outputLabel value="Nome:" for="nome" />
                     <p:inputText id="nome" value="#{pesquisarClienteBean.clienteFilter.nome}" 
-                                 maxlength="100" styleClass="form-control" />
+                                 maxlength="100" styleClass="form-control up" />
 
                 </p:panelGrid>
 
-                <p:dataTable emptyMessage="Nenhum cliente encontrado" 
+                <p:dataTable emptyMessage="Nenhum cliente encontrado" id="tablePesquisa"
                              value="#{pesquisarClienteBean.lazyClienteDataModel}" lazy="true" 
                              paginator="true" rows="10" selectionMode="single" rowKey="#{cliente.id}"
                              selection="#{pesquisarClienteBean.clienteSelecionado}"
@@ -73,8 +73,17 @@
                     <p:column headerText="Nome"  sortBy="#{cliente.nome}"  >
                         <h:outputText value="#{cliente.nome}" />
                     </p:column>
-                    <p:column headerText="Tipo"   >
-                        <h:outputText  value="#{cliente.tipo.descricao}"/>
+                    <p:column headerText="Tipo" filterBy="#{cliente.tipo}"   >
+                        <f:facet name="filter" >
+                            <p:selectOneMenu   value="#{pesquisarClienteBean.clienteFilter.tipo}"  >
+                                <f:selectItem itemLabel=" ----- Filtrar Por TipoPessoa ----- "  noSelectionOption="true" />
+                                <f:selectItems var="tipo" itemValue="#{tipo}" 
+                                               itemLabel="#{tipo.descricao}" 
+                                               value="#{pesquisarClienteBean.tipoPessoas}" />
+                                  <p:ajax  process="@this" update="tablePesquisa" />
+                            </p:selectOneMenu>
+                        </f:facet>
+                        <h:outputText value="#{cliente.tipo.descricao}" />
                     </p:column>
                     <p:column headerText="CPF/CNPJ" sortBy="#{cliente.documentoReceitaFederal}"  >
                         <h:outputText value="#{cliente.documentoReceitaFederal}" />

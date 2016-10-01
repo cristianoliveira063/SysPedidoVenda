@@ -8,7 +8,7 @@
             <p:button value="Novo" icon="fa fa-plus" />
         </p:toolbarGroup>
         <p:toolbarGroup  style="margin-left: 5px">
-            <p:commandButton value="Salvar" process="@this @form" update="@form" icon="fa fa-floppy-o" />
+            <p:commandButton value="Salvar" action="#{cadastroPedidoBean.salvar}"  process="@form" update="@form msgs" icon="fa fa-floppy-o" />
         </p:toolbarGroup>
         <!-- Botões Menu Esquerdo -->
         <p:toolbarGroup align="right" style="margin-right: 5px">

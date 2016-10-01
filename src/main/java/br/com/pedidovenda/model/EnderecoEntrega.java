@@ -6,6 +6,8 @@
 package br.com.pedidovenda.model;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
@@ -23,21 +25,24 @@ public class EnderecoEntrega implements Serializable {
     @Column(name = "entrega_logradouro", nullable = false, length = 150)
     @NotNull
     private String logradouro;
-    
+
     @Column(name = "entrega_numero", nullable = false, length = 20)
-    @NotNull @Size(max = 20)
-    private String numero;    
+    @NotNull
+    @Size(max = 20)
+    private String numero;
     @Column(name = "entrega_complemento", length = 150)
     @Size(max = 150)
-    private String complemento;   
+    private String complemento;
     @Column(name = "entrega_cidade", nullable = false, length = 60)
-    @NotNull @Size(max = 60)
-    private String cidade;  
+    @NotNull
+    @Size(max = 60)
+    private String cidade;
     @Column(name = "entrega_uf", nullable = false, length = 60)
-    @NotNull @Size(max = 60)
-    private String uf; 
+    @NotNull
+    private UF uf;
     @Column(name = "entrega_cep", nullable = false, length = 20)
-    @NotNull @Size(max = 20)
+    @NotNull
+    @Size(max = 20)
     private String cep;
 
     /**
@@ -96,18 +101,16 @@ public class EnderecoEntrega implements Serializable {
         this.cidade = cidade;
     }
 
-    /**
-     * @return the uf
-     */
-    public String getUf() {
+    public UF getUf() {
         return uf;
     }
 
-    /**
-     * @param uf the uf to set
-     */
-    public void setUf(String uf) {
+    public void setUf(UF uf) {
         this.uf = uf;
+    }
+
+    public List<UF> getUfs() {
+        return Arrays.asList(UF.values());
     }
 
     /**

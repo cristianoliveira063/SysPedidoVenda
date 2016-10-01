@@ -60,6 +60,11 @@ public class Produtos extends BasicRepository<Produto, Long> {
             return null;
         }
     }
+    
+    public List<Produto> porNome(String nome) {
+		return this.em.createQuery("from Produto where upper(nome) like :nome", Produto.class)
+				.setParameter("nome", nome.toUpperCase() + "%").getResultList();
+	}
 
     public List<Produto> filtrar(ProdutoFilter filter) {
         CriteriaBuilder builder = getCriteriaBuilder();

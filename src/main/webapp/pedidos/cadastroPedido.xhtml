@@ -11,9 +11,32 @@
     <ui:define name="titulo">Novo pedido</ui:define>
     <ui:define name="content">
 
+        <style type="text/css">
+            /* Customiza TabView - início */
+            .ui-tabs .ui-tabs-panel {
+                padding: 0.5em 0.2em !important;
+            }
 
-        
-        <h:form id="formCadastroPedido" prependId="false">
+            .ui-tabs {
+                padding: 0px !important;
+            }
+
+            .ui-tabs .ui-tabs-nav {
+                margin: -1px !important;
+            }
+
+            .ui-tabs.ui-tabs-top > .ui-tabs-nav {
+                padding: 0px !important;
+            }
+            /* Customiza TabView - fim */
+
+
+        </style>
+
+
+
+
+        <h:form id="frmCadastro" prependId="false">
 
 
             <div class="ui-fluid">

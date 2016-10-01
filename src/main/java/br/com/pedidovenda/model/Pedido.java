@@ -9,8 +9,10 @@ import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -37,45 +39,45 @@ public class Pedido implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;  
+    private Long id;
     @Temporal(TemporalType.DATE)
     @Column(name = "data_criacao", nullable = false)
     @NotNull
-    private Date dataCriacao;   
+    private Date dataCriacao;
     @Column(columnDefinition = "text")
-    private String observacao;   
+    private String observacao;
     @Temporal(TemporalType.DATE)
     @Column(name = "data_entrega", nullable = false)
     @NotNull
-    private Date dataEntrega;  
+    private Date dataEntrega;
     @Column(name = "valor_frete", nullable = false, precision = 10, scale = 2)
     @NotNull
-    private BigDecimal valorFrete;   
+    private BigDecimal valorFrete = BigDecimal.ZERO;
     @Column(name = "valor_desconto", nullable = false, precision = 10, scale = 2)
     @NotNull
-    private BigDecimal valorDesconto;    
+    private BigDecimal valorDesconto = BigDecimal.ZERO;
     @Column(name = "valor_total", nullable = false, precision = 10, scale = 2)
     @NotNull
-    private BigDecimal valorTotal;
+    private BigDecimal valorTotal = BigDecimal.ZERO;
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
     @NotNull
     private StatusPedido status;
     @Enumerated(EnumType.STRING)
-    @Column(name = "forma_pagamento",length = 20, nullable = false)
+    @Column(name = "forma_pagamento", length = 20, nullable = false)
     @NotNull
     private FormaPagamento formaPagamento;
     @ManyToOne
-    @JoinColumn(name = "vendedor_id",nullable = false)
+    @JoinColumn(name = "vendedor_id", nullable = false)
     @NotNull
     private Usuario vendedor;
     @ManyToOne
-    @JoinColumn(name = "cliente_id",nullable = false)
+    @JoinColumn(name = "cliente_id", nullable = false)
     @NotNull
     private Cliente cliente;
     @Embedded
     private EnderecoEntrega enderecoEntrega;
-    @OneToMany(mappedBy = "pedido",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ItemPedido> itens = new ArrayList<>();
 
     public Long getId() {
@@ -86,198 +88,180 @@ public class Pedido implements Serializable {
         this.id = id;
     }
 
-    /**
-     * @return the dataCriacao
-     */
     public Date getDataCriacao() {
         return dataCriacao;
     }
 
-    /**
-     * @param dataCriacao the dataCriacao to set
-     */
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    /**
-     * @return the observacao
-     */
     public String getObservacao() {
         return observacao;
     }
 
-    /**
-     * @param observacao the observacao to set
-     */
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
 
-    /**
-     * @return the dataEntrega
-     */
     public Date getDataEntrega() {
         return dataEntrega;
     }
 
-    /**
-     * @param dataEntrega the dataEntrega to set
-     */
     public void setDataEntrega(Date dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 
-    /**
-     * @return the valorFrete
-     */
     public BigDecimal getValorFrete() {
         return valorFrete;
     }
 
-    /**
-     * @param valorFrete the valorFrete to set
-     */
     public void setValorFrete(BigDecimal valorFrete) {
         this.valorFrete = valorFrete;
     }
 
-    /**
-     * @return the valorDesconto
-     */
     public BigDecimal getValorDesconto() {
         return valorDesconto;
     }
 
-    /**
-     * @param valorDesconto the valorDesconto to set
-     */
     public void setValorDesconto(BigDecimal valorDesconto) {
         this.valorDesconto = valorDesconto;
     }
 
-    /**
-     * @return the valorTotal
-     */
     public BigDecimal getValorTotal() {
         return valorTotal;
     }
 
-    /**
-     * @param valorTotal the valorTotal to set
-     */
     public void setValorTotal(BigDecimal valorTotal) {
         this.valorTotal = valorTotal;
     }
 
-    /**
-     * @return the status
-     */
     public StatusPedido getStatus() {
         return status;
     }
 
-    /**
-     * @param status the status to set
-     */
     public void setStatus(StatusPedido status) {
         this.status = status;
     }
 
-    /**
-     * @return the formaPagamento
-     */
     public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
 
-    /**
-     * @param formaPagamento the formaPagamento to set
-     */
     public void setFormaPagamento(FormaPagamento formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
 
-    /**
-     * @return the vendedor
-     */
+    public BigDecimal getValorSubtotal() {
+        return this.getValorTotal().subtract(this.getValorFrete()).add(this.getValorDesconto());
+    }
+
     public Usuario getVendedor() {
+        if (Validador.isObjectValido(vendedor)) {
+            return vendedor;
+        }
+        vendedor = new Usuario();
         return vendedor;
     }
 
-    /**
-     * @param vendedor the vendedor to set
-     */
     public void setVendedor(Usuario vendedor) {
         this.vendedor = vendedor;
     }
 
-    /**
-     * @return the cliente
-     */
     public Cliente getCliente() {
+        if (Validador.isObjectValido(cliente)) {
+            return cliente;
+        }
+        cliente = new Cliente();
         return cliente;
     }
 
-    /**
-     * @param cliente the cliente to set
-     */
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
-    /**
-     * @return the enderecoEntrega
-     */
-    public EnderecoEntrega getEnderecoEntrega() {      
-        if(Validador.isObjectValido(enderecoEntrega)){         
-              return enderecoEntrega;
+    public EnderecoEntrega getEnderecoEntrega() {
+        if (Validador.isObjectValido(enderecoEntrega)) {
+            return enderecoEntrega;
         }
-        enderecoEntrega = new EnderecoEntrega();      
+        enderecoEntrega = new EnderecoEntrega();
         return enderecoEntrega;
     }
 
-    /**
-     * @param enderecoEntrega the enderecoEntrega to set
-     */
     public void setEnderecoEntrega(EnderecoEntrega enderecoEntrega) {
         this.enderecoEntrega = enderecoEntrega;
     }
 
-    /**
-     * @return the itens
-     */
     public List<ItemPedido> getItens() {
         return itens;
     }
 
-    /**
-     * @param itens the itens to set
-     */
     public void setItens(List<ItemPedido> itens) {
         this.itens = itens;
     }
 
+    public boolean isNovo() {
+        return getId() == null;
+    }
+
+    public boolean isExistente() {
+        return !isNovo();
+    }
+
+    public List<FormaPagamento> getFormaPagamentos() {
+        return Arrays.asList(FormaPagamento.values());
+    }
+
+    public void recalcularValorTotal() {
+        BigDecimal total = BigDecimal.ZERO;
+
+        total = total.add(this.getValorFrete()).subtract(this.getValorDesconto());
+
+        for (ItemPedido item : this.getItens()) {
+            if (item.getProduto() != null && item.getProduto().getId() != null) {
+                total = total.add(item.getValorTotal());
+            }
+        }
+
+        this.setValorTotal(total);
+    }
+
+    public void adicionarItemVazio() {
+        if (this.isOrcamento()) {
+            Produto produto = new Produto();
+
+            ItemPedido item = new ItemPedido();
+            //item.setQuantidade(1);
+            item.setProduto(produto);
+            item.setPedido(this);
+            this.getItens().add(0, item);
+        }
+    }
+
+    public boolean isOrcamento() {
+        return StatusPedido.ORCAMENTO.equals(this.getStatus());
+    }
+
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 7;
+        hash = 61 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pedido)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Pedido other = (Pedido) object;
-        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
-    }
-
-    @Override
-    public String toString() {
-        return "br.com.syspedidovenda.model.Pedido[ id=" + id + " ]";
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Pedido other = (Pedido) obj;
+        return Objects.equals(this.id, other.id);
     }
 
 }
