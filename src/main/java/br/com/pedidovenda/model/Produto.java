@@ -44,9 +44,11 @@ public class Produto implements Serializable {
     @NotNull
     private BigDecimal valorUnitario;
     @Column(name = "quantidade_estoque", nullable = false, length = 5)
-    @NotNull @Min(0) @Max(9999)
-    private Integer quantidadeEstoque;
-    @ManyToOne(optional = false,fetch = FetchType.EAGER)
+    @NotNull
+    @Min(0)
+    @Max(9999)
+    private Integer quantidadeEstoque = 0;
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "categoria_id")
     @NotNull
     private Categoria categoria;
@@ -101,19 +103,15 @@ public class Produto implements Serializable {
         this.valorUnitario = valorUnitario;
     }
 
-    /**
-     * @return the quantidadeEstoque
-     */
     public Integer getQuantidadeEstoque() {
         return quantidadeEstoque;
     }
 
-    /**
-     * @param quantidadeEstoque the quantidadeEstoque to set
-     */
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
+
+   
 
     /**
      * @return the categoria
@@ -144,9 +142,9 @@ public class Produto implements Serializable {
         Produto other = (Produto) object;
         return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
-    
-    public boolean notEquals(Object object){      
-         return !this.equals(object);     
+
+    public boolean notEquals(Object object) {
+        return !this.equals(object);
     }
 
     @Override

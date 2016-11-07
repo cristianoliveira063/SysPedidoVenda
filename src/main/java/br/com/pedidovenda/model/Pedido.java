@@ -214,28 +214,36 @@ public class Pedido implements Serializable {
 
     public void recalcularValorTotal() {
         BigDecimal total = BigDecimal.ZERO;
-
         total = total.add(this.getValorFrete()).subtract(this.getValorDesconto());
-
         for (ItemPedido item : this.getItens()) {
             if (item.getProduto() != null && item.getProduto().getId() != null) {
                 total = total.add(item.getValorTotal());
             }
         }
-
         this.setValorTotal(total);
     }
 
     public void adicionarItemVazio() {
         if (this.isOrcamento()) {
             Produto produto = new Produto();
-
             ItemPedido item = new ItemPedido();
             //item.setQuantidade(1);
             item.setProduto(produto);
             item.setPedido(this);
             this.getItens().add(0, item);
         }
+    }
+
+    public void removerItemVazio() {
+        ItemPedido primeiroItem = this.getItens().get(0);
+
+        if (primeiroItem != null && primeiroItem.getProduto().getId() == null) {
+            this.getItens().remove(0);
+        }
+    }
+
+    public boolean isValorTotalNegativo() {
+        return this.getValorTotal().compareTo(BigDecimal.ZERO) < 0;
     }
 
     public boolean isOrcamento() {

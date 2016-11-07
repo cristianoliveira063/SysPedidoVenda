@@ -33,11 +33,18 @@ public class CadastroPedidoService implements Serializable {
     }
 
     @Transactional
-    public Pedido salvar(Pedido pedido) {
+    public Pedido salvar(Pedido pedido) throws NegocioException {
         if (pedido.isNovo()) {
             pedido.setDataCriacao(new Date());
             pedido.setStatus(StatusPedido.ORCAMENTO);
         }
+        if (pedido.getItens().isEmpty()) {
+            throw new NegocioException("O pedido deve possuir pelo menos um item.");
+        }
+        if (pedido.isValorTotalNegativo()) {
+            throw new NegocioException("Valor total do pedido não pode ser negativo.");
+        }
+        pedido.recalcularValorTotal();
         pedido = this.pedidos.adicionar(pedido);
         return pedido;
     }

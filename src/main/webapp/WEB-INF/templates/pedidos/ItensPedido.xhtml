@@ -6,13 +6,14 @@
 
 
 
-    <p:dataTable id="tabelaItens"  value="#{cadastroPedidoBean.pedido.itens}" var="item"
+
+    <p:dataTable id="tabelaItens"  value="#{cadastroPedidoBean.pedido.itens}" var="item" rowIndexVar="linha"
                  reflow="true" emptyMessage="Não existe itens neste pedido.">
 
-        <p:column headerText="SKU" style="text-align: center; width: 100px">
+        <p:column width="20%" headerText="SKU" style="text-align: center;">
             <h:outputText value="#{item.produto.sku}" rendered="#{item.produtoAssociado}"/>
 
-            <p:inputText size="8" value="#{cadastroPedidoBean.sku}" label="SKU"
+            <p:inputText size="8" value="#{cadastroPedidoBean.sku}" styleClass="up" label="SKU"
                          rendered="#{not item.produtoAssociado}">
                 <p:ajax event="change" process="@this" 
                         update="tabelaItens  :frmCadastro:totalPedido  :frmCadastro:subtotal" 
@@ -22,32 +23,37 @@
         <p:column headerText="Produto">
             <h:outputText value="#{item.produto.nome}" rendered="#{item.produtoAssociado}" />
             <p:autoComplete  value="#{cadastroPedidoBean.produtoLinhaEditavel}"
-                            completeMethod="#{cadastroPedidoBean.completarProduto}"
-                            var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" 
-                            forceSelection="true" rendered="#{not item.produtoAssociado}">
-                <p:ajax event="itemSelect" process="@this" update="tabelaItens msgs  totalPedido  subtotal" 
+                             completeMethod="#{cadastroPedidoBean.completarProduto}"
+                             var="produto" itemLabel="#{produto.nome}" itemValue="#{produto}" 
+                             forceSelection="true" rendered="#{not item.produtoAssociado}">
+                <p:ajax event="itemSelect" process="@this" update="tabelaItens msgs  totalPedido subtotal" 
                         listener="#{cadastroPedidoBean.carregarProdutoLinhaEditavel}"/>
             </p:autoComplete>
         </p:column>
-        <p:column headerText="Valor unitário" style="text-align: right">
+        <p:column width="15%" headerText="Valor Unitário" style="text-align: right">
             <h:outputText value="#{item.valorUnitario}">
                 <f:convertNumber type="currency"/>
             </h:outputText>
         </p:column>
-        <p:column headerText="Quantidade" style="text-align: center" >
-            <p:inputText size="8" value="#{item.quantidade}" />
+        <p:column width="10%" headerText="Quantidade" style="text-align: center" >
+            <p:inputText size="8" value="#{item.quantidade}" >
+                <p:ajax event="change" process="@this"
+                        update="tabelaItens :frmCadastro:totalPedido :frmCadastro:subtotal"
+                        listener="#{cadastroPedidoBean.atualizarQuantidade(item, linha)}" />
+
+            </p:inputText>
         </p:column>
-        <p:column headerText="Estoque" style="text-align: center" >
+        <p:column width="10%" headerText="Estoque" style="text-align: center" >
             <h:outputText value="#{item.produto.quantidadeEstoque}" />
         </p:column>
-        <p:column headerText="Valor total" style="text-align: right" >
+        <p:column width="15%" headerText="Valor Total" style="text-align: right" >
             <h:outputText value="#{item.valorTotal}">
                 <f:convertNumber type="currency"/>
             </h:outputText>
         </p:column>
-        <p:columnGroup type="footer">
+        <p:columnGroup type="footer" >
             <p:row>
-                <p:column colspan="5" footerText="Subtotal" style="text-align: right" />
+                <p:column colspan="5"  footerText="SubTotal"  style="text-align: right" />
                 <p:column style="text-align: right">
                     <f:facet name="footer">
                         <h:outputText value="#{cadastroPedidoBean.pedido.valorSubtotal}">

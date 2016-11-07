@@ -28,7 +28,7 @@ public class ItemPedido implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 3)
-    private int quantidade;
+    private int quantidade = 1;
     @Column(name = "valor_unitario", nullable = false, precision = 10, scale = 2)
     @NotNull
     private BigDecimal valorUnitario = BigDecimal.ZERO;
