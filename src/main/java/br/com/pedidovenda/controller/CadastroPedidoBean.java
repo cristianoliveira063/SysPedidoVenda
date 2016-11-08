@@ -6,6 +6,7 @@
 package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Cliente;
+import br.com.pedidovenda.model.EnderecoEntrega;
 import br.com.pedidovenda.model.ItemPedido;
 import br.com.pedidovenda.model.Pedido;
 import br.com.pedidovenda.model.Produto;
@@ -19,8 +20,6 @@ import br.com.pedidovenda.util.jsf.MessageView;
 import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -49,11 +48,12 @@ public class CadastroPedidoBean implements Serializable {
     
     @PostConstruct
     public void init() {
+        limpar();
         this.vendedores = usuarios.listar();
         this.pedido.setStatus(StatusPedido.ORCAMENTO);
-        this.pedido.adicionarItemVazio();
-        
+        this.pedido.adicionarItemVazio();   
         recalcularPedido();
+        
     }
     
     public void salvar() {
@@ -67,6 +67,12 @@ public class CadastroPedidoBean implements Serializable {
             this.pedido.adicionarItemVazio();
         }
     }
+    
+    
+    private void limpar() {
+		pedido = new Pedido();
+		pedido.setEnderecoEntrega(new EnderecoEntrega());
+	}
     
     public void recalcularPedido() {
         if (this.pedido != null) {

@@ -6,7 +6,6 @@
 package br.com.pedidovenda.repository;
 
 import br.com.pedidovenda.model.Cliente;
-import br.com.pedidovenda.model.Endereco;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
@@ -116,7 +115,7 @@ public class Clientes extends BasicRepository<Cliente, Long> {
     }
 
     public TypedQuery criarConsulta(EntityManager em, ClienteFilter filter, CriteriaQuery criteriaQuery) {
-        TypedQuery<Produto> typedQuery = em.createQuery(criteriaQuery);
+        TypedQuery<Cliente> typedQuery = em.createQuery(criteriaQuery);
         if (Validador.isStringValida(filter.getDocumentoReceitaFederal())) {
             typedQuery.setParameter("documentoReceitaFederal", filter.getDocumentoReceitaFederal());
         }

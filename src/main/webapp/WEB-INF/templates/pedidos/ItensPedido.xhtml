@@ -44,8 +44,16 @@
             </p:inputText>
         </p:column>
         <p:column width="10%" headerText="Estoque" style="text-align: center" >
-            <h:outputText value="#{item.produto.quantidadeEstoque}" />
+            <h:outputText value="#{item.produto.quantidadeEstoque}" 
+                          style="#{item.estoqueInsuficiente ? 'color: red' : ''}"/>
+            <h:graphicImage library="syspedidovenda" name="imagens/alerta.png" id="semEstoque"
+                            style="vertical-align: auto; margin-left: 2px" 
+                            rendered="#{item.estoqueInsuficiente}" />
+
+            <p:tooltip for="semEstoque" value="Estoque insuficiente"
+                       rendered="#{item.estoqueInsuficiente}" />
         </p:column>
+
         <p:column width="15%" headerText="Valor Total" style="text-align: right" >
             <h:outputText value="#{item.valorTotal}">
                 <f:convertNumber type="currency"/>

@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -38,6 +40,7 @@ public class EnderecoEntrega implements Serializable {
     @Size(max = 60)
     private String cidade;
     @Column(name = "entrega_uf", nullable = false, length = 60)
+    @Enumerated(EnumType.STRING)
     @NotNull
     private UF uf;
     @Column(name = "entrega_cep", nullable = false, length = 20)

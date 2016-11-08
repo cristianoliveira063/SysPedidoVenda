@@ -5,10 +5,20 @@
  */
 package br.com.pedidovenda.repository;
 
-import br.com.pedidovenda.model.Cliente;
 import br.com.pedidovenda.model.Pedido;
+import br.com.pedidovenda.modelFilter.Filter;
+import br.com.pedidovenda.modelFilter.PedidoFilter;
+import br.com.pedidovenda.util.validator.Validador;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  *
@@ -23,9 +33,50 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
     public Pedidos() {
         super(Pedido.class);
     }
-    
-    
-    
+
+    public List<Pedido> filtrar(PedidoFilter pedidoFilter) {
+        CriteriaBuilder builder = getCriteriaBuilder();
+        CriteriaQuery<Pedido> criteriaQuery = builder.createQuery(clazz);
+        Root<Pedido> r = criteriaQuery.from(clazz);
+        criteriaQuery.select(r);
+        ordenação(pedidoFilter.getFilter(), criteriaQuery, builder, r);
+        criteriaQuery.where(getPredicates(pedidoFilter, builder, r).toArray(new Predicate[0]));
+        TypedQuery<Pedido> typedQuery = criarConsulta(em, pedidoFilter, criteriaQuery);
+        typedQuery.setFirstResult(pedidoFilter.getFilter().getPrimeiroRegistro());
+        typedQuery.setMaxResults(pedidoFilter.getFilter().getQuantidadeRegistros());
+        return typedQuery.getResultList();
+    }
+
+    public void ordenação(Filter filter, CriteriaQuery criteriaQuery, CriteriaBuilder builder, Root r) {
+        if (filter.isAscendente()
+                && Validador.isStringValida(filter.getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.asc(r.get(filter.getPropriedadeOrdenacao())));
+        } else if (Validador.isStringValida(filter.getPropriedadeOrdenacao())) {
+            criteriaQuery.orderBy(builder.desc(r.get(filter.getPropriedadeOrdenacao())));
+        }
+    }
+
+    public int quantidadeFiltrados(PedidoFilter filter) {
+        CriteriaBuilder builder = getCriteriaBuilder();
+        CriteriaQuery cq = builder.createQuery();
+        Root<Pedido> rt = cq.from(clazz);
+        cq.select(builder.count(rt));
+        cq.where(getPredicates(filter, builder, rt).toArray(new Predicate[0]));
+        Query q = criarConsulta(em, filter, cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
+
+    public List<Predicate> getPredicates(PedidoFilter filter, CriteriaBuilder builder, Root r) {
+        List<Predicate> predicates = new ArrayList<>();
+
+        return predicates;
+    }
+
+    public TypedQuery criarConsulta(EntityManager em, PedidoFilter filter, CriteriaQuery criteriaQuery) {
+        TypedQuery<Pedido> typedQuery = em.createQuery(criteriaQuery);
+
+        return typedQuery;
+    }
 
     @Override
     protected EntityManager getEntityManager() {

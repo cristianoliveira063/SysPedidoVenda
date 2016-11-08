@@ -107,6 +107,17 @@ public class ItemPedido implements Serializable {
         return this.getProduto() != null && this.getProduto().getId() != null;
     }
 
+    public boolean isEstoqueSuficiente() {
+        return this.getPedido().isEmitido() || this.getProduto().getId() == null
+                || this.getProduto().getQuantidadeEstoque() >= this.getQuantidade();
+    }
+
+    public boolean isEstoqueInsuficiente() {
+        return !this.isEstoqueSuficiente();
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;

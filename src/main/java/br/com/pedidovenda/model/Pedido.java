@@ -250,6 +250,10 @@ public class Pedido implements Serializable {
         return StatusPedido.ORCAMENTO.equals(this.getStatus());
     }
 
+    public boolean isEmitido() {
+        return StatusPedido.EMITIDO.equals(this.getStatus());
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
