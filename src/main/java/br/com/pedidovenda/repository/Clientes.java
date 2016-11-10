@@ -6,7 +6,6 @@
 package br.com.pedidovenda.repository;
 
 import br.com.pedidovenda.model.Cliente;
-import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.TipoPessoa;
 import br.com.pedidovenda.modelFilter.ClienteFilter;
 import br.com.pedidovenda.modelFilter.Filter;

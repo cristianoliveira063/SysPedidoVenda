@@ -38,7 +38,7 @@ public class PesquisarPedidosBean implements Serializable {
 
     @PostConstruct
     public void init() {
-
+         pesquisar();
     }
 
     public LazyDataModel<Pedido> pesquisar() {

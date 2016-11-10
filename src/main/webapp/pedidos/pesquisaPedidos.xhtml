@@ -58,28 +58,33 @@
 
                 </p:panelGrid>
 
-                <p:dataTable emptyMessage="Nenhum pedido encontrado"  paginator="true" rows="10"
+                <p:dataTable value="#{pesquisarPedidosBean.lazyPedidosDataModel}" var="pedido" lazy="true"
+                             emptyMessage="Nenhum pedido encontrado"  paginator="true" rows="10"
                              style="margin-top: 30px" 
                              reflow="true" paginatorAlwaysVisible="false"
                              paginatorPosition="bottom">
 
                     <p:column headerText="Número" style="width: 10%"  >
-                        <h:outputText    />
+                        <h:outputText  value="#{pedido.id}"   />
                     </p:column>
                     <p:column headerText="Cliente"  >
-                        <h:outputText   />
+                        <h:outputText   value="#{pedido.cliente.nome}" />
                     </p:column>
                     <p:column headerText="Vendedor"  >
-                        <h:outputText  />
+                        <h:outputText value="#{pedido.vendedor.nome}" />
                     </p:column>
                     <p:column headerText="Data de Criação"  >
-                        <h:outputText    />
+                        <h:outputText  value="#{pedido.dataCriacao}"  >
+                           <f:convertDateTime pattern="dd/MM/yyyy" />
+                        </h:outputText>
                     </p:column>
                     <p:column headerText="Valor Total"  >
-                        <h:outputText   />
+                        <h:outputText value="#{pedido.valorTotal}"  >
+                           <f:convertNumber type="currency"/>
+                        </h:outputText>
                     </p:column>
-                    <p:column headerText="Status"  >
-                        <h:outputText   />
+                    <p:column headerText="Status" >
+                        <h:outputText  value="#{pedido.status.descricao}"/>
                     </p:column>
                     <p:column   >
                         <p:button  icon="fa fa-fw fa-edit" title="Editar" /> 

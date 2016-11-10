@@ -17,6 +17,7 @@
 
         <title><ui:insert name="titulo">Sistema de Pedidos de Venda</ui:insert></title>
 
+        <h:outputStylesheet library="primefaces-omega" name="theme.css"  />  
         <!-- Bootstrap Core CSS -->
         <h:outputStylesheet library="syspedidovenda" name="css/bootstrap.min.css" />
         <!-- Ionicons -->
@@ -31,6 +32,13 @@
         <h:outputScript target="body" library="syspedidovenda" name="js/jquery.maskMoney.min.js" />
         <!-- Locales JS -->
         <h:outputScript target="body" library="syspedidovenda" name="js/locales.js" />
+
+        <style type="text/css">
+
+            .ui-button, .ui-button span, button.ui-button.ui-state-default span, .ui-button.ui-state-default span {
+                font-weight: normal !important;
+            }
+        </style>
 
 
     </h:head>
