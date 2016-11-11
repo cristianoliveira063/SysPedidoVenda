@@ -12,14 +12,12 @@
 
        <!-- PESQUISA PEDIDO CSS -->
         <h:outputStylesheet library="syspedidovenda" name="css/pesquisa-pedido.css" />
-
-
         <h:form id="formPesquisaPedido" prependId="false">
             <div class="ui-fluid">
                 <h2>Pesquisa pedidos</h2>
                 <p:toolbar style="margin-top: 15px">                  
                     <p:toolbarGroup  style="margin-left: 5px">
-                        <p:commandButton value="Pesquisar" icon="fa fa-fw fa-search" />
+                        <p:commandButton value="Pesquisar" icon="fa fa-fw fa-search" update="@form  msgs"  />
                     </p:toolbarGroup>
                     <p:toolbarGroup align="right">
                         <p:button  value="Novo" outcome="/pedidos/cadastroPedido"  icon="fa fa-plus"/>
@@ -44,18 +42,19 @@
                     </h:panelGroup> 
 
                     <p:outputLabel  value="Vendedor:" for="vendedor" />
-                    <p:inputText id="vendedor" styleClass="vendedor form-control"/>
+                    <p:inputText id="vendedor" value="#{pesquisarPedidosBean.pedidoFilter.nomeVendedor}" 
+                                 styleClass="vendedor form-control"/>
 
                     <p:outputLabel  value="Cliente:" for="cliente" />
-                    <p:inputText id="cliente" styleClass="cliente form-control up"/>
+                    <p:inputText id="cliente"  value="#{pesquisarPedidosBean.pedidoFilter.nomeCliente}" 
+                                 styleClass="cliente form-control up"/>
 
                     <p:outputLabel for="status" value="Status:"/>
-                    <p:selectManyCheckbox id="status"  layout="responsive"   columns="3">
+                    <p:selectManyCheckbox id="status"  layout="responsive" columns="3">
                         <f:selectItem  itemLabel="Orçamento"/>
                         <f:selectItem    itemLabel="Emitido"/>
                         <f:selectItem   itemLabel="Cancelado"/>
                     </p:selectManyCheckbox>
-
                 </p:panelGrid>
 
                 <p:dataTable value="#{pesquisarPedidosBean.lazyPedidosDataModel}" var="pedido" lazy="true"
