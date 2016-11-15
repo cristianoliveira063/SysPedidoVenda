@@ -98,10 +98,8 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             predicates.add(builder.like(r.<String>get("cliente").get("nome"), paramNomeCliente));
         }
         if (Validador.isArrayValido(filter.getStatus())) {
-            ParameterExpression<Collection>paramStatusPedido = builder.parameter(Collection.class,"statusPedido");
-            //ParameterExpression<StatusPedido> paramStatusPedido = builder.parameter(StatusPedido.class, "statusPedido");
-           // predicates.add(builder.in(r.get("status").in(StatusPedido.values(),paramStatusPedido)));
-            predicates.add(builder.equal(r.get("status").in(Arrays.asList(StatusPedido.values())),paramStatusPedido));
+           // ParameterExpression<Collection>paramStatusPedido = builder.parameter(Collection.class,"statusPedido");
+             //Predicates.add(builder.in());
         }
 
         return predicates;
@@ -122,10 +120,10 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             typedQuery.setParameter("dataCriacaoAte", filter.getDataCriacaoAte());
         }
         if (Validador.isStringValida(filter.getNomeVendedor())) {
-            typedQuery.setParameter("nomeVendedor", filter.getNomeVendedor());
+            typedQuery.setParameter("nomeVendedor", "%" + filter.getNomeVendedor()+ "%");
         }
         if (Validador.isStringValida(filter.getNomeCliente())) {
-            typedQuery.setParameter("nomeCliente", filter.getNomeCliente());
+            typedQuery.setParameter("nomeCliente",  "%" + filter.getNomeCliente()+ "%");
         }
          if (Validador.isArrayValido(filter.getStatus())) {
             typedQuery.setParameter("statusPedido", Arrays.asList(filter.getStatus()));

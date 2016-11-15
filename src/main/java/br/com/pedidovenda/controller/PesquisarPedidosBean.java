@@ -6,9 +6,11 @@
 package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Pedido;
+import br.com.pedidovenda.model.StatusPedido;
 import br.com.pedidovenda.modelFilter.PedidoFilter;
 import br.com.pedidovenda.repository.Pedidos;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -38,7 +40,7 @@ public class PesquisarPedidosBean implements Serializable {
 
     @PostConstruct
     public void init() {
-         pesquisar();
+        pesquisar();
     }
 
     public LazyDataModel<Pedido> pesquisar() {
@@ -97,6 +99,10 @@ public class PesquisarPedidosBean implements Serializable {
 
     public void setPedidoSelecionado(Pedido pedidoSelecionado) {
         this.pedidoSelecionado = pedidoSelecionado;
+    }
+
+    public List<StatusPedido> getStatusPedidos() {
+        return Arrays.asList(StatusPedido.values());
     }
 
 }
