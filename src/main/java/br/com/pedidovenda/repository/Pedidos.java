@@ -98,8 +98,8 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             predicates.add(builder.like(r.<String>get("cliente").get("nome"), paramNomeCliente));
         }
         if (Validador.isArrayValido(filter.getStatus())) {
-           // ParameterExpression<Collection>paramStatusPedido = builder.parameter(Collection.class,"statusPedido");
-             //Predicates.add(builder.in());
+             ParameterExpression<Collection>paramStatusPedido = builder.parameter(Collection.class,"statusPedido");
+             predicates.add(builder.in(r.get("status")).value(paramStatusPedido));
         }
 
         return predicates;
