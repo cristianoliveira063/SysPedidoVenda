@@ -43,6 +43,8 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
         CriteriaBuilder builder = getCriteriaBuilder();
         CriteriaQuery<Pedido> criteriaQuery = builder.createQuery(clazz);
         Root<Pedido> r = criteriaQuery.from(clazz);
+        r.fetch("cliente");
+        r.fetch("vendedor");
         criteriaQuery.select(r);
         ordenação(pedidoFilter.getFilter(), criteriaQuery, builder, r);
         criteriaQuery.where(getPredicates(pedidoFilter, builder, r).toArray(new Predicate[0]));
@@ -98,8 +100,8 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             predicates.add(builder.like(r.<String>get("cliente").get("nome"), paramNomeCliente));
         }
         if (Validador.isArrayValido(filter.getStatus())) {
-             ParameterExpression<Collection>paramStatusPedido = builder.parameter(Collection.class,"statusPedido");
-             predicates.add(builder.in(r.get("status")).value(paramStatusPedido));
+            ParameterExpression<Collection> paramStatusPedido = builder.parameter(Collection.class, "statusPedido");
+            predicates.add(builder.in(r.get("status")).value(paramStatusPedido));
         }
 
         return predicates;
@@ -120,12 +122,12 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             typedQuery.setParameter("dataCriacaoAte", filter.getDataCriacaoAte());
         }
         if (Validador.isStringValida(filter.getNomeVendedor())) {
-            typedQuery.setParameter("nomeVendedor", "%" + filter.getNomeVendedor()+ "%");
+            typedQuery.setParameter("nomeVendedor", "%" + filter.getNomeVendedor() + "%");
         }
         if (Validador.isStringValida(filter.getNomeCliente())) {
-            typedQuery.setParameter("nomeCliente",  "%" + filter.getNomeCliente()+ "%");
+            typedQuery.setParameter("nomeCliente", "%" + filter.getNomeCliente() + "%");
         }
-         if (Validador.isArrayValido(filter.getStatus())) {
+        if (Validador.isArrayValido(filter.getStatus())) {
             typedQuery.setParameter("statusPedido", Arrays.asList(filter.getStatus()));
         }
 

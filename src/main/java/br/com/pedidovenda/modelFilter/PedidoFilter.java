@@ -24,7 +24,7 @@ public class PedidoFilter implements Serializable {
     private Date dataCriacaoAte;
     private String nomeVendedor;
     private String nomeCliente;
-    private StatusPedido[] status;
+    private StatusPedido[] status = StatusPedido.values();
     private Filter filter;
 
     public Long getNumeroDe() {
