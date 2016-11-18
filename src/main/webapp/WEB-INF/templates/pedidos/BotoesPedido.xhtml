@@ -25,7 +25,8 @@
            
         </p:toolbarGroup>
         <p:toolbarGroup align="right" style="margin-right: 5px">
-            <p:commandButton value="Emitir" icon="fa fa-check" />
+            <p:commandButton value="Emitir" icon="fa fa-check" action="#{emissaoPedidoBean.emitirPedido}"
+                             process="@form" update="@form"/>
         </p:toolbarGroup>       
     </p:toolbar>
 </ui:composition>

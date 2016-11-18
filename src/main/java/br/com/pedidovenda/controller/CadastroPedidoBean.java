@@ -45,10 +45,11 @@ public class CadastroPedidoBean implements Serializable {
     private String sku;
     @Inject
     private Produtos produtos;
+    @Inject
+    private Pedido pedidoParam;
     
     @PostConstruct
     public void init() {
-        limpar();
         this.vendedores = usuarios.listar();
         this.pedido.setStatus(StatusPedido.ORCAMENTO);
         this.pedido.adicionarItemVazio();   
@@ -61,6 +62,7 @@ public class CadastroPedidoBean implements Serializable {
         try {
             cadastroPedidoService.salvar(pedido);
             MessageView.info("Pedido salvo com sucesso.");
+             limpar();
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         } finally {
@@ -160,6 +162,21 @@ public class CadastroPedidoBean implements Serializable {
     
     public void setSku(String sku) {
         this.sku = sku;
+    }
+
+    public Pedido getPedidoParam() {
+        return pedidoParam;
+    }
+
+    public void setPedidoParam(Pedido pedidoParam) {
+        this.pedidoParam = pedidoParam;
+        if(Validador.isObjectValido(pedidoParam)){
+            this.pedido = pedidoParam;  
+        }
+    }
+    
+     public boolean isEditando() {
+        return Validador.isObjectValido(pedido.getId());
     }
     
 }

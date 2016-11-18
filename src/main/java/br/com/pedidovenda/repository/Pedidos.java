@@ -103,7 +103,6 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
             ParameterExpression<Collection> paramStatusPedido = builder.parameter(Collection.class, "statusPedido");
             predicates.add(builder.in(r.get("status")).value(paramStatusPedido));
         }
-
         return predicates;
     }
 
@@ -130,7 +129,6 @@ public class Pedidos extends BasicRepository<Pedido, Long> {
         if (Validador.isArrayValido(filter.getStatus())) {
             typedQuery.setParameter("statusPedido", Arrays.asList(filter.getStatus()));
         }
-
         return typedQuery;
     }
 

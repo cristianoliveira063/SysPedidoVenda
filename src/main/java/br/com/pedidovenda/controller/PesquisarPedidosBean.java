@@ -88,7 +88,7 @@ public class PesquisarPedidosBean implements Serializable {
     public PedidoFilter getPedidoFilter() {
         return pedidoFilter;
     }
-
+  
     public void setPedidoFilter(PedidoFilter pedidoFilter) {
         this.pedidoFilter = pedidoFilter;
     }

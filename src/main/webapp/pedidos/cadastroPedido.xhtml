@@ -6,6 +6,7 @@
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:o="http://omnifaces.org/ui"
                 template="/WEB-INF/templates/Layout.xhtml">
 
     <ui:define name="titulo">Novo pedido</ui:define>
@@ -30,22 +31,19 @@
             }
             /* Customiza TabView - fim */
 
-
         </style>
 
-
-
-
+        <f:metadata>
+            <o:viewParam name="pedido" value="#{cadastroPedidoBean.pedidoParam}"  />
+        </f:metadata>
+        
         <h:form id="frmCadastro" prependId="false">
 
-
             <div class="ui-fluid">
-
-                <h2>Novo pedido</h2>
+                <h2>#{cadastroPedidoBean.editando ? 'Edição de Pedido' : 'Novo Pedido'}</h2>
 
                 <ui:include src="/WEB-INF/templates/pedidos/BotoesPedido.xhtml" />
                 <ui:include src="/WEB-INF/templates/pedidos/CapaPedido.xhtml" />
-
 
                 <p:tabView style="margin-top: 15px">
                     <p:tab title="Itens" >
