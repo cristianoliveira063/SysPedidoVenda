@@ -254,6 +254,14 @@ public class Pedido implements Serializable {
         return StatusPedido.EMITIDO.equals(this.getStatus());
     }
 
+    public boolean isNaoEmissivel() {
+        return !this.isEmissivel();
+    }
+
+    public boolean isEmissivel() {
+        return this.isExistente() && this.isOrcamento();
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

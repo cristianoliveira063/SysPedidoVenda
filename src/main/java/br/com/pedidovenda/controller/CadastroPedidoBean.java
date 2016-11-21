@@ -21,6 +21,7 @@ import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -32,9 +33,10 @@ import javax.inject.Named;
 @Named
 @ViewScoped
 public class CadastroPedidoBean implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    @Inject
+    @Produces
+    @PedidoEdicao
     private Pedido pedido;
     private List<Usuario> vendedores;
     @Inject
@@ -47,41 +49,43 @@ public class CadastroPedidoBean implements Serializable {
     private Produtos produtos;
     @Inject
     private Pedido pedidoParam;
-    
+
+    public CadastroPedidoBean() {
+        limpar();
+    }
+
     @PostConstruct
     public void init() {
         this.vendedores = usuarios.listar();
         this.pedido.setStatus(StatusPedido.ORCAMENTO);
-        this.pedido.adicionarItemVazio();   
+        this.pedido.adicionarItemVazio();
         recalcularPedido();
-        
     }
-    
+
     public void salvar() {
         this.pedido.removerItemVazio();
         try {
             cadastroPedidoService.salvar(pedido);
             MessageView.info("Pedido salvo com sucesso.");
-             limpar();
+            limpar();
         } catch (NegocioException ex) {
             MessageView.error(ex.getMessage());
         } finally {
             this.pedido.adicionarItemVazio();
         }
     }
-    
-    
+
     private void limpar() {
-		pedido = new Pedido();
-		pedido.setEnderecoEntrega(new EnderecoEntrega());
-	}
-    
+        pedido = new Pedido();
+        pedido.setEnderecoEntrega(new EnderecoEntrega());
+    }
+
     public void recalcularPedido() {
         if (this.pedido != null) {
             this.pedido.recalcularValorTotal();
         }
     }
-    
+
     public void carregarProdutoLinhaEditavel() {
         ItemPedido item = this.pedido.getItens().get(0);
         if (this.produtoLinhaEditavel != null) {
@@ -97,7 +101,7 @@ public class CadastroPedidoBean implements Serializable {
             }
         }
     }
-    
+
     public void atualizarQuantidade(ItemPedido item, int linha) {
         if (item.getQuantidade() < 1) {
             if (linha == 0) {
@@ -106,10 +110,10 @@ public class CadastroPedidoBean implements Serializable {
                 this.getPedido().getItens().remove(linha);
             }
         }
-        
+
         this.pedido.recalcularValorTotal();
     }
-    
+
     private boolean existeItemComProduto(Produto produto) {
         boolean existeItem = false;
         for (ItemPedido item : this.getPedido().getItens()) {
@@ -120,46 +124,46 @@ public class CadastroPedidoBean implements Serializable {
         }
         return existeItem;
     }
-    
+
     public List<Produto> completarProduto(String nome) {
         return this.produtos.porNome(nome);
     }
-    
+
     public void carregarProdutoPorSku() {
         if (Validador.isStringValida(this.sku)) {
             this.produtoLinhaEditavel = this.produtos.porSku(this.sku);
             this.carregarProdutoLinhaEditavel();
         }
     }
-    
+
     public Pedido getPedido() {
         return pedido;
     }
-    
+
     public List<Usuario> getVendedores() {
         return vendedores;
     }
-    
+
     public List<Cliente> completarCliente(String nome) {
         return this.cadastroPedidoService.pesquisarPorNome(nome);
     }
-    
+
     public void setPedido(Pedido pedido) {
         this.pedido = pedido;
     }
-    
+
     public Produto getProdutoLinhaEditavel() {
         return produtoLinhaEditavel;
     }
-    
+
     public void setProdutoLinhaEditavel(Produto produtoLinhaEditavel) {
         this.produtoLinhaEditavel = produtoLinhaEditavel;
     }
-    
+
     public String getSku() {
         return sku;
     }
-    
+
     public void setSku(String sku) {
         this.sku = sku;
     }
@@ -170,13 +174,13 @@ public class CadastroPedidoBean implements Serializable {
 
     public void setPedidoParam(Pedido pedidoParam) {
         this.pedidoParam = pedidoParam;
-        if(Validador.isObjectValido(pedidoParam)){
-            this.pedido = pedidoParam;  
+        if (Validador.isObjectValido(pedidoParam)) {
+            this.pedido = pedidoParam;
         }
     }
-    
-     public boolean isEditando() {
+
+    public boolean isEditando() {
         return Validador.isObjectValido(pedido.getId());
     }
-    
+
 }

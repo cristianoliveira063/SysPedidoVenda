@@ -7,6 +7,8 @@ package br.com.pedidovenda.controller;
 
 import br.com.pedidovenda.model.Pedido;
 import br.com.pedidovenda.model.PedidoAlteradoEvent;
+import br.com.pedidovenda.service.EmissaoPedidoService;
+import br.com.pedidovenda.service.NegocioException;
 import java.io.Serializable;
 import javax.enterprise.event.Event;
 import javax.faces.view.ViewScoped;
@@ -23,21 +25,21 @@ public class EmissaoPedidoBean implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Inject
+    @PedidoEdicao
     private Pedido pedido;
     @Inject
     private Event<PedidoAlteradoEvent> pedidoAlteradoEvent;
+    @Inject
+    private EmissaoPedidoService emissaoPedidoService;
 
-    public void emitirPedido() {
+    public void emitirPedido() throws NegocioException {
         this.pedido.removerItemVazio();
-
         try {
-            //this.pedido = this.emissaoPedidoService.emitir(this.pedido);
+            this.pedido = this.emissaoPedidoService.emitir(this.pedido);
             this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
-
             //FacesUtil.addInfoMessage("Pedido emitido com sucesso!");
         } finally {
             this.pedido.adicionarItemVazio();
         }
     }
-
 }

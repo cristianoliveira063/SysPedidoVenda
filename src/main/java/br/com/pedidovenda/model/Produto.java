@@ -5,6 +5,7 @@
  */
 package br.com.pedidovenda.model;
 
+import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.validator.SKU;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -111,8 +112,6 @@ public class Produto implements Serializable {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
-   
-
     /**
      * @return the categoria
      */
@@ -125,6 +124,17 @@ public class Produto implements Serializable {
      */
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public void baixarEstoque(Integer quantidade) throws NegocioException {
+        int novaQuantidade = this.getQuantidadeEstoque() - quantidade;
+
+        if (novaQuantidade < 0) {
+            throw new NegocioException("Não há disponibilidade no estoque de "
+                    + quantidade + " itens do produto " + this.getSku() + ".");
+        }
+
+        this.setQuantidadeEstoque(novaQuantidade);
     }
 
     @Override
