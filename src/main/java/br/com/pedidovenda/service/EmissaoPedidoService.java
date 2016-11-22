@@ -26,18 +26,16 @@ public class EmissaoPedidoService implements Serializable {
     @Inject
     private Pedidos pedidos;
 
+    
     public Pedido emitir(Pedido pedido) throws NegocioException {
         pedido = this.cadastroPedidoService.salvar(pedido);
-
         if (pedido.isNaoEmissivel()) {
             throw new NegocioException("Pedido não pode ser emitido com status "
                     + pedido.getStatus().getDescricao() + ".");
         }
 
         this.estoqueService.baixarItensEstoque(pedido);
-
         pedido.setStatus(StatusPedido.EMITIDO);
-
         pedido = this.pedidos.adicionar(pedido);
 
         return pedido;

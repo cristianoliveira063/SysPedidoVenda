@@ -9,6 +9,7 @@ import br.com.pedidovenda.model.Pedido;
 import br.com.pedidovenda.model.PedidoAlteradoEvent;
 import br.com.pedidovenda.service.EmissaoPedidoService;
 import br.com.pedidovenda.service.NegocioException;
+import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
 import javax.enterprise.event.Event;
 import javax.faces.view.ViewScoped;
@@ -37,7 +38,7 @@ public class EmissaoPedidoBean implements Serializable {
         try {
             this.pedido = this.emissaoPedidoService.emitir(this.pedido);
             this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
-            //FacesUtil.addInfoMessage("Pedido emitido com sucesso!");
+            MessageView.info("Pedido emitido com sucesso!");
         } finally {
             this.pedido.adicionarItemVazio();
         }

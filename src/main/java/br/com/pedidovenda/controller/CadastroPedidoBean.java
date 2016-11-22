@@ -9,6 +9,7 @@ import br.com.pedidovenda.model.Cliente;
 import br.com.pedidovenda.model.EnderecoEntrega;
 import br.com.pedidovenda.model.ItemPedido;
 import br.com.pedidovenda.model.Pedido;
+import br.com.pedidovenda.model.PedidoAlteradoEvent;
 import br.com.pedidovenda.model.Produto;
 import br.com.pedidovenda.model.StatusPedido;
 import br.com.pedidovenda.model.Usuario;
@@ -21,6 +22,7 @@ import br.com.pedidovenda.util.validator.Validador;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.enterprise.event.Observes;
 import javax.enterprise.inject.Produces;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -136,6 +138,10 @@ public class CadastroPedidoBean implements Serializable {
         }
     }
 
+    public void pedidoAlterado(@Observes PedidoAlteradoEvent event) {
+        this.pedido = event.getPedido();
+    }
+
     public Pedido getPedido() {
         return pedido;
     }
@@ -176,6 +182,7 @@ public class CadastroPedidoBean implements Serializable {
         this.pedidoParam = pedidoParam;
         if (Validador.isObjectValido(pedidoParam)) {
             this.pedido = pedidoParam;
+            this.pedido.adicionarItemVazio();
         }
     }
 

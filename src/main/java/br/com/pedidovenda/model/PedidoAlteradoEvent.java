@@ -11,7 +11,7 @@ package br.com.pedidovenda.model;
  */
 public class PedidoAlteradoEvent {
 
-    private Pedido pedido;
+    private final Pedido pedido;
 
     public PedidoAlteradoEvent(Pedido pedido) {
         this.pedido = pedido;
