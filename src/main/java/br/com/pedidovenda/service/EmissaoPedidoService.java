@@ -8,6 +8,7 @@ package br.com.pedidovenda.service;
 import br.com.pedidovenda.model.Pedido;
 import br.com.pedidovenda.model.StatusPedido;
 import br.com.pedidovenda.repository.Pedidos;
+import br.com.pedidovenda.util.jpa.Transactional;
 import java.io.Serializable;
 import javax.inject.Inject;
 
@@ -26,7 +27,7 @@ public class EmissaoPedidoService implements Serializable {
     @Inject
     private Pedidos pedidos;
 
-    
+    @Transactional
     public Pedido emitir(Pedido pedido) throws NegocioException {
         pedido = this.cadastroPedidoService.salvar(pedido);
         if (pedido.isNaoEmissivel()) {

@@ -11,6 +11,8 @@ import br.com.pedidovenda.service.EmissaoPedidoService;
 import br.com.pedidovenda.service.NegocioException;
 import br.com.pedidovenda.util.jsf.MessageView;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.event.Event;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -33,12 +35,14 @@ public class EmissaoPedidoBean implements Serializable {
     @Inject
     private EmissaoPedidoService emissaoPedidoService;
 
-    public void emitirPedido() throws NegocioException {
-        this.pedido.removerItemVazio();
+    public void emitirPedido()  {
+         this.pedido.removerItemVazio();
         try {
             this.pedido = this.emissaoPedidoService.emitir(this.pedido);
             this.pedidoAlteradoEvent.fire(new PedidoAlteradoEvent(this.pedido));
             MessageView.info("Pedido emitido com sucesso!");
+        } catch (NegocioException e) {
+           MessageView.error(e.getMessage());
         } finally {
             this.pedido.adicionarItemVazio();
         }
